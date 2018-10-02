@@ -60,22 +60,22 @@ nombres=dict()
 
 
  #Array de las maquinas con el puerto el id de la maquina y el token de la API
-maquinas = [["5001", "maq1", "X-Api-Key"],
-	        ["5002", "maq2", "X-Api-Key"],
-	        ["5003", "maq3", "X-Api-Key"],
-	        ["5004", "maq4", "X-Api-Key"],
-	        ["5005", "maq5", "X-Api-Key"],
-	        ["5006", "maq6", "X-Api-Key"],
-	        ["5007", "maq7", "X-Api-Key"]]
+maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
+            ["5002", "maq2", "56D24EE0B4A64CD2AB9545461152CA96"],
+            ["5003", "maq3", "4B22BE0A43DA4DF7999B228F106260A2"],
+            ["5004", "maq4", "8C5E7DB1649F4069AAE6C1C5013591F5"],
+            ["5005", "maq5", "AA6675CD2AF04C29A42815F2EDA5B8B5"],
+            ["5006", "maq6", "912088BC02A44629AA15A159E61579E4"],
+            ["5007", "maq7", "3DE1E4F69D9E47A6B57D9ECD7086E949"]]
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
-nombres["maq1"]={"Nombre":"Impresora1", "direccion":str("./3dp1")}
-nombres["maq2"]={"Nombre":"Impresora2", "direccion":str("./3dp2")}
-nombres["maq3"]={"Nombre":"Impresora3", "direccion":str("./3dp3")}
-nombres["maq4"]={"Nombre":"Impresora4", "direccion":str("./3dp4")}
-nombres["maq5"]={"Nombre":"Impresora5", "direccion":str("./3dp5")}
-nombres["maq6"]={"Nombre":"Impresora6", "direccion":str("./3dp6")}
-nombres["maq7"]={"Nombre":"Impresora7", "direccion":str("./3dp7")}
+nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1")}
+nombres["maq2"]={"Nombre":"Witbox Amarilla", "direccion":str("./3dp2")}
+nombres["maq3"]={"Nombre":"witbox Blanca", "direccion":str("./3dp3")}
+nombres["maq4"]={"Nombre":"Replicator 2", "direccion":str("./3dp4")}
+nombres["maq5"]={"Nombre":"i3 steel", "direccion":str("./3dp5")}
+nombres["maq6"]={"Nombre":"Sirius", "direccion":str("./3dp6")}
+nombres["maq7"]={"Nombre":"BlackBelt", "direccion":str("./3dp7")}
 
 #Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).			
 # def pideDatosFiles(datos, idmaquina):
