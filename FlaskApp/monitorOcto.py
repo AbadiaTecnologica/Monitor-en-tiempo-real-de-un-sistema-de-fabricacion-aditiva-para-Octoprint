@@ -58,6 +58,23 @@ errores=dict()
 nombres=dict()
 
 
+# Rellenamos los valores que necesitamos, ya que en caso de un cambio API la aplicacion siga funcionando.
+valoresPrinter["Pausa"] = "-"
+valoresPrinter["Imprimiendo"] = "-"
+valoresPrinter["Lista"] = "-"
+valoresPrinter["Estado"] = "-"
+valoresPrinter["TempCamaActual"] = "-"
+valoresPrinter["TempCamaFijada"] = "-"
+valoresPrinter["TempHottendActual"] = "-"
+valoresPrinter["TempHottendFijada"] = "-"
+
+valoresJob["TiempoEstimadoImpresion"] = "-"
+valoresJob["Nombre"] = "-"
+valoresJob["TiempoUltimaImpresion"] = "-"
+valoresJob["Porcentaje"] = "-"
+valoresJob["TiempoImpresion"] = "-"
+valoresJob["TiempoRestante"] = "-"
+valoresJob["Estado"] = "-"
 
  #Array de las maquinas con el puerto el id de la maquina y el token de la API
 maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
@@ -71,7 +88,7 @@ maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1")}
 nombres["maq2"]={"Nombre":"Witbox Amarilla", "direccion":str("./3dp2")}
-nombres["maq3"]={"Nombre":"witbox Blanca", "direccion":str("./3dp3")}
+nombres["maq3"]={"Nombre":"Witbox Blanca", "direccion":str("./3dp3")}
 nombres["maq4"]={"Nombre":"Replicator 2", "direccion":str("./3dp4")}
 nombres["maq5"]={"Nombre":"i3 steel", "direccion":str("./3dp5")}
 nombres["maq6"]={"Nombre":"Sirius", "direccion":str("./3dp6")}
@@ -100,40 +117,48 @@ nombres["maq7"]={"Nombre":"BlackBelt", "direccion":str("./3dp7")}
 
 #Funcion que devuelve los datos de impresora (temperaturas de cama y extrusor).
 def pideDatosPrinter(datos):
-	
-	#Diccionario temporal en el que iremos guardando nuestros valores utiles.
-	valoresPrinter=dict()
+    # Diccionario temporal en el que iremos guardando nuestros valores utiles.
+    valoresPrinter = dict()
 
-	#Pausa
-	valoresPrinter["Pausa"]=str(datos["state"]["flags"]["paused"])
+    # Pausa
+    valoresPrinter["Pausa"] = str(datos["state"]["flags"]["paused"])
 
-	#Imprimiendo
-	valoresPrinter["Imprimiendo"]= str(datos["state"]["flags"]["printing"])
+    # Imprimiendo
+    valoresPrinter["Imprimiendo"] = str(datos["state"]["flags"]["printing"])
 
-	#Lista
-	valoresPrinter["Lista"] = str(datos["state"]["flags"]["ready"])
+    # Lista
+    valoresPrinter["Lista"] = str(datos["state"]["flags"]["ready"])
 
-	#Estado Impresora (conectada o no)
-	valoresPrinter["Estado"]=str(datos["state"]["text"])
+    # Estado Impresora (conectada o no)
+    valoresPrinter["Estado"] = str(datos["state"]["text"])
 
-	#Comprobamos que la impresora este conectada mediante las lecturas de temperatura
-	if len(datos["temperature"]) == 0:
-		print("Conflicto con la API en Printer (impresora desconectada)")
-	else:
-		#Temperatura actual de la cama
-		valoresPrinter["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
+    # Comprobamos que la impresora este conectada mediante las lecturas de temperatura
+    if len(datos["temperature"]) == 0:
+        print("Conflicto con la API en Printer (impresora desconectada)")
+    else:
+        # Comprobamos que la impresora tiene como caracteristica la cama caliente.
+        if "bed" in datos["temperature"]:
 
-		#Temperatura fijada de la cama
-		valoresPrinter["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
+            # Temperatura actual de la cama
+            valoresPrinter["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
 
-		#Temperatura actual del extrusor
-		valoresPrinter["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+            # Temperatura fijada de la cama
+            valoresPrinter["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
 
-		#Temperatura fijada de extrusor
-		valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+            # Temperatura actual del extrusor
+            valoresPrinter["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
 
-	#Devolvemos el diccionario con los datos de cada maquina.
-	return valoresPrinter
+            # Temperatura fijada de extrusor
+            valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+        else:
+            # Temperatura actual del extrusor
+            valoresPrinter["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+
+            # Temperatura fijada de extrusor
+            valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+
+    # Devolvemos el diccionario con los datos de cada maquina.
+    return valoresPrinter
 
 
 #Funcion que devuelve los datos de la impresion en curso (Timepo, Timeleft, Porcentaje completado...).
@@ -257,9 +282,9 @@ def requestPrinter():
 			else:
 				if resp.status_code == 204:
 					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
+				#elif resp.status_code == 409:
+					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
 					#errores[maquina[1]]="La impresora no esta operativa"
-					print("La impresora no esta operativa (409)")
 				elif resp.status_code == 404:
 					errores[maquina[1]]="No hay comunicacion por parte del servidor"
 				elif resp.status_code == 200:
@@ -295,9 +320,9 @@ def requestJob():
 
 				if resp.status_code == 204:
 					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
+				#elif resp.status_code == 409:
+					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
 					#errores[maquina[1]]="La impresora no esta operativa"
-					print("La impresora no esta operativa (409)")
 				elif resp.status_code == 404:
 					errores[maquina[1]]="No hay comunicacion por parte del servidor"
 				elif resp.status_code == 200:
@@ -419,7 +444,6 @@ def desconectar():
 		#Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
 	return main()
 
-	
 #Ruta principal de nuestra aplicacion
 @app.route("/")
 
