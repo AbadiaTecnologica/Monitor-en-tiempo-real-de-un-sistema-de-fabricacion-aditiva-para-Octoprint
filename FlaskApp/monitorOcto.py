@@ -15,6 +15,7 @@ from datetime import datetime,timedelta
 import json as simplejson
 import requests
 import threading
+import collections
 
 
 
@@ -56,7 +57,7 @@ errores=dict()
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 nombres=dict()
-
+nombresOrdenados=dict()
 
 # Rellenamos los valores que necesitamos, ya que en caso de un cambio API la aplicacion siga funcionando.
 valoresPrinter["Pausa"] = "-"
@@ -454,7 +455,7 @@ def main():
 	requestPrinter()
 	requestJob()
 
-	
+	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
 	#parsed_json= jsonify(json_string)
 
 	#parsed_json = json.loads(json_string)
@@ -462,7 +463,7 @@ def main():
 	#funcionDatosJson(data)
 
 	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJob,
-	 fallos = errores, nombresMaquinas=nombres)
+	 fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
 
 if __name__=="__main__":
 	app.run(host='0.0.0.0')

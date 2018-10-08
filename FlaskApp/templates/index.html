@@ -50,7 +50,7 @@
     <script type="text/javascript">
       setTimeout(function(){
       window.location.reload(1);
-    }, 10000000);
+    }, 5000);
 
     </script>
 
@@ -161,9 +161,22 @@
 
                 <!--Grid row-->
                 <div class="row mb-4 wow fadeIn">
-
+                  {% for key,element in nombresOrdenados.items() %}
+                    {% if element == "4" %}
+                      <div class="row mb-4 wow fadeIn">
+                      <div class="col-lg-3 col-md-12 mb-3">
+                    {% else %}
                     <!--Grid column-->
-                    <div class="col-lg-3 col-md-12 mb-3">
+                        <div class="col-lg-3 col-md-12 mb-3">
+                      {% endif %}
+
+            
+                      
+                        <!--<div>{{key}}: {{datosJob[key]["Estado"]}}</div>-->
+                      
+
+                      
+
 
 <!--Primera Impresora -->
                       <!--Card-->
@@ -175,31 +188,31 @@
                             <div  class="card">
 
 
-            {% if datosJob["maq1"] %}
-            {% if datosJob["maq1"]["Estado"] == "Operational"%}
+            {% if datosJob[key] %}
+            {% if datosJob[key]["Estado"] == "Operational"%}
               <div id="gradOperativa" class="card">
                  <h4 class="card">
-                <a href={{nombresMaquinas["maq1"]["direccion"]}} style = "color:black">{{nombresMaquinas["maq1"]["Nombre"]}}</a>
+                <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
-            {% elif datosJob["maq1"]["Estado"] == "Printing" %}
+            {% elif datosJob[key]["Estado"] == "Printing" %}
               <div id="gradImprime" class="card">
                    <h4 class="card">
-                <a href={{nombresMaquinas["maq1"]["direccion"]}} style = "color:black">{{nombresMaquinas["maq1"]["Nombre"]}}</a>
+                <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
             {% else %}
               <div id="gradError" class="card">
                    <h4 class="card">
-                <a href={{nombresMaquinas["maq1"]["direccion"]}} style = "color:black">{{nombresMaquinas["maq1"]["Nombre"]}}</a>
+                <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
             {% endif %} 
 
-              {% for element in datosFiles["maq1"] %}
+              {% for element in datosFiles[key] %}
                   <!--pre>{{element}}</pre-->
               {% endfor %}   
 
-             {% if datosJob["maq1"]["Estado"] == "Operational"%}
+             {% if datosJob[key]["Estado"] == "Operational"%}
                  <a href=/desconectar?maq=1  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
-             {% elif datosJob["maq1"]["Estado"] == "Printing" %}
+             {% elif datosJob[key]["Estado"] == "Printing" %}
                  <a href=/desconectar?maq=1  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
              {% else %}
                  <a href=/conectar?maq=1  style= <button class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
@@ -207,50 +220,50 @@
           
             
               
-               {% if datosJob["maq1"] %}
-                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo estimado de impresion: {{datosJob["maq1"]["TiempoEstimadoImpresion"]}}</pre-->
-                 {% if datosJob["maq1"] %}
-                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo estimado de impresion: {{datosJob["maq1"]["TiempoEstimadoImpresion"]}}</pre-->
+               {% if datosJob[key] %}
+                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo estimado de impresion: {{datosJob[key]["TiempoEstimadoImpresion"]}}</pre-->
+                 {% if datosJob[key] %}
+                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo estimado de impresion: {{datosJob[key]["TiempoEstimadoImpresion"]}}</pre-->
                   <p>   </p>
-                  <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob["maq1"]["Estado"]}}</pre>
-                  {% if datosJob["maq1"]["TiempoUltimaImpresion"] == 'None' %}
+                  <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</pre>
+                  {% if datosJob[key]["TiempoUltimaImpresion"] == 'None' %}
                     <pre> <i class="fa fa-clock-o iconos"></i> Ultima:</pre>
                   {% else %}
-                    <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob["maq1"]["TiempoUltimaImpresion"]}}</pre>
+                    <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
                   {% endif %}
                   
-                  {% if datosJob["maq1"]["Nombre"] == 'None' %}
+                  {% if datosJob[key]["Nombre"] == 'None' %}
                       <pre> <i class="fa fa-archive" style="font-size:24px"></i></pre>
                   {% else %}
-                       <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob["maq1"]["Nombre"][:30]}} </span></pre>
+                       <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
                   {% endif %}     
-                  {% if datosJob["maq1"]["Porcentaje"] == 'None'%}
+                  {% if datosJob[key]["Porcentaje"] == 'None'%}
                       <pre> <i class="fa fa-percent" style="font-size:24px"></i></pre>
-                  {% elif datosJob["maq1"]["Porcentaje"] == '100' %}
+                  {% elif datosJob[key]["Porcentaje"] == '100' %}
                       <div id="progressBar">
 
-                        <div id="progress-bar"  role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:{{datosJob["maq1"]["Porcentaje"]}}%">
-                        {{datosJob["maq1"]["Porcentaje"][:3]}}%
+                        <div id="progress-bar"  role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:{{datosJob[key]["Porcentaje"]}}%">
+                        {{datosJob[key]["Porcentaje"][:3]}}%
                         </div>
                       </div>
                   {% else %}
 
                     <div id="progressBar">
 
-                        <div id="progress-bar"  role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:{{datosJob["maq1"]["Porcentaje"]}}%">
-                        {{datosJob["maq1"]["Porcentaje"][:4]}}%
+                        <div id="progress-bar"  role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:{{datosJob[key]["Porcentaje"]}}%">
+                        {{datosJob[key]["Porcentaje"][:4]}}%
                         </div>
                       </div>
                       <pre></pre>
                  {% endif %} 
 
                 {% endif %}     
-                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo de impresion: {{datosJob["maq1"]["TiempoImpresion"]}}</pre-->
-                  {% if datosJob["maq1"]["TiempoRestante"] == 'None' %}
+                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Tiempo de impresion: {{datosJob[key]["TiempoImpresion"]}}</pre-->
+                  {% if datosJob[key]["TiempoRestante"] == 'None' %}
 
                       <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: </pre>
                   {% else %}
-                      <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob["maq1"]["TiempoRestante"]}} </pre>
+                      <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
                   {% endif %}
                    
                 {% else %}
@@ -259,27 +272,34 @@
                 {% endif %}   
 
 
-                {% if datosPrinter["maq1"] %}
-                  <!--pre> <i class="fa fa-pause" style="font-size:24px"></i> Pausa: {{datosPrinter["maq1"]["Pausa"]}}</pre-->
-                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Imprimiendo: {{datosPrinter["maq1"]["Imprimiendo"]}}</pre-->
-                  <!--pre> <i class="fa fa-check" style="font-size:24px"></i> Lista: : {{datosPrinter["maq1"]["Lista"]}}</pre-->
-                  <!--pre> <i class="fa fa-plug" style="font-size:24px"></i> Estado: {{datosPrinter["maq1"]["Estado"]}}</pre-->
-                  <!--pre>Temperatura actual de la cama: {{datosPrinter["maq1"]["TempCamaActual"]}}</pre>
-                  <pre>Temperatura fijada de la cama: {{datosPrinter["maq1"]["TempCamaFijada"]}}</pre-->
+                {% if datosPrinter[key] %}
+                  <!--pre> <i class="fa fa-pause" style="font-size:24px"></i> Pausa: {{datosPrinter[key]["Pausa"]}}</pre-->
+                  <!--pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Imprimiendo: {{datosPrinter[key]["Imprimiendo"]}}</pre-->
+                  <!--pre> <i class="fa fa-check" style="font-size:24px"></i> Lista: : {{datosPrinter[key]["Lista"]}}</pre-->
+                  <!--pre> <i class="fa fa-plug" style="font-size:24px"></i> Estado: {{datosPrinter[key]["Estado"]}}</pre-->
+                  <!--pre>Temperatura actual de la cama: {{datosPrinter[key]["TempCamaActual"]}}</pre>
+                  <pre>Temperatura fijada de la cama: {{datosPrinter[key]["TempCamaFijada"]}}</pre-->
                   
-                  <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter["maq1"]["TempHottendActual"]}} / {{datosPrinter["maq1"]["TempHottendFijada"]}} º C</pre>
-                  <!--pre> <i class="fa fa-thermometer-empty" style="font-size:24px"></i> Temperatura fijada del extrusor: {{datosPrinter["maq1"]["TempHottendFijada"]}}</pre-->  
-                {% else %}
+<!--Comprobacion cuando es una Witbox (sin cama caliente) -->
+                  {% if key == "maq1" %}
+                      <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                  {% elif key == "maq2"%}
+                      <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>  
+                  {% elif key == "maq3"%}
+                      <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>  
+                  {% else %}
+                      <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                      <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+                  {% endif %}
+                  <!--pre> <i class="fa fa-thermometer-empty" style="font-size:24px"></i> Temperatura fijada del extrusor: {{datosPrinter[key]["TempHottendFijada"]}}</pre-->  
+                  {% else %}
                   <pre> Impresora no conectada </pre>
 
                 {% endif %}    
             
-              {{fallos["maq1"]}}
+              {{fallos[key]}}
            
-            <div class="card-body">
-             
-              <!--p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p-->
-            </div>
+           
           </div>
           {% else %}
           <div style="background-color:#FF7043; class="card h-100">
@@ -287,7 +307,7 @@
                     
                   <div class="card-body">
                      <h4 class="card-title">
-                <a href={{nombresMaquinas["maq1"]["direccion"]}} style = "color:black">{{nombresMaquinas["maq1"]["Nombre"]}}</a>
+                <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
                     <pre>No hay OctoPrint</pre>
         
@@ -301,9 +321,7 @@
 
                     </div>
                     <!--Grid column-->
-
-
-<!-- Octava Impresora (futuro) -->
+                    {% endfor %}
 
  <!-- Acaban las impresoras -->       
 
