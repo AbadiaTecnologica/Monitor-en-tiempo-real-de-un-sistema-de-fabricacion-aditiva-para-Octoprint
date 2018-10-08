@@ -87,13 +87,13 @@ maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
             ["5007", "maq7", "3DE1E4F69D9E47A6B57D9ECD7086E949"]]
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
-nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1")}
-nombres["maq2"]={"Nombre":"Witbox Amarilla", "direccion":str("./3dp2")}
-nombres["maq3"]={"Nombre":"Witbox Blanca", "direccion":str("./3dp3")}
-nombres["maq4"]={"Nombre":"Replicator 2", "direccion":str("./3dp4")}
-nombres["maq5"]={"Nombre":"i3 steel", "direccion":str("./3dp5")}
-nombres["maq6"]={"Nombre":"Sirius", "direccion":str("./3dp6")}
-nombres["maq7"]={"Nombre":"BlackBelt", "direccion":str("./3dp7")}
+nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1"), "numMaquina": str("1")}
+nombres["maq2"]={"Nombre":"Witbox Amarilla", "direccion":str("./3dp2"), "numMaquina": str("2")}
+nombres["maq3"]={"Nombre":"Witbox Blanca", "direccion":str("./3dp3"), "numMaquina": str("3")}
+nombres["maq4"]={"Nombre":"Replicator 2", "direccion":str("./3dp4"), "numMaquina": str("4")}
+nombres["maq5"]={"Nombre":"i3 steel", "direccion":str("./3dp5"), "numMaquina": str("5")}
+nombres["maq6"]={"Nombre":"Sirius", "direccion":str("./3dp6"), "numMaquina" : str("6")}
+nombres["maq7"]={"Nombre":"BlackBelt", "direccion":str("./3dp7"), "numMaquina": str("7")}
 
 #Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).			
 # def pideDatosFiles(datos, idmaquina):

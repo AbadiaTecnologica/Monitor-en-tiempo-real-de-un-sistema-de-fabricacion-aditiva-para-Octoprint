@@ -14,6 +14,9 @@
     <link href="/static/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="/static/css/style.min.css" rel="stylesheet">
+    <!-- Estilos Creados -->
+    <link href="/static/css/estilos.css" rel="stylesheet">
+
 
      <!-- JQuery -->
     <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
@@ -24,6 +27,7 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="/static/js/mdb.min.js"></script>
 
+
    <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
 
@@ -31,6 +35,7 @@
 <!-- <script>
      $.get("/update", function(data) { 
       var refreshId = setInterval(function(){
+
       $("#pruebaDiv").load(data)
         }, 10000 );
   });
@@ -211,11 +216,11 @@
               {% endfor %}   
 
              {% if datosJob[key]["Estado"] == "Operational"%}
-                 <a href=/desconectar?maq=1  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
+                 <a href=/desconectar?maq={{nombresMaquinas[key]["numMaquina"]}}  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
              {% elif datosJob[key]["Estado"] == "Printing" %}
-                 <a href=/desconectar?maq=1  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
+                 <a href=/desconectar?maq={{nombresMaquinas[key]["numMaquina"]}} style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
              {% else %}
-                 <a href=/conectar?maq=1  style= <button class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
+                 <a href=/conectar?maq={{nombresMaquinas[key]["numMaquina"]}}  style= <button class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
              {% endif %} 
           
             
@@ -353,75 +358,6 @@
 
     </footer>
     <!--/.Footer-->
-
-    <!-- SCRIPTS -->
-   
-    <!-- Initializations -->
-    <style type="text/css">
-
-    #body{
-  		background-image: linear-gradient(to bottom, #ADA996 , #EAEAEA);
-	}
-
-
-  #footer{
-      position: fixed;
-      bottom: 0;
-      color:#fff;
-      background-color: rgb(75, 75, 75);
-      text-align: center;
-      font-size: 90%;
-      width: 100%;
-      height: 6%;
-
-  }
-	#copyleft {
-  		display:inline-block;
-  		transform: rotate(180deg);
-	}
-
-    #gradOperativa {
-  		background-image: linear-gradient(to right, #52c234 , #52c234);
-	}
-
-    #gradError {
-  		background-image: linear-gradient(to right, #D31027 , #D31027 );
-	}
-
-    #gradImprime {
-  		background-image: linear-gradient(to right,#0082c8, #0082c8);
-	}
-
-  #preArchivos {
-	   font-family: "courier new", courier, monospace;
-	   font-size: 11px;
-  }
-	#progressBar {
-	  display: -ms-flexbox;
-	  display: flex;
-	  height: 0.75rem;
-	  overflow: hidden;
-	  font-size: 0.85rem;
-	  background-color: #e9ecef;
-	  border-radius: 1rem;
-	  margin-left:10px;
-	  margin-right:10px;
-	}
-
-	#progress-bar {
-	  display: -ms-flexbox;
-	  display: flex;
-	  -ms-flex-direction: column;
-	  flex-direction: column;
-	  -ms-flex-pack: center;
-	  justify-content: center;
-	  color: #fff;
-	  text-align: center;
-	  white-space: nowrap;
-	  background-color: #006064;
-	  transition: width 0.6s ease;
-	}
-</style>
 
 </body>
 </html>
