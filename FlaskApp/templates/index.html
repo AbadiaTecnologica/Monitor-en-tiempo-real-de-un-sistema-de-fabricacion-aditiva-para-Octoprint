@@ -26,9 +26,33 @@
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="/static/js/mdb.min.js"></script>
+   
+    <script type="text/javascript">
+      function confirmacionDesconectar(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas desconectar la maquina?")
+        var desconectar= "/desconectar?maq=";
+        var direccion = desconectar.concat(maquina);
+        if (ask){
+          window.alert("Se va a desconectar la maquina");
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
 
-
-   <script src="http://code.jquery.com/jquery-latest.min.js"
+    <script type="text/javascript">
+      function confirmacionConectar(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas conectar la maquina?")
+        var conectar= "/conectar?maq=";
+        var direccion = conectar.concat(maquina);
+        if (ask){
+          window.alert("Se va a conectar la maquina");
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
 
 
@@ -54,8 +78,8 @@
 
     <script type="text/javascript">
       setTimeout(function(){
-      window.location.reload(1);
-    }, 5000);
+      window.location.replace("http://127.0.0.1:5000/");
+    }, 3000);
 
     </script>
 
@@ -216,11 +240,12 @@
               {% endfor %}   
 
              {% if datosJob[key]["Estado"] == "Operational"%}
-                 <a href=/desconectar?maq={{nombresMaquinas[key]["numMaquina"]}}  style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
+                 <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></a>
+
              {% elif datosJob[key]["Estado"] == "Printing" %}
-                 <a href=/desconectar?maq={{nombresMaquinas[key]["numMaquina"]}} style= <button class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
+                 <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></button></a>
              {% else %}
-                 <a href=/conectar?maq={{nombresMaquinas[key]["numMaquina"]}}  style= <button class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
+                 <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
              {% endif %} 
           
             

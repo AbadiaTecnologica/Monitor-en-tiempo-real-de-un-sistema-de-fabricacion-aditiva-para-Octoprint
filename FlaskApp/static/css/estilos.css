@@ -19,7 +19,7 @@
       height: 6%;
 
   	}
-	.copyleft {
+	#copyleft {
   		display:inline-block;
   		transform: rotate(180deg);
 	}
