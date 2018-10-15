@@ -79,7 +79,7 @@
     <script type="text/javascript">
       setTimeout(function(){
       window.location.replace("http://127.0.0.1:5000/");
-    }, 3000);
+    }, 1000000);
 
     </script>
 
@@ -132,27 +132,11 @@
                      <!-- Links -->
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
+                           {% for key,element in nombresOrdenados.items() %}
                             <li class="nav-item">
-                                <a class="nav-link  waves-effect" href="#">Witbox Negra</a>
+                                <a class="nav-link  waves-effect" href={{nombresMaquinas[key]["direccion"]}}>{{nombresMaquinas[key]["Nombre"]}}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link  waves-effect" href="#">Witbox Amarilla</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link waves-effect" href="#">Witbox Blanca</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link waves-effect" href="#">Replicator 2</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link waves-effect" href="#">i3 Steel</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link waves-effect" href="#">Sirius</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link waves-effect" href="#">BlackBelt</a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

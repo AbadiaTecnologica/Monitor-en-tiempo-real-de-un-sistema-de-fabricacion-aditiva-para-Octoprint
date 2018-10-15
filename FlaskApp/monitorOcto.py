@@ -84,6 +84,8 @@ maquinas = [["5001", "maq1", "035F6F56D7584A67984AE8779F2A0EA9"]]
 nombres["maq1"]={"Nombre":"Moebyus One", "direccion":str("./3dp1"), "numMaquina": str("1")}
 
 
+
+
 #Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).			
 # def pideDatosFiles(datos, idmaquina):
 
