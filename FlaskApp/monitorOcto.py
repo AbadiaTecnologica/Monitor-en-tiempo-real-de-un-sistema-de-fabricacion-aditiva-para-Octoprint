@@ -26,7 +26,7 @@ app = Flask(__name__)
 #Direccion sobre la que corre el Octoprint dentro del servidor.
 #host = "http://127.0.0.1"
 #Direccion sobre la que corre el Octoprint.
-host = "http://192.168.1.185"
+host = "http://192.168.1.200"
 
 #Archivo files API Octoprint.
 files = "files"
@@ -68,6 +68,7 @@ valoresPrinter["TempCamaActual"] = "-"
 valoresPrinter["TempCamaFijada"] = "-"
 valoresPrinter["TempHottendActual"] = "-"
 valoresPrinter["TempHottendFijada"] = "-"
+valoresPrinter["CamaDisponible"] = "-"
 
 valoresJob["TiempoEstimadoImpresion"] = "-"
 valoresJob["Nombre"] = "-"
@@ -78,11 +79,29 @@ valoresJob["TiempoRestante"] = "-"
 valoresJob["Estado"] = "-"
 
  #Array de las maquinas con el puerto el id de la maquina y el token de la API
-maquinas = [["5001", "maq1", "035F6F56D7584A67984AE8779F2A0EA9"]]
+maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
+            ["5002", "maq2", "56D24EE0B4A64CD2AB9545461152CA96"],
+            ["5003", "maq3", "4B22BE0A43DA4DF7999B228F106260A2"],
+            ["5004", "maq4", "8C5E7DB1649F4069AAE6C1C5013591F5"],
+            ["5005", "maq5", "AA6675CD2AF04C29A42815F2EDA5B8B5"],
+            ["5006", "maq6", "912088BC02A44629AA15A159E61579E4"],
+            ["5007", "maq7", "3DE1E4F69D9E47A6B57D9ECD7086E949"]]
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
-nombres["maq1"]={"Nombre":"Moebyus One", "direccion":str("./3dp1"), "numMaquina": str("1")}
+nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1"), "numMaquina": str("1")}
+nombres["maq2"]={"Nombre":"Witbox Amarilla", "direccion":str("./3dp2"), "numMaquina": str("2")}
+nombres["maq3"]={"Nombre":"Witbox Blanca", "direccion":str("./3dp3"), "numMaquina": str("3")}
+nombres["maq4"]={"Nombre":"Replicator 2", "direccion":str("./3dp4"), "numMaquina": str("4")}
+nombres["maq5"]={"Nombre":"i3 steel", "direccion":str("./3dp5"), "numMaquina": str("5")}
+nombres["maq6"]={"Nombre":"Sirius", "direccion":str("./3dp6"), "numMaquina" : str("6")}
+nombres["maq7"]={"Nombre":"BlackBelt", "direccion":str("./3dp7"), "numMaquina": str("7")}
 
+
+
+for element in range(0, len(maquinas)):
+    maquina = maquinas[element][1]
+    datosFinalesJob[maquina] = valoresJob
+    datosFinalesPrinter[maquina] = valoresPrinter
 
 
 
@@ -148,6 +167,7 @@ def pideDatosPrinter(datos):
 
             # Temperatura fijada de extrusor
             valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+            valoresPrinter["CamaDisponible"] = str("No")
 
     # Devolvemos el diccionario con los datos de cada maquina.
     return valoresPrinter
@@ -263,9 +283,9 @@ def requestPrinter():
 			data = resp.json()
 		except Exception as e:
 			datosJson =list()
-			strfallo = "Error en i= %d: %s"
+			strfallo = "Error en Printer cuando i= %d: %s"
 			print (strfallo %(i, str(e)))
-			print("resp del if: " + str(resp))
+			print("resp del if Printer: " + str(resp))
 
 			#Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
 			#a pesar de que una maquina pueda fallar.
@@ -274,9 +294,9 @@ def requestPrinter():
 			else:
 				if resp.status_code == 204:
 					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				#elif resp.status_code == 409:
+				elif resp.status_code == 409:
 					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					#errores[maquina[1]]="La impresora no esta operativa"
+					errores[maquina[1]]="La impresora no esta operativa"
 				elif resp.status_code == 404:
 					errores[maquina[1]]="No hay comunicacion por parte del servidor"
 				elif resp.status_code == 200:
@@ -285,6 +305,8 @@ def requestPrinter():
 					#datosJson.append(str(data.content()))
 				elif resp.status_code == 500:
 					errores[maquina[1]]="Internal server error"
+				else:
+					errores[maquina[1]]= "Hay algun error desconocido"
 	
 		else: #Else del try
 			datosFinalesPrinter[maquina[1]] = pideDatosPrinter(data)
@@ -306,23 +328,23 @@ def requestJob():
 			else:
 
 				datosJson =list()
-				strfallo = "Error en i= %d: %s"
+				strfallo = "Error en Job cuando i= %d: %s"
 				print (strfallo %(i, str(e)))
-				print("resp del if: " + str(resp))
+				print("resp del if Job: " + str(resp))
 
 				if resp.status_code == 204:
 					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				#elif resp.status_code == 409:
+				elif resp.status_code == 409:
 					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					#errores[maquina[1]]="La impresora no esta operativa"
+					errores[maquina[1]]="La impresora no esta operativa"
 				elif resp.status_code == 404:
 					errores[maquina[1]]="No hay comunicacion por parte del servidor"
 				elif resp.status_code == 200:
 					print("La respuesta es correcta")
 					#Seguramente se tendra que comentar, se usa a modo debug
 					#datosJson.append(str(data.content()))
-				#else:
-					#errores[maquina[1]]= "Hay algun error desconocido"
+				else:
+					errores[maquina[1]]= "Hay algun error desconocido"
 		else: #Else del try
 			datosFinalesJob[maquina[1]] = pideDatosJob(data)	
 
@@ -447,13 +469,21 @@ def main():
 	requestJob()
 
 	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
+	datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
 	#parsed_json= jsonify(json_string)
 
 	#parsed_json = json.loads(json_string)
 	#data = []
 	#funcionDatosJson(data)
+	#print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
+	#print("NUM JOB"+ str(len(datosFinalesJob)))
+	#print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
 
-	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJob,
+	#print("DATOS JOB"+str(datosFinalesJob["maq1"]))
+	#print("DATOS PRINTER"+str(datosFinalesPrinter))
+	#print("DATOS JOB"+str(datosFinalesJob))
+
+	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
 	 fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
 
 if __name__=="__main__":
