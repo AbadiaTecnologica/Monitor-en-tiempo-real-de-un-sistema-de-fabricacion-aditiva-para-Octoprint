@@ -16,6 +16,7 @@ import json as simplejson
 import requests
 import threading
 import collections
+import csv
 
 
 
@@ -40,7 +41,7 @@ job = "job"
 #Direccion de la API para conectar o desconectar las impresoras mediante una peticion POST
 conn="connection"
 
-
+maquinas = list()
 #Lista en las que se guardan los datos utiles que vamos a mostrar.
 valoresFiles = list()
 valoresPrinter = dict()
@@ -78,14 +79,14 @@ valoresJob["TiempoImpresion"] = "-"
 valoresJob["TiempoRestante"] = "-"
 valoresJob["Estado"] = "-"
 
- #Array de las maquinas con el puerto el id de la maquina y el token de la API
-maquinas = [["5001", "maq1", "50EA1BD3AACC4133B32C907E626C4FA7"],
-            ["5002", "maq2", "56D24EE0B4A64CD2AB9545461152CA96"],
-            ["5003", "maq3", "4B22BE0A43DA4DF7999B228F106260A2"],
-            ["5004", "maq4", "8C5E7DB1649F4069AAE6C1C5013591F5"],
-            ["5005", "maq5", "AA6675CD2AF04C29A42815F2EDA5B8B5"],
-            ["5006", "maq6", "912088BC02A44629AA15A159E61579E4"],
-            ["5007", "maq7", "3DE1E4F69D9E47A6B57D9ECD7086E949"]]
+ #Cargamos los datos de las impreoras desde el archivo csv
+reader = open("datosImpresoras.csv", "r")
+
+for row in reader:
+    maquinas.append(row.strip().split(";"))
+
+maquinas.pop(0)
+
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1"), "numMaquina": str("1")}
