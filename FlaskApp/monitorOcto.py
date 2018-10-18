@@ -79,14 +79,12 @@ valoresJob["TiempoImpresion"] = "-"
 valoresJob["TiempoRestante"] = "-"
 valoresJob["Estado"] = "-"
 
- #Cargamos los datos de las impreoras desde el archivo csv
+ # Cargamos los datos de las impreoras desde el archivo csv
 reader = open("datosImpresoras.csv", "r")
-
 for row in reader:
     maquinas.append(row.strip().split(";"))
-
+# Borramos la primera fila que contiene los nombres
 maquinas.pop(0)
-
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 nombres["maq1"]={"Nombre":"Witbox Negra", "direccion":str("./3dp1"), "numMaquina": str("1")}
