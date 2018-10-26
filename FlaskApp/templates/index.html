@@ -246,7 +246,9 @@
 	 					<pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
 	                {% else %}
 	                    <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
-	                    <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+	                    {% if datosPrinter[key]["TempCamaActual"] > "0" %}
+	                    	<pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+	                    {% endif %}
 	                {% endif %}
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
                   <pre> Impresora no conectada </pre>
