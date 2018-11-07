@@ -459,6 +459,89 @@ def desconectar():
 		#Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
 	return main()
 
+
+
+
+#Ruta para llamar a la funcion que imprime en cada maquina
+@app.route("/imprimir")
+
+def imprimir():
+	# Ejemplo de direccion http://192.168.1.185:8050/imprimir?maq=1
+
+	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+	id_maq=request.args.get("maq", default =-1, type = int)
+	#print("id maquina: " +str (id_maq))
+	if id_maq != -1:
+		maquina = maquinas[id_maq-1]
+		print("Maquina: " + str(maquina))
+		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+		data = '{"command": "start"}'
+		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+		#print(str(urlConectar))
+		peticion=requests.post(urlConectar,data=data,headers=headers)
+
+	return main()
+
+#Ruta para llamar a la funcion que imprime en cada maquina
+@app.route("/reanudar")
+
+
+def reanudar():
+	# Ejemplo de direccion http://192.168.1.185:8050/reanudar?maq=1
+
+	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+	id_maq=request.args.get("maq", default =-1, type = int)
+	#print("id maquina: " +str (id_maq))
+	if id_maq != -1:
+		maquina = maquinas[id_maq-1]
+		print("Maquina: " + maquina)
+		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+		data = '{"command": "pause", "action": "resume"}'
+		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+		peticion=requests.post(urlConectar,data=data,headers=headers)
+
+	return main()
+
+#Ruta para llamar a la funcion que imprime en cada maquina
+@app.route("/pausar")
+
+
+def pausar():
+	# Ejemplo de direccion http://192.168.1.185:8050/pausar?maq=1
+
+	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+	id_maq=request.args.get("maq", default =-1, type = int)
+	#print("id maquina: " +str (id_maq))
+	if id_maq != -1:
+		maquina = maquinas[id_maq-1]
+		print("Maquina: " + maquina)
+		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+		data = '{"command": "pause", "action": "pause"}'
+		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+		peticion=requests.post(urlConectar,data=data,headers=headers)
+
+	return main()
+
+#Ruta para llamar a la funcion que imprime en cada maquina
+@app.route("/cancelar")
+
+def cancelar():
+	# Ejemplo de direccion http://192.168.1.185:8050/cancelar?maq=1
+
+	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+	id_maq=request.args.get("maq", default =-1, type = int)
+	#print("id maquina: " +str (id_maq))
+	if id_maq != -1:
+		maquina = maquinas[id_maq-1]
+		print("Maquina: " + maquina)
+		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+		data = '{"command": "cancel"}'
+		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+		peticion=requests.post(urlConectar,data=data,headers=headers)
+
+	return main()
+
+
 #Ruta principal de nuestra aplicacion
 @app.route("/")
 

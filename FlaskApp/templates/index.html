@@ -50,6 +50,57 @@
         
       } 
     </script>
+
+      <script type="text/javascript">
+      function confirmacionStart(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas comenzar la impresion?")
+        var imprimir= "/imprimir?maq=";
+        var direccion = imprimir.concat(maquina);
+        if (ask){
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
+
+
+      <script type="text/javascript">
+      function confirmacionPausar(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas pausar la impresion?")
+        var pausar= "/pausar?maq=";
+        var direccion = pausar.concat(maquina);
+        if (ask){
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
+
+      <script type="text/javascript">
+      function confirmacionCancelar(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas cancelar la impresion?")
+        var cancelar = "/cancelar?maq=";
+        var direccion = cancelar.concat(maquina);
+        if (ask){
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
+
+     <script type="text/javascript">
+      function confirmacionReanudar(maquina) {
+        var ask = window.confirm("¿Estas seguro que deseas reanudar la impresion?")
+        var reanudar = "/reanudar?maq=";
+        var direccion = reanudar.concat(maquina);
+        if (ask){
+          window.location.href = direccion;
+        }
+        
+      } 
+    </script>
+
+
     <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
 
@@ -76,8 +127,8 @@
 
     <script type="text/javascript">
       setTimeout(function(){
-      window.location.replace("http://127.0.0.1:5000/");
-    }, 3000);
+      window.location.replace("http://192.168.1.185:8050/");
+    },10000000);
 
     </script>
 
@@ -184,10 +235,7 @@
             
                       
                         <!--<div>{{key}}: {{datosJob[key]["Estado"]}}</div>-->
-                      
-
-                      
-
+                    
 
 <!--Primera Impresora -->
                       <!--Card-->
@@ -201,13 +249,14 @@
 
             {% if datosJob[key] %} <!--Comprobamos que tenemos el servicio de Octoprint lanzado -->
 
-            {% if datosJob[key]["Estado"] == "Operational"%}
+            {% if datosJob[key]["Estado"] == "Operational"%} <!-- Estado Operativa -->
               <div id="gradOperativa" class="card">
                 <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
+
                 <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></a> </pre>
                 <!--Tiempo de ultima impresion -->	
                 {% if datosJob[key]["TiempoUltimaImpresion"] != 'None' %}
@@ -246,7 +295,7 @@
 	 					<pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
 	                {% else %}
 	                    <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
-	                    {% if datosPrinter[key]["TempCamaActual"] > "0" %}
+	                    {% if datosPrinter[key]["TempCamaActual"] > "0.0" %}
 	                    	<pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
 	                    {% endif %}
 	                {% endif %}
@@ -256,9 +305,18 @@
                 {% endif %}    
             
              <!-- {{fallos[key]}}-->
+
+             <!-- Empezar a imprimir si hay gcode cargado -->
+             <div class="btn-group btn-group" role="group" style="text-align: center;">
+              <p>
+                  <button type="button" class="btn btn-primary" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
+                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px"></i></button>
+                  <button type="button"class="btn disabled" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px"></i></button></p>
+             </div>
            
+
               	
-            {% elif datosJob[key]["Estado"] == "Printing" %}
+            {% elif datosJob[key]["Estado"] == "Printing" %} <!--Estado imprimiendo -->
               <div id="gradImprime" class="card">
                    <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
@@ -305,15 +363,17 @@
                   
 					<!--Comprobacion cuando es una Witbox (sin cama caliente) -->
 					{% if datosPrinter[key]["CamaDisponible"] == "No"%}
-	 					<pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
-	                {% else %}
-	                    <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
-	                    <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
-	                {% endif %}
+            <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                  {% else %}
+                      <pre> <i class="fa fa-thermometer" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                      {% if datosPrinter[key]["TempCamaActual"] > "0.0" %}
+                        <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+                      {% endif %}
+                  {% endif %}
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
                   <pre> Impresora no conectada </pre>
 
-                {% endif %}    
+                {% endif %}   
             
              <!-- {{fallos[key]}}-->
              {% elif datosJob[key]["Estado"] == "-" %} <!-- Cuando tenemos el dato por defecto significa que el servicio de OctoPrint no esta lanzado.-->
