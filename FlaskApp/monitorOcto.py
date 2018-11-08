@@ -494,7 +494,7 @@ def reanudar():
 	#print("id maquina: " +str (id_maq))
 	if id_maq != -1:
 		maquina = maquinas[id_maq-1]
-		print("Maquina: " + maquina)
+		print("Maquina: " + str(maquina))
 		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
 		data = '{"command": "pause", "action": "resume"}'
 		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
@@ -514,7 +514,7 @@ def pausar():
 	#print("id maquina: " +str (id_maq))
 	if id_maq != -1:
 		maquina = maquinas[id_maq-1]
-		print("Maquina: " + maquina)
+		print("Maquina: " + str(maquina))
 		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
 		data = '{"command": "pause", "action": "pause"}'
 		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
@@ -533,7 +533,7 @@ def cancelar():
 	#print("id maquina: " +str (id_maq))
 	if id_maq != -1:
 		maquina = maquinas[id_maq-1]
-		print("Maquina: " + maquina)
+		print("Maquina: " + str(maquina))
 		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
 		data = '{"command": "cancel"}'
 		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)

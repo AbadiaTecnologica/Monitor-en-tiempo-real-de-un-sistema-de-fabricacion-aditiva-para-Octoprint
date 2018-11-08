@@ -36,6 +36,10 @@
   		background-image: linear-gradient(to right,#0082c8, #0082c8);
 	}
 
+	#gradPausa {
+  		background-image: linear-gradient(to right,#ff8000, #ff8000);
+	}
+
  	#preArchivos {
 	   font-family: "courier new", courier, monospace;
 	   font-size: 11px;
