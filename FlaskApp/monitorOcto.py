@@ -22,10 +22,9 @@ import csv
 
 app = Flask(__name__)
 
-
 		
-#Direccion sobre la que corre el Octoprint dentro del servidor.
-#host = "http://127.0.0.1"
+# Direccion sobre la que corre el Octoprint dentro del servidor.
+# host = "http://127.0.0.1"
 #Direccion sobre la que corre el Octoprint.
 host = "http://192.168.1.200"
 
@@ -80,7 +79,7 @@ valoresJob["TiempoRestante"] = "-"
 valoresJob["Estado"] = "-"
 
  # Cargamos los datos de las impreoras desde el archivo csv
-reader = open("datosImpresoras.csv", "r")
+reader = open("./datosImpresoras.csv", "r")
 for row in reader:
     maquinas.append(row.strip().split(";"))
 # Borramos la primera fila que contiene los nombres
@@ -88,7 +87,7 @@ maquinas.pop(0)
 
 #Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 
-reader2 = open("nombres.csv", 'r')
+reader2 = open("./nombres.csv", 'r')
 n = 0
 for row in reader2:
     elemento=row.strip().split(";")
