@@ -51,6 +51,9 @@ datosFinalesFiles = dict()
 datosFinalesPrinter = dict()
 datosFinalesJob = dict()
 
+datosJsonPrinter = dict()
+datosJsonJob = dict()
+
 #Un diccionario para guardar los errores que se hayan podido producir en las peticiones a la API.
 errores=dict()
 
@@ -271,16 +274,17 @@ def requestPrinter():
 		try:
 			resp = requests.get(url=urlstring)
 			
-			#Control de errores (se pueden comentar)
-			#print ("resp: "+str(resp))
-			#print("status code: " + str(resp.status_code))
-			#print("tipo status code: " + str(type(resp.status_code)))
-			#print("tipo de resp: " + str(type(resp)))
-			#print ("datos resp = " + str(resp.content))
-			#print ("datos resp tipo = " + str(type(resp.content)))
+			# Control de errores (se pueden comentar)
+			# print ("resp: "+str(resp))
+			# print("status code: " + str(resp.status_code))
+			# print("tipo status code: " + str(type(resp.status_code)))
+			# print("tipo de resp: " + str(type(resp)))
+			# print ("datos resp = " + str(resp.content))
+			# print ("datos resp tipo = " + str(type(resp.content)))
 
 			#Parseamos la respuesta para que sea JSON.
 			data = resp.json()
+
 		except Exception as e:
 			datosJson =list()
 			strfallo = "Error en Printer cuando i= %d: %s"
@@ -346,7 +350,141 @@ def requestJob():
 				else:
 					errores[maquina[1]]= "Hay algun error desconocido"
 		else: #Else del try
-			datosFinalesJob[maquina[1]] = pideDatosJob(data)	
+			datosFinalesJob[maquina[1]] = pideDatosJob(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def getJsonPrinter():
+	for i in range(0, len(maquinas)):
+		maquina = maquinas[i]
+		urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+		try:
+			resp = requests.get(url=urlstring)
+			
+			# Control de errores (se pueden comentar)
+			# print ("resp: "+str(resp))
+			# print("status code: " + str(resp.status_code))
+			# print("tipo status code: " + str(type(resp.status_code)))
+			# print("tipo de resp: " + str(type(resp)))
+			# print ("datos resp = " + str(resp.content))
+			# print ("datos resp tipo = " + str(type(resp.content)))
+
+			#Parseamos la respuesta para que sea JSON.
+			data = resp.json()
+
+		
+			
+		except Exception as e:
+			datosJson =list()
+			strfallo = "Error en Printer cuando i= %d: %s"
+			print (strfallo %(i, str(e)))
+			print("resp del if Printer: " + str(resp))
+
+			#Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
+			#a pesar de que una maquina pueda fallar.
+			if resp == None:
+				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+			else:
+				if resp.status_code == 204:
+					errores[maquina[1]]="La respuesta de la API no tiene contenido"
+				elif resp.status_code == 409:
+					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
+					errores[maquina[1]]="La impresora no esta operativa"
+				elif resp.status_code == 404:
+					errores[maquina[1]]="No hay comunicacion por parte del servidor"
+				elif resp.status_code == 200:
+					print("La respuesta es correcta")
+					#Seguramente se tendra que comentar, se usa a modo debug
+					#datosJson.append(str(data.content()))
+				elif resp.status_code == 500:
+					errores[maquina[1]]="Internal server error"
+				else:
+					errores[maquina[1]]= "Hay algun error desconocido"
+	
+		else: #Else del try
+			datosJsonPrinter[maquina[1]] = data
+
+
+#Funcion que hace las peticiones a la API de cada maquina para obtener el JSON job
+def getJsonJob():
+	for i in range(0, len(maquinas)):
+		maquina = maquinas[i]
+		urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+		try:
+			resp = requests.get(url=urlstring)
+			#Parseamos la respuesta para que sea JSON.
+			data = resp.json()
+			
+		except Exception as e:
+
+			if resp == None:
+				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+			else:
+
+				datosJson =list()
+				strfallo = "Error en Job cuando i= %d: %s"
+				print (strfallo %(i, str(e)))
+				print("resp del if Job: " + str(resp))
+
+				if resp.status_code == 204:
+					errores[maquina[1]]="La respuesta de la API no tiene contenido"
+				elif resp.status_code == 409:
+					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
+					errores[maquina[1]]="La impresora no esta operativa"
+				elif resp.status_code == 404:
+					errores[maquina[1]]="No hay comunicacion por parte del servidor"
+				elif resp.status_code == 200:
+					print("La respuesta es correcta")
+					#Seguramente se tendra que comentar, se usa a modo debug
+					#datosJson.append(str(data.content()))
+				else:
+					errores[maquina[1]]= "Hay algun error desconocido"
+		else: #Else del try
+			datosJsonJob[maquina[1]] = data
 
 #Ruta para llamar a la funcion que conecta las maquinas
 @app.route("/conectar")
@@ -540,7 +678,44 @@ def cancelar():
 
 	return main()
 
+@app.route("/update")
 
+def update():
+
+	#LLamada a las funciones que utilizamos
+	#requestFiles()
+
+	requestPrinter()
+	requestJob()
+	
+
+	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
+	datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
+
+
+	datosFiles = datosFinalesFiles
+	datosPrinter = datosFinalesPrinter
+	datosJob=datosFinalesJobOrdenados
+	fallos = errores
+	nombresMaquinas=nombres
+	nombresOrdenados=nombresOrdenados
+
+
+
+	#parsed_json= jsonify(json_string)
+
+	#parsed_json = json.loads(json_string)
+	#data = []
+	#funcionDatosJson(data)
+	#print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
+	#print("NUM JOB"+ str(len(datosFinalesJob)))
+	#print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
+
+	#print("DATOS JOB"+str(datosFinalesJob["maq1"]))
+	#print("DATOS PRINTER"+str(datosFinalesPrinter))
+	#print("DATOS JOB"+str(datosFinalesJob))
+	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
+	fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
 #Ruta principal de nuestra aplicacion
 @app.route("/")
 
@@ -548,8 +723,23 @@ def main():
 
 	#LLamada a las funciones que utilizamos
 	#requestFiles()
+
+	Printer = dict()
+	Job = dict()
+	# sch = scheduler()
+	# sch2 = scheduler()
+	# sch.add_job(requestPrinter, 'interval', seconds=3)
+	# sch2.add_job(requestJob, 'interval', seconds=3)
+	# sch.start()
+	# sch2.start()
 	requestPrinter()
 	requestJob()
+	getJsonPrinter()
+	getJsonJob()
+
+	#print("Diccionario Printer: " + str(datosJsonPrinter))
+	#print("Diccionario Job: " + str(datosJsonJob))
+
 
 	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
 	datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
@@ -565,9 +755,8 @@ def main():
 	#print("DATOS JOB"+str(datosFinalesJob["maq1"]))
 	#print("DATOS PRINTER"+str(datosFinalesPrinter))
 	#print("DATOS JOB"+str(datosFinalesJob))
-
 	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-	 fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
+	fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter) 
 
 if __name__=="__main__":
 	app.run(host='0.0.0.0')

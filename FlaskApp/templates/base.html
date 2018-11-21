@@ -102,31 +102,26 @@
     </script>
 
 
-    <script src="http://code.jquery.com/jquery-latest.min.js"
-        type="text/javascript"></script>
-
-<!--
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
       setTimeout(function(){
       window.location.replace("./");
-    },3000);
+    },5000);
 
-    </script>-->
-
-<script>
-  $(function(){
-    function refreshDiv(){
-        $.ajax({
-            url: './'
-        }).done(function(result) {
-            $('#refreshDIV').text(result);
-            window.setTimeout(refreshDiv, 3000);
-        });
-
+    </script> -->
+ 
+ <script type="text/javascript">
+    window.onload = setupRefresh;
+    function setupRefresh()
+    {
+        setInterval("refreshBlock();",3000);
     }
-    window.setTimeout(refreshDiv, 3000);
-});
-</script>
+    
+    function refreshBlock()
+    {
+       $('#refreshDiv').load("./");
+    }
+  </script>
+
 
 </head>
 {% endblock %}

@@ -7,10 +7,10 @@
     <!--Main Navigation-->
 	
  
-  <div id ="refreshDiv" class="container">
+  <div class="container">
               </div>
     <!--Main layout-->
-     <body id="body">
+     <body id="refreshDiv" class="body">
 
 
  						&nbsp;
@@ -48,13 +48,15 @@
             {% if datosJob[key] %} <!--Comprobamos que tenemos el servicio de Octoprint lanzado -->
 
             {% if datosJob[key]["Estado"] == "Operational"%} <!-- Estado Operativa -->
+            <div id="tiempoImpresion"></div>
+
               <div id="gradOperativa" class="card">
                 <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
-
+                
                 <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></a> </pre>
                 <!--Tiempo de ultima impresion -->	
                 {% if datosJob[key]["TiempoUltimaImpresion"] != 'None' %}
@@ -315,6 +317,6 @@
     <!-- Div del container -->
 </div>
     <!--Main layout-->
-</body>
 
+</body>
 {% endblock %}
