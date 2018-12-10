@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login Monitor</title>
+  
+  
+  
+      <link rel="stylesheet" href="/static/css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div class="login-wrap">
+  <h2>Login</h2>
+  
+  <div class="form">
+<form action="" method="post">
+        <input type="text" placeholder="Username" name="username" value="{{
+          request.form.username }}">
+         <input type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}">
+        <button class="btn btn-default" type="submit" value="Login"> Login </button>
+      </form>
+
+
+
+  </div>
+            {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+</div>
+  <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+
+  
+
+    <script  src="/static/js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

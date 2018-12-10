@@ -8,7 +8,7 @@ __version__ = "1.0.0"
 __email__ = "zotesgonzalez@gmail.com"
 '''
 
-from flask import Flask,render_template
+from flask import Flask,render_template, redirect, url_for, request
 from flask import jsonify
 from flask import request
 from datetime import datetime,timedelta
@@ -716,6 +716,20 @@ def update():
 	#print("DATOS JOB"+str(datosFinalesJob))
 	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
 	fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
+
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('main'))
+    return render_template('login.html', error=error)
+
 #Ruta principal de nuestra aplicacion
 @app.route("/")
 
