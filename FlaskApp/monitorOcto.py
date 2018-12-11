@@ -634,60 +634,36 @@ def cancelar():
 
     return main()
 
-@app.route("/update")
-
-def update():
-
-    #LLamada a las funciones que utilizamos
-    #requestFiles()
-
-    requestPrinter()
-    requestJob()
-
-
-    nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
-    datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
-
-
-    datosFiles = datosFinalesFiles
-    datosPrinter = datosFinalesPrinter
-    datosJob=datosFinalesJobOrdenados
-    fallos = errores
-    nombresMaquinas=nombres
-    nombresOrdenados=nombresOrdenados
-
-
-
-    #parsed_json= jsonify(json_string)
-
-    #parsed_json = json.loads(json_string)
-    #data = []
-    #funcionDatosJson(data)
-    #print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
-    #print("NUM JOB"+ str(len(datosFinalesJob)))
-    #print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
-
-    #print("DATOS JOB"+str(datosFinalesJob["maq1"]))
-    #print("DATOS PRINTER"+str(datosFinalesPrinter))
-    #print("DATOS JOB"+str(datosFinalesJob))
-    return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-                           fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
-
-
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def do_admin_login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            print("Las credenciales son incorrectas")
-            error = 'Invalid Credentials. Please try again.'
-        else:
+        if request.form['username'] == 'admin' and request.form['password'] == 'admin':
             print("El Login ha sido correcto")
+            print("Usuario: "+ str(request.form['username']))
+            print("Contraseña: " + str(request.form['password']))
             session['logged_in'] = True
             return main()
+        elif request.form['username'] == 'operador' and request.form['password'] == 'operador':
+            print("El Login ha sido correcto")
+            print("Usuario: "+ str(request.form['username']))
+            print("Contraseña: " + str(request.form['password']))
+            session['logged_in'] = True
+            return main()
+        else:
+            print("Las credenciales son incorrectas")
+            print("Usuario: " + str(request.form['username']))
+            print("Contraseña: " + str(request.form['password']))
+            error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', error=error)
+
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return main()
+
 
 #Ruta principal de nuestra aplicacion
 @app.route("/")
@@ -732,7 +708,7 @@ def main():
         #print("DATOS PRINTER"+str(datosFinalesPrinter))
         #print("DATOS JOB"+str(datosFinalesJob))
         return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-                               fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter)
+                               fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter,)
 
 if __name__=="__main__":
     app.secret_key = os.urandom(12)
