@@ -8,7 +8,7 @@ __version__ = "1.0.0"
 __email__ = "zotesgonzalez@gmail.com"
 '''
 
-from flask import Flask,render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session, abort
 from flask import jsonify
 from flask import request
 from datetime import datetime,timedelta
@@ -16,13 +16,14 @@ import json as simplejson
 import requests
 import threading
 import collections
-import csv
+import os
+
 
 
 
 app = Flask(__name__)
 
-		
+
 # Direccion sobre la que corre el Octoprint dentro del servidor.
 # host = "http://127.0.0.1"
 #Direccion sobre la que corre el Octoprint.
@@ -81,7 +82,7 @@ valoresJob["TiempoImpresion"] = "-"
 valoresJob["TiempoRestante"] = "-"
 valoresJob["Estado"] = "-"
 
- # Cargamos los datos de las impreoras desde el archivo csv
+# Cargamos los datos de las impreoras desde el archivo csv
 reader = open("./datosImpresoras.csv", "r")
 for row in reader:
     maquinas.append(row.strip().split(";"))
@@ -124,7 +125,7 @@ for element in range(0, len(maquinas)):
 # 		h, m = divmod(m, 60)
 # 		valoresFiles.append("Tiempo estimado impresion: " + "%d:%02d:%02d" % (h, m, s))
 # 		valoresFiles.append("____________________________________________")
-		
+
 
 # 	return valoresFiles
 
@@ -178,60 +179,60 @@ def pideDatosPrinter(datos):
 
 #Funcion que devuelve los datos de la impresion en curso (Timepo, Timeleft, Porcentaje completado...).
 def pideDatosJob(datos):
-	
-	#Diccionario temporal en el que guardaremos nuestros datos utiles.
-	valoresJob=dict()
-	
-	#Comprabamos que el tiempo estimado de impresion no es None, y entonces cambiamos el formato a uno legible.
-	if datos["job"]["estimatedPrintTime"] is None:
-		valoresJob["TiempoEstimadoImpresion"]=str(datos["job"]["estimatedPrintTime"])
-	else:
-		tiempo=datos["job"]["estimatedPrintTime"]
-		m, s = divmod(tiempo,60)
-		h, m = divmod(m, 60)
-		#Hacemos la conversion y lo guardamos en nuestro diccionario en horas, minutos y segundos.
-		valoresJob["TiempoEstimadoImpresion"]="%d:%02d:%02d" % (h, m, s)
 
-	#Nombre del archivo que esta imprimiendo
-	valoresJob["Nombre"]=str(datos["job"]["file"]["name"])
+    #Diccionario temporal en el que guardaremos nuestros datos utiles.
+    valoresJob=dict()
 
-	#Tiempo que duro la ultima impresion y hacemos la misma conversion de antes para que los datos sean legibles.
-	if datos["job"]["lastPrintTime"] is None:
-		valoresJob["TiempoUltimaImpresion"]=str(datos["job"]["lastPrintTime"])
-	else:
-		tiempo=datos["job"]["lastPrintTime"]
-		m, s = divmod(tiempo,60)
-		h, m = divmod(m, 60)
-		valoresJob["TiempoUltimaImpresion"]= "%d:%02d:%02d" % (h, m, s)
+    #Comprabamos que el tiempo estimado de impresion no es None, y entonces cambiamos el formato a uno legible.
+    if datos["job"]["estimatedPrintTime"] is None:
+        valoresJob["TiempoEstimadoImpresion"]=str(datos["job"]["estimatedPrintTime"])
+    else:
+        tiempo=datos["job"]["estimatedPrintTime"]
+        m, s = divmod(tiempo,60)
+        h, m = divmod(m, 60)
+        #Hacemos la conversion y lo guardamos en nuestro diccionario en horas, minutos y segundos.
+        valoresJob["TiempoEstimadoImpresion"]="%d:%02d:%02d" % (h, m, s)
 
-	#Porcetaje de impresion que se ha completado
-	valoresJob["Porcentaje"]=str(datos["progress"]["completion"])
+    #Nombre del archivo que esta imprimiendo
+    valoresJob["Nombre"]=str(datos["job"]["file"]["name"])
 
+    #Tiempo que duro la ultima impresion y hacemos la misma conversion de antes para que los datos sean legibles.
+    if datos["job"]["lastPrintTime"] is None:
+        valoresJob["TiempoUltimaImpresion"]=str(datos["job"]["lastPrintTime"])
+    else:
+        tiempo=datos["job"]["lastPrintTime"]
+        m, s = divmod(tiempo,60)
+        h, m = divmod(m, 60)
+        valoresJob["TiempoUltimaImpresion"]= "%d:%02d:%02d" % (h, m, s)
 
-	#Tiempo que lleva de impresion (pieza actual). Hacemos la misma coversion anterior.
-	if datos["progress"]["printTime"] is None:
-		valoresJob["TiempoImpresion"]=str(datos["progress"]["printTime"])
-	else:
-		tiempo=datos["progress"]["printTime"]
-		m, s = divmod(tiempo,60)
-		h, m = divmod(m, 60)
-		valoresJob["TiempoImpresion"]="%d:%02d:%02d" % (h, m, s)
+    #Porcetaje de impresion que se ha completado
+    valoresJob["Porcentaje"]=str(datos["progress"]["completion"])
 
 
-	#Tiempo que le queda a la impresion actual. Hacemos la misma coversion anterior.
-	if datos["progress"]["printTimeLeft"] is None:
-		valoresJob["TiempoRestante"]=str(datos["progress"]["printTimeLeft"])
-	else:
-		tiempo=datos["progress"]["printTimeLeft"]
-		m, s = divmod(tiempo,60)
-		h, m = divmod(m, 60)
-		valoresJob["TiempoRestante"]= "%d:%02d:%02d" % (h, m, s)
-	#Estado de la impresora
-	valoresJob["Estado"]= str(datos["state"])
+    #Tiempo que lleva de impresion (pieza actual). Hacemos la misma coversion anterior.
+    if datos["progress"]["printTime"] is None:
+        valoresJob["TiempoImpresion"]=str(datos["progress"]["printTime"])
+    else:
+        tiempo=datos["progress"]["printTime"]
+        m, s = divmod(tiempo,60)
+        h, m = divmod(m, 60)
+        valoresJob["TiempoImpresion"]="%d:%02d:%02d" % (h, m, s)
 
-	
-	#Devolvemos el diccionario con los datos de cada maquina.
-	return valoresJob
+
+    #Tiempo que le queda a la impresion actual. Hacemos la misma coversion anterior.
+    if datos["progress"]["printTimeLeft"] is None:
+        valoresJob["TiempoRestante"]=str(datos["progress"]["printTimeLeft"])
+    else:
+        tiempo=datos["progress"]["printTimeLeft"]
+        m, s = divmod(tiempo,60)
+        h, m = divmod(m, 60)
+        valoresJob["TiempoRestante"]= "%d:%02d:%02d" % (h, m, s)
+    #Estado de la impresora
+    valoresJob["Estado"]= str(datos["state"])
+
+
+    #Devolvemos el diccionario con los datos de cada maquina.
+    return valoresJob
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON files
@@ -240,12 +241,12 @@ def pideDatosJob(datos):
 # 		maquina = maquinas[i]
 # 		urlstring = str(host + ":" + maquina[0] + "/api/" + files + "?apikey=" + maquina[2])
 # 		resp = requests.get(url=urlstring)
-		
+
 # 		try:
 # 			#data = simplejson.loads(resp)
 # 			data = resp.json()
 # 		except Exception as e:
-			
+
 # 			strfallo = "Error en i= %d: %s"
 # 			print (strfallo %(i, str(e)))
 # 			print("resp del if: " + str(resp))
@@ -268,89 +269,89 @@ def pideDatosJob(datos):
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON printer
 def requestPrinter():
-	for i in range(0, len(maquinas)):
-		maquina = maquinas[i]
-		urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
-		try:
-			resp = requests.get(url=urlstring)
-			
-			# Control de errores (se pueden comentar)
-			# print ("resp: "+str(resp))
-			# print("status code: " + str(resp.status_code))
-			# print("tipo status code: " + str(type(resp.status_code)))
-			# print("tipo de resp: " + str(type(resp)))
-			# print ("datos resp = " + str(resp.content))
-			# print ("datos resp tipo = " + str(type(resp.content)))
+    for i in range(0, len(maquinas)):
+        maquina = maquinas[i]
+        urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+        try:
+            resp = requests.get(url=urlstring)
 
-			#Parseamos la respuesta para que sea JSON.
-			data = resp.json()
+            # Control de errores (se pueden comentar)
+            # print ("resp: "+str(resp))
+            # print("status code: " + str(resp.status_code))
+            # print("tipo status code: " + str(type(resp.status_code)))
+            # print("tipo de resp: " + str(type(resp)))
+            # print ("datos resp = " + str(resp.content))
+            # print ("datos resp tipo = " + str(type(resp.content)))
 
-		except Exception as e:
-			datosJson =list()
-			strfallo = "Error en Printer cuando i= %d: %s"
-			print (strfallo %(i, str(e)))
-			print("resp del if Printer: " + str(resp))
+            #Parseamos la respuesta para que sea JSON.
+            data = resp.json()
 
-			#Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
-			#a pesar de que una maquina pueda fallar.
-			if resp == None:
-				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
-			else:
-				if resp.status_code == 204:
-					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
-					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					errores[maquina[1]]="La impresora no esta operativa"
-				elif resp.status_code == 404:
-					errores[maquina[1]]="No hay comunicacion por parte del servidor"
-				elif resp.status_code == 200:
-					print("La respuesta es correcta")
-					#Seguramente se tendra que comentar, se usa a modo debug
-					#datosJson.append(str(data.content()))
-				elif resp.status_code == 500:
-					errores[maquina[1]]="Internal server error"
-				else:
-					errores[maquina[1]]= "Hay algun error desconocido"
-	
-		else: #Else del try
-			datosFinalesPrinter[maquina[1]] = pideDatosPrinter(data)
+        except Exception as e:
+            datosJson =list()
+            strfallo = "Error en Printer cuando i= %d: %s"
+            print (strfallo %(i, str(e)))
+            print("resp del if Printer: " + str(resp))
+
+            #Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
+            #a pesar de que una maquina pueda fallar.
+            if resp == None:
+                errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+            else:
+                if resp.status_code == 204:
+                    errores[maquina[1]]="La respuesta de la API no tiene contenido"
+                elif resp.status_code == 409:
+                    #No hace falta puesto que ya sale el estado de la impresora en otra variable.
+                    errores[maquina[1]]="La impresora no esta operativa"
+                elif resp.status_code == 404:
+                    errores[maquina[1]]="No hay comunicacion por parte del servidor"
+                elif resp.status_code == 200:
+                    print("La respuesta es correcta")
+                #Seguramente se tendra que comentar, se usa a modo debug
+                #datosJson.append(str(data.content()))
+                elif resp.status_code == 500:
+                    errores[maquina[1]]="Internal server error"
+                else:
+                    errores[maquina[1]]= "Hay algun error desconocido"
+
+        else: #Else del try
+            datosFinalesPrinter[maquina[1]] = pideDatosPrinter(data)
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON job
 def requestJob():
-	for i in range(0, len(maquinas)):
-		maquina = maquinas[i]
-		urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
-		try:
-			resp = requests.get(url=urlstring)
-			#Parseamos la respuesta para que sea JSON.
-			data = resp.json()
-		except Exception as e:
+    for i in range(0, len(maquinas)):
+        maquina = maquinas[i]
+        urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+        try:
+            resp = requests.get(url=urlstring)
+            #Parseamos la respuesta para que sea JSON.
+            data = resp.json()
+        except Exception as e:
 
-			if resp == None:
-				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
-			else:
+            if resp == None:
+                errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+            else:
 
-				datosJson =list()
-				strfallo = "Error en Job cuando i= %d: %s"
-				print (strfallo %(i, str(e)))
-				print("resp del if Job: " + str(resp))
+                datosJson =list()
+                strfallo = "Error en Job cuando i= %d: %s"
+                print (strfallo %(i, str(e)))
+                print("resp del if Job: " + str(resp))
 
-				if resp.status_code == 204:
-					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
-					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					errores[maquina[1]]="La impresora no esta operativa"
-				elif resp.status_code == 404:
-					errores[maquina[1]]="No hay comunicacion por parte del servidor"
-				elif resp.status_code == 200:
-					print("La respuesta es correcta")
-					#Seguramente se tendra que comentar, se usa a modo debug
-					#datosJson.append(str(data.content()))
-				else:
-					errores[maquina[1]]= "Hay algun error desconocido"
-		else: #Else del try
-			datosFinalesJob[maquina[1]] = pideDatosJob(data)
+                if resp.status_code == 204:
+                    errores[maquina[1]]="La respuesta de la API no tiene contenido"
+                elif resp.status_code == 409:
+                    #No hace falta puesto que ya sale el estado de la impresora en otra variable.
+                    errores[maquina[1]]="La impresora no esta operativa"
+                elif resp.status_code == 404:
+                    errores[maquina[1]]="No hay comunicacion por parte del servidor"
+                elif resp.status_code == 200:
+                    print("La respuesta es correcta")
+                #Seguramente se tendra que comentar, se usa a modo debug
+                #datosJson.append(str(data.content()))
+                else:
+                    errores[maquina[1]]= "Hay algun error desconocido"
+        else: #Else del try
+            datosFinalesJob[maquina[1]] = pideDatosJob(data)
 
 
 
@@ -399,92 +400,92 @@ def requestJob():
 
 
 def getJsonPrinter():
-	for i in range(0, len(maquinas)):
-		maquina = maquinas[i]
-		urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
-		try:
-			resp = requests.get(url=urlstring)
-			
-			# Control de errores (se pueden comentar)
-			# print ("resp: "+str(resp))
-			# print("status code: " + str(resp.status_code))
-			# print("tipo status code: " + str(type(resp.status_code)))
-			# print("tipo de resp: " + str(type(resp)))
-			# print ("datos resp = " + str(resp.content))
-			# print ("datos resp tipo = " + str(type(resp.content)))
+    for i in range(0, len(maquinas)):
+        maquina = maquinas[i]
+        urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+        try:
+            resp = requests.get(url=urlstring)
 
-			#Parseamos la respuesta para que sea JSON.
-			data = resp.json()
+            # Control de errores (se pueden comentar)
+            # print ("resp: "+str(resp))
+            # print("status code: " + str(resp.status_code))
+            # print("tipo status code: " + str(type(resp.status_code)))
+            # print("tipo de resp: " + str(type(resp)))
+            # print ("datos resp = " + str(resp.content))
+            # print ("datos resp tipo = " + str(type(resp.content)))
 
-		
-			
-		except Exception as e:
-			datosJson =list()
-			strfallo = "Error en Printer cuando i= %d: %s"
-			print (strfallo %(i, str(e)))
-			print("resp del if Printer: " + str(resp))
+            #Parseamos la respuesta para que sea JSON.
+            data = resp.json()
 
-			#Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
-			#a pesar de que una maquina pueda fallar.
-			if resp == None:
-				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
-			else:
-				if resp.status_code == 204:
-					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
-					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					errores[maquina[1]]="La impresora no esta operativa"
-				elif resp.status_code == 404:
-					errores[maquina[1]]="No hay comunicacion por parte del servidor"
-				elif resp.status_code == 200:
-					print("La respuesta es correcta")
-					#Seguramente se tendra que comentar, se usa a modo debug
-					#datosJson.append(str(data.content()))
-				elif resp.status_code == 500:
-					errores[maquina[1]]="Internal server error"
-				else:
-					errores[maquina[1]]= "Hay algun error desconocido"
-	
-		else: #Else del try
-			datosJsonPrinter[maquina[1]] = data
+
+
+        except Exception as e:
+            datosJson =list()
+            strfallo = "Error en Printer cuando i= %d: %s"
+            print (strfallo %(i, str(e)))
+            print("resp del if Printer: " + str(resp))
+
+            #Controlamos los posibles errores que nos pueden dar y los capturamos para que la aplicacion siga en funcionamiento,
+            #a pesar de que una maquina pueda fallar.
+            if resp == None:
+                errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+            else:
+                if resp.status_code == 204:
+                    errores[maquina[1]]="La respuesta de la API no tiene contenido"
+                elif resp.status_code == 409:
+                    #No hace falta puesto que ya sale el estado de la impresora en otra variable.
+                    errores[maquina[1]]="La impresora no esta operativa"
+                elif resp.status_code == 404:
+                    errores[maquina[1]]="No hay comunicacion por parte del servidor"
+                elif resp.status_code == 200:
+                    print("La respuesta es correcta")
+                #Seguramente se tendra que comentar, se usa a modo debug
+                #datosJson.append(str(data.content()))
+                elif resp.status_code == 500:
+                    errores[maquina[1]]="Internal server error"
+                else:
+                    errores[maquina[1]]= "Hay algun error desconocido"
+
+        else: #Else del try
+            datosJsonPrinter[maquina[1]] = data
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON job
 def getJsonJob():
-	for i in range(0, len(maquinas)):
-		maquina = maquinas[i]
-		urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
-		try:
-			resp = requests.get(url=urlstring)
-			#Parseamos la respuesta para que sea JSON.
-			data = resp.json()
-			
-		except Exception as e:
+    for i in range(0, len(maquinas)):
+        maquina = maquinas[i]
+        urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
+        try:
+            resp = requests.get(url=urlstring)
+            #Parseamos la respuesta para que sea JSON.
+            data = resp.json()
 
-			if resp == None:
-				errores[maquina[1]]="El servicio de Octoprint no esta operativo"
-			else:
+        except Exception as e:
 
-				datosJson =list()
-				strfallo = "Error en Job cuando i= %d: %s"
-				print (strfallo %(i, str(e)))
-				print("resp del if Job: " + str(resp))
+            if resp == None:
+                errores[maquina[1]]="El servicio de Octoprint no esta operativo"
+            else:
 
-				if resp.status_code == 204:
-					errores[maquina[1]]="La respuesta de la API no tiene contenido"
-				elif resp.status_code == 409:
-					#No hace falta puesto que ya sale el estado de la impresora en otra variable.
-					errores[maquina[1]]="La impresora no esta operativa"
-				elif resp.status_code == 404:
-					errores[maquina[1]]="No hay comunicacion por parte del servidor"
-				elif resp.status_code == 200:
-					print("La respuesta es correcta")
-					#Seguramente se tendra que comentar, se usa a modo debug
-					#datosJson.append(str(data.content()))
-				else:
-					errores[maquina[1]]= "Hay algun error desconocido"
-		else: #Else del try
-			datosJsonJob[maquina[1]] = data
+                datosJson =list()
+                strfallo = "Error en Job cuando i= %d: %s"
+                print (strfallo %(i, str(e)))
+                print("resp del if Job: " + str(resp))
+
+                if resp.status_code == 204:
+                    errores[maquina[1]]="La respuesta de la API no tiene contenido"
+                elif resp.status_code == 409:
+                    #No hace falta puesto que ya sale el estado de la impresora en otra variable.
+                    errores[maquina[1]]="La impresora no esta operativa"
+                elif resp.status_code == 404:
+                    errores[maquina[1]]="No hay comunicacion por parte del servidor"
+                elif resp.status_code == 200:
+                    print("La respuesta es correcta")
+                #Seguramente se tendra que comentar, se usa a modo debug
+                #datosJson.append(str(data.content()))
+                else:
+                    errores[maquina[1]]= "Hay algun error desconocido"
+        else: #Else del try
+            datosJsonJob[maquina[1]] = data
 
 #Ruta para llamar a la funcion que conecta las maquinas
 @app.route("/conectar")
@@ -492,56 +493,33 @@ def getJsonJob():
 #Funcion que conecta las maquinas.
 def conectar():
 
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: "+ str(id_maq))
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: "+ str(id_maq))
 
-	#Sino le pasas nada por parametro, pondra por defecto -1 y significa que hay que conectar todas las maquinas.
-	if id_maq==-1:
+    #Sino le pasas nada por parametro, pondra por defecto -1 y significa que hay que conectar todas las maquinas.
+    if id_maq!=-1:
 
-		print("borrar todas")
-		#Sirve para conectar todas las maquinas, pero actualmente no esta en funcionamiento. 
-		#Tan solo seria repetir el bucle inicial de las funciones anteriores.
-		#for i in range(0, len(maquinas)):
-		if None:
-			print("None")
-			maquina = maquinas[i]
-			print("Maquina: " + maquina)
-			headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-			data= '{"command": "connect"}'
-			urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
-			peticion=requests.post(urlConectar,data=data,headers=headers)
+        maquina = maquinas[id_maq - 1]
+        print("Entra en el else:")
+        headers = {'Content-Type': 'application/json', 'X-Api-Key': maquina[2]}
+        data = '{"command": "connect"}'
+        urlConectar = str(host + ":" + maquina[0] + "/api/" + conn)
+        peticion = requests.post(urlConectar, data=data, headers=headers)
 
-			#Para pruebas
-			#print("request: " + str(peticion))
-			#print("status code: " + str(peticion.status_code))
-			#print("tipo status code: " + str(type(peticion.status_code)))
-			#print("tipo de request: " + str(type(peticion)))
-			#print("datos request = " + str(peticion.content))
-			#print("datos request tipo = " + str(type(peticion.content)))
+    #Para pruebas
+    # print("request else: " + str(peticion))
+    # print("status code else: " + str(peticion.status_code))
+    # print("tipo status code else: " + str(type(peticion.status_code)))
+    # print("tipo de request else: " + str(type(peticion)))
+    # print("datos request else = " + str(peticion.content))
+    # print("datos request tipo else = " + str(type(peticion.content)))
 
-	#Conectar la maquina que le hemos dicho especificamente.
-	else:
-		maquina= maquinas[id_maq-1]
-		print("Entra en el else:")
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data= '{"command": "connect"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
-		peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
+    return main()
 
-		#Para pruebas
-		# print("request else: " + str(peticion))
-		# print("status code else: " + str(peticion.status_code))
-		# print("tipo status code else: " + str(type(peticion.status_code)))
-		# print("tipo de request else: " + str(type(peticion)))
-		# print("datos request else = " + str(peticion.content))
-		# print("datos request tipo else = " + str(type(peticion.content)))
 
-		#Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
-	return main()
-	
 
-	
 
 
 #Ruta para llamar a la funcion que desconecta las maquinas
@@ -549,52 +527,30 @@ def conectar():
 
 #Funcion que desconecta las maquinas.
 def desconectar():
-	
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: " +str (id_maq))
 
-	#Sino le pasas nada por parametro, pondra por defecto -1 y significa que hay que desconectar todas las maquinas.
-	if id_maq==-1:
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: " +str (id_maq))
 
-		print("borrar todas")
-		#Sirve para desconectar todas las maquinas, pero actualmente no esta en funcionamiento. 
-		#Tan solo seria repetir el bucle inicial de las funciones anteriores.
-		#for i in range(0, len(maquinas)):
-		if None:
-			print("None")
-			maquina = maquinas[i]
-			print("Maquina: " + maquina)
-			headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-			data = '{"command": "disconnect"}'
-			urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
-			peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Sino le pasas nada por parametro, pondra por defecto -1 y significa que hay que desconectar todas las maquinas.
+    if id_maq!=-1:
+        maquina= maquinas[id_maq-1]
+        print("Entra en el else:")
+        headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+        data= '{"command": "disconnect"}'
+        urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
+        peticion=requests.post(urlConectar,data=data,headers=headers)
 
-			# print("request: " + str(peticion))
-			# print("status code: " + str(peticion.status_code))
-			# print("tipo status code: " + str(type(peticion.status_code)))
-			# print("tipo de request: " + str(type(peticion)))
-			# print("datos request = " + str(peticion.content))
-			# print("datos request tipo = " + str(type(peticion.content)))
 
-		
-	else:
-		maquina= maquinas[id_maq-1]
-		print("Entra en el else:")
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data= '{"command": "disconnect"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
-		peticion=requests.post(urlConectar,data=data,headers=headers)
-	
-		# print("request else: " + str(peticion))
-		# print("status code else: " + str(peticion.status_code))
-		# print("tipo status code else: " + str(type(peticion.status_code)))
-		# print("tipo de request else: " + str(type(peticion)))
-		# print("datos request else = " + str(peticion.content))
-		# print("datos request tipo else = " + str(type(peticion.content)))
+    # print("request else: " + str(peticion))
+    # print("status code else: " + str(peticion.status_code))
+    # print("tipo status code else: " + str(type(peticion.status_code)))
+    # print("tipo de request else: " + str(type(peticion)))
+    # print("datos request else = " + str(peticion.content))
+    # print("datos request tipo else = " + str(type(peticion.content)))
 
-		#Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
-	return main()
+    #Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
+    return main()
 
 
 
@@ -603,131 +559,134 @@ def desconectar():
 @app.route("/imprimir")
 
 def imprimir():
-	# Ejemplo de direccion http://192.168.1.185:8050/imprimir?maq=1
+    # Ejemplo de direccion http://192.168.1.185:8050/imprimir?maq=1
 
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: " +str (id_maq))
-	if id_maq != -1:
-		maquina = maquinas[id_maq-1]
-		print("Maquina: " + str(maquina))
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data = '{"command": "start"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-		#print(str(urlConectar))
-		peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: " +str (id_maq))
+    if id_maq != -1:
+        maquina = maquinas[id_maq-1]
+        print("Maquina: " + str(maquina))
+        headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+        data = '{"command": "start"}'
+        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+        #print(str(urlConectar))
+        peticion=requests.post(urlConectar,data=data,headers=headers)
 
-	return main()
+    return main()
 
 #Ruta para llamar a la funcion que imprime en cada maquina
 @app.route("/reanudar")
 
 
 def reanudar():
-	# Ejemplo de direccion http://192.168.1.185:8050/reanudar?maq=1
+    # Ejemplo de direccion http://192.168.1.185:8050/reanudar?maq=1
 
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: " +str (id_maq))
-	if id_maq != -1:
-		maquina = maquinas[id_maq-1]
-		print("Maquina: " + str(maquina))
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data = '{"command": "pause", "action": "resume"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-		peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: " +str (id_maq))
+    if id_maq != -1:
+        maquina = maquinas[id_maq-1]
+        print("Maquina: " + str(maquina))
+        headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+        data = '{"command": "pause", "action": "resume"}'
+        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+        peticion=requests.post(urlConectar,data=data,headers=headers)
 
-	return main()
+    return main()
 
 #Ruta para llamar a la funcion que imprime en cada maquina
 @app.route("/pausar")
 
 
 def pausar():
-	# Ejemplo de direccion http://192.168.1.185:8050/pausar?maq=1
+    # Ejemplo de direccion http://192.168.1.185:8050/pausar?maq=1
 
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: " +str (id_maq))
-	if id_maq != -1:
-		maquina = maquinas[id_maq-1]
-		print("Maquina: " + str(maquina))
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data = '{"command": "pause", "action": "pause"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-		peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: " +str (id_maq))
+    if id_maq != -1:
+        maquina = maquinas[id_maq-1]
+        print("Maquina: " + str(maquina))
+        headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+        data = '{"command": "pause", "action": "pause"}'
+        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+        peticion=requests.post(urlConectar,data=data,headers=headers)
 
-	return main()
+    return main()
 
 #Ruta para llamar a la funcion que imprime en cada maquina
 @app.route("/cancelar")
 
 def cancelar():
-	# Ejemplo de direccion http://192.168.1.185:8050/cancelar?maq=1
+    # Ejemplo de direccion http://192.168.1.185:8050/cancelar?maq=1
 
-	#Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
-	id_maq=request.args.get("maq", default =-1, type = int)
-	#print("id maquina: " +str (id_maq))
-	if id_maq != -1:
-		maquina = maquinas[id_maq-1]
-		print("Maquina: " + str(maquina))
-		headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
-		data = '{"command": "cancel"}'
-		urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-		peticion=requests.post(urlConectar,data=data,headers=headers)
+    #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
+    id_maq=request.args.get("maq", default =-1, type = int)
+    #print("id maquina: " +str (id_maq))
+    if id_maq != -1:
+        maquina = maquinas[id_maq-1]
+        print("Maquina: " + str(maquina))
+        headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
+        data = '{"command": "cancel"}'
+        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
+        peticion=requests.post(urlConectar,data=data,headers=headers)
 
-	return main()
+    return main()
 
 @app.route("/update")
 
 def update():
 
-	#LLamada a las funciones que utilizamos
-	#requestFiles()
+    #LLamada a las funciones que utilizamos
+    #requestFiles()
 
-	requestPrinter()
-	requestJob()
-	
-
-	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
-	datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
+    requestPrinter()
+    requestJob()
 
 
-	datosFiles = datosFinalesFiles
-	datosPrinter = datosFinalesPrinter
-	datosJob=datosFinalesJobOrdenados
-	fallos = errores
-	nombresMaquinas=nombres
-	nombresOrdenados=nombresOrdenados
+    nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
+    datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
+
+
+    datosFiles = datosFinalesFiles
+    datosPrinter = datosFinalesPrinter
+    datosJob=datosFinalesJobOrdenados
+    fallos = errores
+    nombresMaquinas=nombres
+    nombresOrdenados=nombresOrdenados
 
 
 
-	#parsed_json= jsonify(json_string)
+    #parsed_json= jsonify(json_string)
 
-	#parsed_json = json.loads(json_string)
-	#data = []
-	#funcionDatosJson(data)
-	#print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
-	#print("NUM JOB"+ str(len(datosFinalesJob)))
-	#print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
+    #parsed_json = json.loads(json_string)
+    #data = []
+    #funcionDatosJson(data)
+    #print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
+    #print("NUM JOB"+ str(len(datosFinalesJob)))
+    #print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
 
-	#print("DATOS JOB"+str(datosFinalesJob["maq1"]))
-	#print("DATOS PRINTER"+str(datosFinalesPrinter))
-	#print("DATOS JOB"+str(datosFinalesJob))
-	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-	fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
+    #print("DATOS JOB"+str(datosFinalesJob["maq1"]))
+    #print("DATOS PRINTER"+str(datosFinalesPrinter))
+    #print("DATOS JOB"+str(datosFinalesJob))
+    return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
+                           fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados)
 
 
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def do_admin_login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            print("Las credenciales son incorrectas")
             error = 'Invalid Credentials. Please try again.'
         else:
-            return redirect(url_for('main'))
+            print("El Login ha sido correcto")
+            session['logged_in'] = True
+            return main()
     return render_template('login.html', error=error)
 
 #Ruta principal de nuestra aplicacion
@@ -735,44 +694,48 @@ def login():
 
 def main():
 
-	#LLamada a las funciones que utilizamos
-	#requestFiles()
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        #LLamada a las funciones que utilizamos
+        #requestFiles()
 
-	Printer = dict()
-	Job = dict()
-	# sch = scheduler()
-	# sch2 = scheduler()
-	# sch.add_job(requestPrinter, 'interval', seconds=3)
-	# sch2.add_job(requestJob, 'interval', seconds=3)
-	# sch.start()
-	# sch2.start()
-	requestPrinter()
-	requestJob()
-	getJsonPrinter()
-	getJsonJob()
+        Printer = dict()
+        Job = dict()
+        # sch = scheduler()
+        # sch2 = scheduler()
+        # sch.add_job(requestPrinter, 'interval', seconds=3)
+        # sch2.add_job(requestJob, 'interval', seconds=3)
+        # sch.start()
+        # sch2.start()
+        requestPrinter()
+        requestJob()
+        getJsonPrinter()
+        getJsonJob()
 
-	#print("Diccionario Printer: " + str(datosJsonPrinter))
-	#print("Diccionario Job: " + str(datosJsonJob))
+        #print("Diccionario Printer: " + str(datosJsonPrinter))
+        #print("Diccionario Job: " + str(datosJsonJob))
 
 
-	nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
-	datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
-	#parsed_json= jsonify(json_string)
+        nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
+        datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
+        #parsed_json= jsonify(json_string)
 
-	#parsed_json = json.loads(json_string)
-	#data = []
-	#funcionDatosJson(data)
-	#print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
-	#print("NUM JOB"+ str(len(datosFinalesJob)))
-	#print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
+        #parsed_json = json.loads(json_string)
+        #data = []
+        #funcionDatosJson(data)
+        #print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
+        #print("NUM JOB"+ str(len(datosFinalesJob)))
+        #print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
 
-	#print("DATOS JOB"+str(datosFinalesJob["maq1"]))
-	#print("DATOS PRINTER"+str(datosFinalesPrinter))
-	#print("DATOS JOB"+str(datosFinalesJob))
-	return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-	fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter) 
+        #print("DATOS JOB"+str(datosFinalesJob["maq1"]))
+        #print("DATOS PRINTER"+str(datosFinalesPrinter))
+        #print("DATOS JOB"+str(datosFinalesJob))
+        return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
+                               fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter)
 
 if __name__=="__main__":
-	app.run(host='0.0.0.0')
-#Dentro del servidor
-	#app.run(host='0.0.0.0',port=8050)
+    app.secret_key = os.urandom(12)
+    app.run(host='0.0.0.0', port=5000)
+# Dentro del servidor
+# app.run(host='0.0.0.0',port=8050)

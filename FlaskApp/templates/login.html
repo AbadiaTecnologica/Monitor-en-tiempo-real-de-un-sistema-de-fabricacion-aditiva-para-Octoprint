@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% block body %}
+{% if session['logged_in'] %}
+You're logged in already!
+{% else %}
 <html lang="en" >
 
 <head>
@@ -7,7 +10,7 @@
   
   
   
-      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="/static/css/styleLogin.css">
 
   
 </head>
@@ -18,7 +21,7 @@
   <h2>Login</h2>
   
   <div class="form">
-<form action="" method="post">
+<form action="{{ url_for('do_admin_login') }}" method="post">
         <input type="text" placeholder="Username" name="username" value="{{
           request.form.username }}">
          <input type="password" placeholder="Password" name="password" value="{{
@@ -45,3 +48,5 @@
 </body>
 
 </html>
+{% endif %}
+{% endblock %}
