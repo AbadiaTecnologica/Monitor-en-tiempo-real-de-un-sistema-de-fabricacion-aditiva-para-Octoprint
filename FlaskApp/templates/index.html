@@ -57,7 +57,7 @@
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
                 
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px"></i></a> </pre>
+                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></a> </pre>
                 <!--Tiempo de ultima impresion -->	
                 {% if datosJob[key]["TiempoUltimaImpresion"] != 'None' %}
                     <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
@@ -107,15 +107,15 @@
              <!-- {{fallos[key]}}-->
 
              <!-- Empezar a imprimir si hay gcode cargado (Botonera) -->
+                {% if session['admin'] %}
              <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
                   <button type="button" class="btn btn-primary" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
                   <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px;color: black"></i></button>
                   <button type="button"class="btn disabled" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px; color: black"></i></button></p>
              </div>
-           
+                {% endif %}
 
-              	
             {% elif datosJob[key]["Estado"] == "Printing" %} <!--Estado imprimiendo -->
               <div id="gradImprime" class="card">
                    <h4 class="card">
@@ -124,7 +124,7 @@
 
               <p>   </p>
              	<!--Estado e icono de desconectar -->
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px;color: black"></i></a> </pre>
+                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px;color: black"></i></a> </pre>
                 <!--Tiempo restante de impresion -->	 
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
@@ -176,12 +176,14 @@
                 {% endif %}  
 
             <!-- Pusar o Cancelar impresion (Botonera) -->
+                {% if session['admin'] %}
              <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
                   <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px;color: black"></i></button>
                   <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px"></i></button>
                   <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px"></i></button></p>
              </div>
+                    {% endif %}
              <!-- {{fallos[key]}}-->
 
 
@@ -195,7 +197,7 @@
 
               <p>   </p>
               <!--Estado e icono de desconectar -->
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-off" style="font-size:24px;color: black"></i></a> </pre>
+                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px;color: black"></i></a> </pre>
                 <!--Tiempo restante de impresion -->   
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
@@ -270,7 +272,7 @@
                    <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
-              <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></button></a>
+              <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fa fa-toggle-off" style="font-size:24px;color:greenyellow"></i></button></a>
                <p> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</p>
 
             {% endif %} 

@@ -644,12 +644,14 @@ def do_admin_login():
             print("Usuario: "+ str(request.form['username']))
             print("Contraseña: " + str(request.form['password']))
             session['logged_in'] = True
+            session['admin'] = True
             return main()
         elif request.form['username'] == 'operador' and request.form['password'] == 'operador':
             print("El Login ha sido correcto")
             print("Usuario: "+ str(request.form['username']))
             print("Contraseña: " + str(request.form['password']))
             session['logged_in'] = True
+            session['operador'] = True
             return main()
         else:
             print("Las credenciales son incorrectas")
@@ -662,6 +664,8 @@ def do_admin_login():
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
+    session['admin'] = False
+    session['operador'] = False
     return main()
 
 

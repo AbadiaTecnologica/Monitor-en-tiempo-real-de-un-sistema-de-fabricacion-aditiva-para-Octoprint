@@ -31,25 +31,31 @@
    
     <script type="text/javascript">
       function confirmacionDesconectar(maquina) {
+          {% if session['operador'] %}
+            alert("Usted no tiene permiso para ejecutar esta accion. Consulte con un administrador.")
+          {% else %}
         var ask = window.confirm("¿Estas seguro que deseas desconectar la maquina?")
         var desconectar= "/desconectar?maq=";
         var direccion = desconectar.concat(maquina);
         if (ask){
           window.location.href = direccion;
         }
-        
+          {% endif %}
       } 
     </script>
 
     <script type="text/javascript">
       function confirmacionConectar(maquina) {
+          {% if session['operador'] %}
+            alert("Usted no tiene permiso para ejecutar esta accion. Consulte con un administrador.")
+          {% else %}
         var ask = window.confirm("¿Estas seguro que deseas conectar la maquina?")
         var conectar= "/conectar?maq=";
         var direccion = conectar.concat(maquina);
         if (ask){
           window.location.href = direccion;
         }
-        
+          {% endif %}
       } 
     </script>
 
