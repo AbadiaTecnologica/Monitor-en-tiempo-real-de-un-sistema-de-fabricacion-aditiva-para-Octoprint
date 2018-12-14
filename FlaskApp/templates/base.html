@@ -170,8 +170,15 @@
 
                         </ul>
                     </div>
-
-                    <span><a href="#" style= <button onclick="confirmacionLogout()"><i class="fas fa-sign-out-alt" style="font-size:24px;color: whitesmoke"></i></a></span>
+                    {% if session['admin'] %}
+                        <i class="far fa-user" style="font-size:21px;color: whitesmoke">&nbsp;</i><span style="color: whitesmoke">Admin</span>
+                    {% elif session['operador'] %}
+                        <i class="far fa-user" style="font-size:21px;color: whitesmoke">&nbsp;</i><span style="color: whitesmoke">Operador</span>
+                    {% elif session['visor'] %}
+                        <i class="far fa-user" style="font-size:21px;color: whitesmoke">&nbsp;</i><span style="color: whitesmoke">Visor</span>
+                    {% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="text-align:right "><a href="#" style= <button onclick="confirmacionLogout()"><i class="fas fa-sign-out-alt" style="font-size:24px;color: whitesmoke"></i></a></span>
                 </div>
             </nav>
               

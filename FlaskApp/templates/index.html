@@ -57,7 +57,7 @@
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
                 
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px"></i></a> </pre>
+                <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
                 <!--Tiempo de ultima impresion -->	
                 {% if datosJob[key]["TiempoUltimaImpresion"] != 'None' %}
                     <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
@@ -124,7 +124,7 @@
 
               <p>   </p>
              	<!--Estado e icono de desconectar -->
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px;color: black"></i></a> </pre>
+                <pre> <i class="fas fa-info-circle"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px;color: black"></i></a> </pre>
                 <!--Tiempo restante de impresion -->	 
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
@@ -197,7 +197,7 @@
 
               <p>   </p>
               <!--Estado e icono de desconectar -->
-                <pre> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fa fa-toggle-on" style="font-size:24px;color: black"></i></a> </pre>
+                <pre> <i class="fas fa-info-circle"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px;color: black"></i></a> </pre>
                 <!--Tiempo restante de impresion -->   
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
@@ -272,8 +272,8 @@
                    <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
-              <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fa fa-toggle-off" style="font-size:24px;color:greenyellow"></i></button></a>
-               <p> <i class="fa fa-plug"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</p>
+              <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fas fa-plug" style="font-size:24px;color:greenyellow"></i></button></a>
+               <p> <i class="fas fa-info-circle"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</p>
 
             {% endif %} 
 

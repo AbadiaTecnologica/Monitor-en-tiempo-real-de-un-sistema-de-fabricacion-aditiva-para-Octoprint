@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33c53774-6591-4633-885e-86fe2e495b33" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlaskApp/monitorOcto.py" beforeDir="false" afterPath="$PROJECT_DIR$/FlaskApp/monitorOcto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlaskApp/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/FlaskApp/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlaskApp/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FlaskApp/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlaskApp/tutorial.db" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,11 +16,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$data.coverage" NAME="data Coverage Results" MODIFIED="1544728418013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
-    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$datos.coverage" NAME="datos Coverage Results" MODIFIED="1544729479789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
+    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$tabledef.coverage" NAME="tabledef Coverage Results" MODIFIED="1544787099390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
+    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$usuariosBD.coverage" NAME="usuariosBD Coverage Results" MODIFIED="1544787110591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
     <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$dummy.coverage" NAME="dummy Coverage Results" MODIFIED="1544729419441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
-    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$monitorOcto.coverage" NAME="monitorOcto Coverage Results" MODIFIED="1544616120886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
-    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$tabledef.coverage" NAME="tabledef Coverage Results" MODIFIED="1544729413137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
+    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$datos.coverage" NAME="datos Coverage Results" MODIFIED="1544729479789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
+    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$monitorOcto.coverage" NAME="monitorOcto Coverage Results" MODIFIED="1544791926668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
+    <SUITE FILE_PATH="coverage/Monitor_en_tiempo_real_de_un_sistema_de_fabricacion_aditiva_para_Octoprint$data.coverage" NAME="data Coverage Results" MODIFIED="1544728418013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FlaskApp" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -28,24 +34,21 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="tutorial" type="feb32156:DbDataSourceImpl" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1688842353">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.59" value="1" />
           <entry key="project.open.time.70" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -62,16 +65,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="827" />
-          <entry key="py" value="510" />
+          <entry key="html" value="1112" />
+          <entry key="py" value="877" />
           <entry key="txt" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="827" />
+          <entry key="HTML" value="1112" />
           <entry key="PLAIN_TEXT" value="15" />
-          <entry key="Python" value="510" />
+          <entry key="Python" value="877" />
         </counts>
       </usages-collector>
     </session>
@@ -119,31 +122,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlaskApp/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2190">
-              <caret line="146" selection-start-line="146" selection-end-line="146" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/FlaskApp/templates/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="193" column="36" selection-start-line="193" selection-start-column="36" selection-end-line="193" selection-end-column="36" />
+            <state relative-caret-position="281">
+              <caret line="179" column="46" lean-forward="true" selection-start-line="179" selection-start-column="46" selection-end-line="179" selection-end-column="46" />
+              <folding>
+                <element signature="n#style#0;n#i#0;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#6205#6211#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#1;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#6360#6366#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#6515#6521#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#6623#6629#0#HTML" expanded="true" />
+                <element signature="e#6629#6635#0#HTML" expanded="true" />
+                <element signature="e#6635#6641#0#HTML" expanded="true" />
+                <element signature="e#6641#6647#0#HTML" expanded="true" />
+                <element signature="e#6647#6653#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/FlaskApp/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="52" column="51" lean-forward="true" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+              <folding>
+                <element signature="e#1884#1907#0#HTML" expanded="true" />
+                <element signature="e#1957#1971#0#HTML" expanded="true" />
+                <element signature="e#2106#2141#0#HTML" expanded="true" />
+                <element signature="e#11196#11231#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlaskApp/tabledef.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="70" lean-forward="true" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+            <state relative-caret-position="195">
+              <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
-                <marker date="1544729342192" expanded="true" signature="410:412" ph="..." />
-                <marker date="1544729342192" expanded="true" signature="662:664" ph="..." />
-                <marker date="1544729342192" expanded="true" signature="662:668" ph="..." />
               </folding>
             </state>
           </provider>
@@ -152,8 +177,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlaskApp/usuariosBD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="225">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -164,8 +189,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlaskApp/monitorOcto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9780">
-              <caret line="660" column="53" selection-start-line="660" selection-start-column="53" selection-end-line="660" selection-end-column="53" />
+            <state relative-caret-position="421">
+              <caret line="662" column="53" lean-forward="true" selection-start-line="662" selection-start-column="53" selection-end-line="662" selection-end-column="53" />
               <folding>
                 <element signature="e#142#226#0" expanded="true" />
               </folding>
@@ -176,8 +201,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlaskApp/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+            <state relative-caret-position="300">
+              <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -198,6 +223,10 @@
       <find>logged_in</find>
       <find>pause</find>
       <find>Admin</find>
+      <find>plug</find>
+      <find>on</find>
+      <find>toggle-on</find>
+      <find>off</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,13 +240,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/FlaskApp/monitorOcto.py" />
         <option value="$PROJECT_DIR$/FlaskApp/templates/login.html" />
+        <option value="$PROJECT_DIR$/FlaskApp/data.py" />
+        <option value="$PROJECT_DIR$/FlaskApp/dummy.py" />
+        <option value="$PROJECT_DIR$/FlaskApp/tabledef.py" />
+        <option value="$PROJECT_DIR$/FlaskApp/monitorOcto.py" />
         <option value="$PROJECT_DIR$/FlaskApp/templates/base.html" />
         <option value="$PROJECT_DIR$/FlaskApp/templates/index.html" />
-        <option value="$PROJECT_DIR$/FlaskApp/data.py" />
-        <option value="$PROJECT_DIR$/FlaskApp/tabledef.py" />
-        <option value="$PROJECT_DIR$/FlaskApp/dummy.py" />
       </list>
     </option>
   </component>
@@ -268,7 +297,13 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrador\Desktop\Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint\FlaskApp" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -282,29 +317,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.datos">
-    <configuration name="data" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/FlaskApp" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FlaskApp/data.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.monitorOcto">
     <configuration name="datos" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -393,20 +406,42 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="usuariosBD" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/FlaskApp" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FlaskApp/usuariosBD.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.monitorOcto" />
       <item itemvalue="Python.tabledef" />
-      <item itemvalue="Python.data" />
       <item itemvalue="Python.dummy" />
       <item itemvalue="Python.datos" />
+      <item itemvalue="Python.usuariosBD" />
+      <item itemvalue="Python.monitorOcto" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.monitorOcto" />
+        <item itemvalue="Python.usuariosBD" />
+        <item itemvalue="Python.tabledef" />
         <item itemvalue="Python.datos" />
         <item itemvalue="Python.dummy" />
-        <item itemvalue="Python.tabledef" />
-        <item itemvalue="Python.data" />
-        <item itemvalue="Python.monitorOcto" />
       </list>
     </recent_temporary>
   </component>
@@ -439,30 +474,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1580938" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16262136" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49919093" visible="true" weight="0.3229508" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3298731" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49919093" visible="true" weight="0.32641292" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5008091" side_tool="true" weight="0.3298731" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3295082" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32871974" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.32980332" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32928804" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -483,55 +518,29 @@
           <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" rowLines="3" />
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/FlaskApp/data.py" />
+    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2190">
-          <caret line="146" selection-start-line="146" selection-end-line="146" />
+        <state relative-caret-position="300">
+          <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FlaskApp/monitorOcto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9780">
-          <caret line="660" column="53" selection-start-line="660" selection-start-column="53" selection-end-line="660" selection-end-column="53" />
+        <state relative-caret-position="421">
+          <caret line="662" column="53" lean-forward="true" selection-start-line="662" selection-start-column="53" selection-end-line="662" selection-end-column="53" />
           <folding>
             <element signature="e#142#226#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="193" column="36" selection-start-line="193" selection-start-column="36" selection-end-line="193" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FlaskApp/data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FlaskApp/usuariosBD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="225">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -540,13 +549,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/FlaskApp/tabledef.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="70" lean-forward="true" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+        <state relative-caret-position="195">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
-            <marker date="1544729342192" expanded="true" signature="410:412" ph="..." />
-            <marker date="1544729342192" expanded="true" signature="662:664" ph="..." />
-            <marker date="1544729342192" expanded="true" signature="662:668" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="179" column="46" lean-forward="true" selection-start-line="179" selection-start-column="46" selection-end-line="179" selection-end-column="46" />
+          <folding>
+            <element signature="n#style#0;n#i#0;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#6205#6211#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#1;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#6360#6366#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#6515#6521#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#6623#6629#0#HTML" expanded="true" />
+            <element signature="e#6629#6635#0#HTML" expanded="true" />
+            <element signature="e#6635#6641#0#HTML" expanded="true" />
+            <element signature="e#6641#6647#0#HTML" expanded="true" />
+            <element signature="e#6647#6653#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#span#2;n#div#0;n#nav#0;n#header#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FlaskApp/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="52" column="51" lean-forward="true" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+          <folding>
+            <element signature="e#1884#1907#0#HTML" expanded="true" />
+            <element signature="e#1957#1971#0#HTML" expanded="true" />
+            <element signature="e#2106#2141#0#HTML" expanded="true" />
+            <element signature="e#11196#11231#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -17,9 +17,10 @@ import requests
 import threading
 import collections
 import os
+from sqlalchemy.orm import sessionmaker
+from tabledef import *
 
-
-
+engine = create_engine('sqlite:///tutorial.db', echo=True)
 
 app = Flask(__name__)
 
@@ -639,25 +640,31 @@ def cancelar():
 def do_admin_login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] == 'admin' and request.form['password'] == 'admin':
-            print("El Login ha sido correcto")
-            print("Usuario: "+ str(request.form['username']))
-            print("Contraseña: " + str(request.form['password']))
+        POST_USERNAME = str(request.form['username'])
+        POST_PASSWORD = str(request.form['password'])
+
+        Session = sessionmaker(bind=engine)
+        s = Session()
+        query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]))
+        result = query.first()
+        if result:
+            print("Username"+str(POST_USERNAME))
             session['logged_in'] = True
-            session['admin'] = True
-            return main()
-        elif request.form['username'] == 'operador' and request.form['password'] == 'operador':
-            print("El Login ha sido correcto")
-            print("Usuario: "+ str(request.form['username']))
-            print("Contraseña: " + str(request.form['password']))
-            session['logged_in'] = True
-            session['operador'] = True
+            if POST_USERNAME == "admin":
+                session['admin'] = True
+            elif POST_USERNAME == "operador":
+                session['operador'] = True
+            elif POST_USERNAME == "visor":
+                session['visor'] = True
             return main()
         else:
+            error = 'Invalid Credentials. Please try again.'
+            print("error"+str(error))
             print("Las credenciales son incorrectas")
+            print("Resultado"+str(result))
             print("Usuario: " + str(request.form['username']))
             print("Contraseña: " + str(request.form['password']))
-            error = 'Invalid Credentials. Please try again.'
+
     return render_template('login.html', error=error)
 
 
@@ -666,6 +673,7 @@ def logout():
     session['logged_in'] = False
     session['admin'] = False
     session['operador'] = False
+    session['visor'] = False
     return main()
 
 
