@@ -57,23 +57,32 @@
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
                 {% if session['visor'] %}
-                
+
                 <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}} </pre>
                 {% else %}
                     <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
 
                 {% endif %}
                     <!--Tiempo de ultima impresion -->
-                {% if datosJob[key]["TiempoUltimaImpresion"] != 'None' %}
+                    <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
+
+                {% if datosJob[key]["TiempoUltimaImpresion"] == 'N' %}
                     <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
                 {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
-                {% if datosJob[key]["Nombre"] != 'None' %}
-                      <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre> 
-                {% endif %} 
+                <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
+
+                {% if datosJob[key]["Nombre"] == 'N' %}
+                      <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
+                {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
-                      
+                      <div id="progressBar">
+
+                        <div id="progress-bar"  role="progressbar"  aria-valuemin="0" aria-valuemax="100" >
+
+                        </div>
+                      </div>
                 {% elif datosJob[key]["Porcentaje"] == '100.0' %}
 
                       <div id="progressBar">
@@ -90,11 +99,11 @@
                         </div>
                       </div>
                       <pre></pre>
-                {% endif %} 
+                {% endif %}
 
                 <!--Temperaturas de la cama y el extrusor -->
                 {% if datosPrinter[key] %}
-                  
+
 					<!--Comprobacion cuando es una Witbox (sin cama caliente) -->
 					{% if datosPrinter[key]["CamaDisponible"] == "No"%}
 	 					<pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
@@ -107,8 +116,8 @@
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
                   <pre> Impresora no conectada </pre>
 
-                {% endif %}    
-            
+                {% endif %}
+
              <!-- {{fallos[key]}}-->
 
              <!-- Empezar a imprimir si hay gcode cargado (Botonera) -->
@@ -135,23 +144,23 @@
 
                 <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}} </pre>
                 {% else %}
-                    <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
+                    <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px;color: #1b5e20"></i></a> </pre>
 
                 {% endif %}                <!--Tiempo restante de impresion -->
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
                   {% elif datosJob[key]["TiempoRestante"] == "-"%}
                   {% else %}
-                
+
                   <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
                   {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
                 {% if datosJob[key]["Nombre"] != 'None' %}
-                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p> 
-                {% endif %} 
+                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
+                {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
-                      
+
                 {% elif datosJob[key]["Porcentaje"] == '100.0' %}
 
                       <div id="progressBar">
@@ -168,11 +177,11 @@
                         </div>
                       </div>
                       <pre></pre>
-                {% endif %} 
+                {% endif %}
 
                 <!--Temperaturas de la cama y el extrusor -->
                 {% if datosPrinter[key] %}
-                  
+
 					<!--Comprobacion cuando es una Witbox (sin cama caliente) -->
 					{% if datosPrinter[key]["CamaDisponible"] == "No"%}
             <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
@@ -185,7 +194,7 @@
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
                   <pre> Impresora no conectada </pre>
 
-                {% endif %}  
+                {% endif %}
 
             <!-- Pusar o Cancelar impresion (Botonera) -->
                 {% if session['visor'] %}
@@ -203,7 +212,7 @@
 
 
               <!-- Cuando el estado es Pausa -->
-              {% elif datosJob[key]["Estado"] == "Paused" %} 
+              {% elif datosJob[key]["Estado"] == "Paused" %}
                             <div id="gradPausa" class="card">
                    <h4 class="card">
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
@@ -222,16 +231,16 @@
                   {% elif datosJob[key]["TiempoRestante"] == "0:00:00" %}
                   {% elif datosJob[key]["TiempoRestante"] == "-"%}
                   {% else %}
-                
+
                   <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
                   {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
                 {% if datosJob[key]["Nombre"] != 'None' %}
-                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p> 
-                {% endif %} 
+                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
+                {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
-                      
+
                 {% elif datosJob[key]["Porcentaje"] == '100.0' %}
 
                       <div id="progressBar">
@@ -248,11 +257,11 @@
                         </div>
                       </div>
                       <pre></pre>
-                {% endif %} 
+                {% endif %}
 
                 <!--Temperaturas de la cama y el extrusor -->
                 {% if datosPrinter[key] %}
-                  
+
           <!--Comprobacion cuando es una Witbox (sin cama caliente) -->
           {% if datosPrinter[key]["CamaDisponible"] == "No"%}
             <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
@@ -265,7 +274,7 @@
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
                   <pre> Impresora no conectada </pre>
 
-                {% endif %}  
+                {% endif %}
 
             <!-- Pusar o Cancelar impresion (Botonera) -->
              <div class="btn-group btn-group" role="group" style="text-align: center;">
@@ -276,7 +285,7 @@
              </div>
 
               <!-- Cuando tenemos el dato por defecto significa que el servicio de OctoPrint no esta lanzado.-->
-              {% elif datosJob[key]["Estado"] == "-" %} 
+              {% elif datosJob[key]["Estado"] == "-" %}
 
               <div id="gradError" class="card">
                 <h4 class="card">
@@ -299,7 +308,7 @@
                     {% endif %}
 
 
-            {% endif %} 
+            {% endif %}
 
               {% for element in datosFiles[key] %}
                   <!--pre>{{element}}</pre-->
