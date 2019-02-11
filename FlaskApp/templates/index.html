@@ -202,9 +202,9 @@
                     {% else %}
                     <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
-                  <button type="button" class="btn btn-primary" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
-                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px;color: black"></i></button>
-                  <button type="button"class="btn disabled" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px; color: black"></i></button></p>
+                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
+                  <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px;color: black"></i></button>
+                  <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px; color: black"></i></button></p>
                      </div>
                 {% endif %}
              <!-- {{fallos[key]}}-->
