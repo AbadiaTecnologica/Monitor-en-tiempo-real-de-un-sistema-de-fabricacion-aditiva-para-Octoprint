@@ -1,0 +1,159 @@
+\apendice{Plan de Proyecto Software}
+
+\section{Introducción}
+
+En este apartado vamos a incluir la planificación temporal que hemos llevado a cabo y la viabilidad tanto económica como legal de nuestro proyecto.
+
+\section{Planificación temporal}
+
+Este aspecto es uno de los que hubiera gustado mejorar, ya que, la planificación que hemos llevado a cabo no ha sido la mejor. Me hubiera gustado hacer la planificación mediante \textit{sprints} pero sabíamos que el desarrollo del proyecto iba a ser más largo que la duración del Trabajo de Fin de Grado y tampoco nos queríamos fijar objetivos que fueran imposibles de cumplir. Además este proyecto comenzó durante unas prácticas curriculares que realicé en la empresa \textbf{Abadía Tecnológica} durante los meses de marzo a mayo de 2018; es por ello que no hemos utilizado la metodología basada en \textit{sprints} sino que hemos intentado avanzar con el proyecto lo máximo posible. En el repositorio de GitHub (\url{https://github.com/AbadiaTecnologica/Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint}) se puede ver los distintos \textit{commits} que hemos hecho para llevar a cabo el desarrollo del proyecto. 
+
+Inicialmente este proyecto sólo se iba a realizar para las prácticas curriculares pero vimos que era una idea interesante y poco explotada, por lo que decidimos proponerlo como Trabajo de Fin de Grado.
+
+Otro aspecto que debemos tener en cuenta es que hemos tenido que realizar la totalidad del proyecto en las instalaciones de la empresa, ya que es donde se encontraba el hardware que hemos necesitado para el desarrollo de la aplicación. Esto es una gran limitación, ya que teníamos que estar sujetos al horario de la empresa.
+
+A continuación vamos a explicar las fases por las que hemos pasado para el desarrollo de este proyecto.
+
+\subsection{Fases}
+
+\subsubsection{FASE 1: Instalación y configuración}
+
+Durante la primera quincena del mes de abril de 2018, los primeros pasos que hicimos fue instalar una distribución \textit{Debian} 9 en el ordenador que usaremos como servidor. Una vez tuvimos eso listo, lo que hicimos fue instalar todas las instancias de OctoPrint que íbamos a usar, una por cada máquina; en nuestro caso fueron 7 instancias. 
+Nosotros tenemos un usuario por cada instancia de OctoPrint para llevar un mejor control de las máquinas. 
+
+El siguiente paso fue configurar cada OctoPrint con cada máquina, es decir, tuvimos que introducir las características de las máquinas, el tamaño de las camas, etc.
+
+Cuando tuvimos todas las máquinas bien configuradas y funcionando, nos pusimos a desarrollar la aplicación.
+
+\subsubsection{FASE 2: Comunicación con la API de OctoPrint}
+
+En la segunda quincena del mes de abril de 2018, llevamos a cabo la comunicación con la máquina mediante la API REST de OctoPrint. Durante el periodo de prácticas sólo realizamos peticiones GET ya que era más sencillo y no teníamos experiencia previa haciendo este tipo de operaciones. Es decir, en nuestro monitor no podíamos realizar ninguna operación, tan solo mostrábamos los datos que necesitábamos.
+
+El procedimiento era parecido al que tenemos ahora, pedíamos los datos en una petición GET, los almacenábamos en diccionarios de Python y usando \textit{Flask} y \textit{Bootstrap} y los lanzábamos a una página web. 
+Ahora el proceso el mucho más refinado, ya que, en las primeras versiones teníamos una tarjeta para cada máquina, es decir, no era iterativo. Además la aplicación no era tan estable y si la máquina nos devolvía un error no identificado, la aplicación se caía.
+
+\subsubsection{FASE 3: Boceto de la aplicación}
+
+Poco a poco fui mejorando la aplicación y para el final del periodo de prácticas, durante la primera quincena del mes de mayo de 2018, teníamos la funcionalidad de desconectar un máquina tal y como se ve en la siguiente imagen.
+
+\imagen{vistaAntigua}{Vista antigua de la aplicación.}
+
+\subsubsection{FASE 4: Mejoras en la interfaz de usuario}
+
+A comienzos del mes de octubre de 2018 se continuó el desarrollo del proyecto como Trabajo de Fin de Grado.
+
+Lo primero que hicimos fue dar un cambio a la interfaz para ello usamos \textit{Bootstrap} y \textit{MDBootstrap}. En el desarrollo del producto todo el material que hemos utilizado son licencias de uso libre. 
+
+Una vez le dimos un diseño más profesional lo siguiente que hicimos fue introducir confirmación en los botones de desconectar las máquinas; ya que si pulsábamos sobre el botón por accidente la máquina de desconectaba y se cancelaba la impresión. Más tarde introducimos un \textit{navbar} donde tenemos todos los nombres de la máquinas con los que cuenta nuestra aplicación y un enlace a cada instancia de OctoPrint desde la que podemos manejar los parámetros más relacionados con la impresión en curso.
+
+\subsubsection{FASE 5: Mejoras en la instalación de máquinas nuevas}
+
+Hacia mediados de octubre de 2018 añadimos todos los datos de las impresoras a un archivo CSV; de esta manera cuando tenemos que modificar los datos de una impresora lo podemos hacer cómodamente editando el archivo CSV y el propio \textit{back-end} de la aplicación se encargará de leer el CSV y cargar los datos en nuestra aplicación web.
+
+Durante el desarrollo de la aplicación la API de OctoPrint se actualizó y nuestra aplicación no estaba operativa. El problema fue que modificaron el archivo JSON que obtenemos cuando hacemos la petición GET a la API de OctoPrint e intentábamos acceder a un dato que no existía. Para solucionarlo ahora cargamos todos los datos que necesitamos con un campo por defecto y luego actualizamos con los datos reales procedentes del JSON obtenido, de esta manera nos aseguramos que todos los campos críticos tengan un valor (o el valor real o el valor por defecto), de esta manera ganamos en estabilidad.
+
+\subsubsection{FASE 6: Adición de nuevas funcionalidades}
+Durante las primeras semanas de noviembre de 2018 añadimos las funcionalidades de imprimir, pausar y cancelar impresión. Todas las funcionalidades tienen un sistema de confirmación para evitar que pulsemos sobre ellas por error.
+Además también añadimos un nuevo estado disponible para mostrar el estado de pausa.
+
+Hasta este momento toda la vista de la aplicación estaba en un archivo llamado \textit{index.html} que se recargaba completamente cada cinco segundos para actualizar los datos de las impresoras 3D. Como no tenía mucho sentido recargar la página entera lo que hicimos fue separar los archivos que eran necesarios recargar con los que no lo eran; de esta manera teníamos dos archivos:
+\begin{itemize}
+\item Base: contiene el \textit{navbar} y el \textit{footer} que son estáticos y no es necesario que se actualicen cada cinco segundos.
+\item Índice: contiene el cuerpo de la aplicación con las tarjetas (vistas) de todas las máquinas, éste es necesario que se actualice para que los datos sean lo más fiables posible.  
+\end{itemize}
+
+Hacía finales de noviembre hicimos una función en JavaScript para que cada vez que recargue la aplicación sólo actualice el \textit{body} y el resto de la página se mantenga estática.
+
+\subsubsection{FASE 7: Creación de un inicio de sesión}
+Durante la primera quincena de diciembre de 2018 creamos un \textit{Login} para garantizar la seguridad de nuestra aplicación web. El \textit{Login} contiene tres grupos de usuarios:
+
+\begin{itemize}
+\item \textbf{Admin}: es el administrador de la aplicación. Tiene acceso a todos los elementos de la aplicación y en un futuro será el encargado de añadir usuarios a la base de datos.
+\item \textbf{Operador}: tendrá acceso a todas las funcionalidades del sistema salvo la creación de nuevos usuarios.
+\item \textbf{Visor}: este usuario será el que más restricciones tenga ya que no podrá utilizar la botonera de funcionalidades \textit{(comenzar, pausar, cancelar)}  y tampoco deberá tener acceso a la conexión y desconexión de las impresoras 3D.
+\end{itemize}
+
+El resto del mes de diciembre se usó para crear una pequeña base de datos con \textit{SQLite} que contiene los usuarios con los que cuenta la aplicación y  realizar mejoras en la vista de la aplicación web, como por ejemplo incluir el usuario con el que nos hemos iniciado sesión previamente.
+
+
+\section{Estudio de viabilidad}
+
+A continuación vamos a llevar a cabo un estudio tanto de la viabilidad económica como legal de nuestra aplicación web.
+
+\subsection{Viabilidad económica}
+
+Para el desarrollo de este proyecto se ha necesitado un total de 4 meses en los que un sólo programador ha llevado a cabo todo el trabajo.
+
+A continuación vamos a desglosar los costos de llevar a cabo este proyecto:
+\subsubsection{Coste personal} 
+
+En el coste personal debemos tener en cuenta el salario mínimo de ingeniero \cite{seguridadsocial} y la cuota de la seguridad social \cite{seguridadsocial}. El costo total de personal en los 4 meses es el siguiente.
+
+\tablaSmallSinColores{Coste Personal}
+{l l}{Coste Personal}
+{\textbf{Concepto} & \textbf{Valor}\\}
+{Salario mensual			    & 1215 \euro{}	\\
+ Seguridad Social (23,60\%)		& 286 \euro{} \\
+ Total				 			& 1501 \euro{}\\
+ \midrule
+ Total 4 meses					& 6004 \euro{}	\\
+}
+
+\subsubsection{Coste Hardware} 
+
+Para llevar a cabo este proyecto necesitamos varios elementos hardware que son indispensables:
+\begin{itemize}
+\item BQ Witbox 2 \cite{witbox}: necesitamos al menos dos impresoras 3D para que nuestro proyecto tenga sentido como monitor de una granja de impresoras 3D. Hemos elegido este modelo porque es la máquina con la que más familiarizamos estamos y es la que hemos usado para el desarrollo del proyecto.
+\item Zotac ZBox HD-ID11 \cite{zotac}: un mini ordenador muy parecido al modelo que hemos usado nosotros. Es el ordenador que hará de servidor de la aplicación.
+\end{itemize}
+
+\tablaSmallSinColores{Costes Hardware.}
+{l l}{Costes Hardware.}
+{\textbf{Concepto} & \textbf{Valor}\\}
+{BQ Witbox 2 (2 unidades)		& 2738 \euro{}	\\
+ Zotac ZBox HD-ID11 	     & 186 \euro{} \\
+ \midrule
+ Total					        & 2924 \euro{}\\
+}
+
+\subsubsection{Coste Software}
+
+Todo los programas que hemos usado para el desarrollo de este proyecto son completamente gratuitos por lo que este apartado no encarece el desarrollo final del producto. 
+
+\subsection{Viabilidad legal}
+
+En el apartado legal llevaremos a cabo un estudio de las librerías utilizadas con sus correspondientes licencias y el uso que se le puede dar por parte de terceros.
+
+\newpage
+
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{p{4cm} p{1.5cm} p{6cm} p{3.5cm}}
+      \toprule
+      \textbf{Librería} & \textbf{Versión} & \textbf{Descripción} & \textbf{Licencia} \\
+      \otoprule
+      Python  & 3.7.2 & Lenguaje de programación utilizado. & PSFL \\
+      Flask & 1.0.2 & Frameowrk utilizado. & BSD \\
+      Requests & 2.21.0 & Librería para las peticiones a la API. & Apache 2.0 \\
+      Collections & 2.4.0 & Tratamiento de estructuras de datos. & PSFL\\
+      os & 2.4.0 & Manejo de rutas del sistema. & PSFL\\
+      SQLAlchemy ORM  & 1.3.0 & Librería para la creación de la base de datos. & MIT\\
+      \bottomrule
+    \end{tabular}
+    \caption{Licencias de las librerías utilizadas.}
+    \label{tabla:licenses}
+  \end{center}
+\end{table}
+
+
+Las licencias que hemos usado en nuestro proyecto son:
+\begin{itemize}
+\item \textbf{PSFL} \cite{wiki:psfl}: licencia de software libre permisiva como BSD y además es compatible con GPL. 
+\item \textbf{BSD} \cite{wiki:bsd}: licencia de software libre permisiva parecida a la licencia MIT. BSD tiene menos restricciones en comparación con otras licencias como GPL estando muy cercana al dominio público.
+\item \textbf{Apache 2.0} \cite{wiki:apache}: es un licencia de software libre pero requiere la conservación del aviso del derecho de autor y descargo de responsabilidad.
+\item \textbf{MIT} \cite{wiki:mit}: es una licencia de software libre permisiva procedente del Instituto Tecnológico de Massachusetts. Es compatible con otras licencias como \textit{Copyleft} y GNU.
+\end{itemize}
+
+
+

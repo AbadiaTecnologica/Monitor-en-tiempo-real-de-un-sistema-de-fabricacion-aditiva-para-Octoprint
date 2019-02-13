@@ -1,0 +1,98 @@
+\apendice{Documentación de usuario}
+
+\section{Introducción}
+
+En este apartado se detallan los requisitos que debemos cumplir y los pasos necesarios para llevar a cabo la instalación de la aplicación. Además explicaremos en el manual de usuario cómo se debe utilizar nuestra aplicación.
+
+\section{Requisitos de usuarios}
+
+A continuación vamos a enumerar los diferentes requisitos para poder usar nuestra aplicación:
+
+\begin{itemize}
+\item \textbf{Servidor}: deberemos contar con un servidor con \textit{Debian} instalado. En nuestro caso hemos utilizado la version número 9 de esta de distribución de Linux, en ésta distribución de \textit{Debian} ya viene preinstalado \textit{Python} y los comandos para que funcione el protocolo \textit{SSH} por lo que no será necesario instalarlo por separado.
+\item \textbf{Impresora 3D}: como no podía ser de otra manera necesitamos al menos una impresora 3D para conectar al servidor, aunque es recomendable utilizar la aplicación con más de una impresora.
+\item \textbf{Ordenador}: un ordenador con algún entorno de desarrollo desde el que podremos ejecutar o mandar al servidor ejecutar nuestra aplicación.
+\item \textbf{Hub USB}: necesitamos un hub USB para conectar todas la impresoras 3D al servidor.
+\end{itemize}
+
+\section{Instalación}
+
+Para que la aplicación funcione correctamente debemos seguir cuidadosamente el siguiente apartado:
+
+\subsection{Instalación de OctoPrint}
+
+Tal y como comentamos en la memoria del proyecto debemos tener una instancia de OctoPrint por cada máquina que tengamos en nuestra aplicación.
+Para llevar un mejor control de cada máquina deberemos crear un usuario en el servidor por cada máquina que vayamos a instalar en la aplicación. Para ello introduciremos los siguientes comandos en una consola de comandos dentro del servidor:
+\begin{enumerate}
+\item \emph{adduser impresor1}
+\item \emph{adduser impresor2}
+\item \emph{adduser impresor3}
+\item \emph{adduser impresor4}
+\item \emph{adduser impresor5}
+\item \emph{adduser impresor6}
+\item \emph{adduser impresor7}
+\end{enumerate}
+
+Ahora deberemos instalar una instancia de OctoPrint en cada usuario que hemos creado. Para instalar OctoPrint deberemos introducir los siguientes comandos en una terminal dentro del servidor:
+
+\begin{enumerate}
+\item \emph{git clone https://github.com/foosel/OctoPrint}
+\item \emph{cd OctoPrint}
+\item \emph{virtualenv venv}
+\item \emph{./venv/bin/pip install pip --upgrade}
+\item \emph{./venv/bin/python setup.py install}
+\item \emph{mkdir ~/.octoprint}
+\end{enumerate}
+
+Una vez hemos seguido todos los pasos anteriores debemos introducir el siguiente comando para lanzar el servicio de OctoPrint y comprobar que funciona correctamente:
+\begin{enumerate}
+\item \emph{~/OctoPrint/venv/bin/octoprint serve}
+\end{enumerate}
+
+La primera vez que se lanza el servicio de OctoPrint debemos configurar los parámetros de la impresora que vayamos a utilizar tales como las medidas de la cama, etc.
+
+Debemos repetir estos pasos con cada usuario que hayamos creado anteriormente.
+
+
+\section{Manual del usuario}
+
+A continuación explicaremos los pasos necesarios para utilizar nuestra aplicación de forma correctamente.
+
+\subsection{Login}
+
+Una vez lancemos nuestra aplicación se nos abrirá la página de inicio de sesión en la que deberemos introducir nuestro usuario y contraseña. En la siguiente figura vemos nuestra página de inicio de sesión.
+
+\imagen{login}{Página de inicio de sesión de nuestra aplicación.}
+
+
+En caso de que el inicio de sesión haya sido incorrecto la página nos indicará que ese usuario o contraseña no es correcto y tendremos que volver a introducir el usuario y la contraseña, mientras que si el inicio de sesión ha sido satisfactorio se abrirá la página principal de la aplicación con los permisos que tengamos dependiendo del usuario con el que hayamos iniciado sesión tal y como vemos a continuación.
+
+\imagen{aplicacionAdmin}{Aplicación cuando hemos iniciado sesión como \textit{Admin}.}
+
+A continuación podemos ver una vista de la aplicación cuando hemos iniciado sesión como \textit{Visor}; podemos ver que en este caso no tenemos disponible ninguna funcionalidad, tan sólo es un visor para poder visualizar las maquinas pero no podemos ejercer ninguna acción sobre las máquinas.
+
+\imagen{visor}{Aplicación cuando hemos iniciado sesión como \textit{Visor}.}
+
+\subsection{Funcionalidad}
+
+Una vez hemos iniciado sesión en la aplicación tendremos acceso a las funcionalidades de la aplicación tales como comenzar, pausar o cancelar una impresión. Por ejemplo, cuando una máquina está \textit{Operativa} quiere decir que está lista para comenzar una impresión y la tarjeta contará con la siguiente botonera:
+
+\imagen{botonera}{Botonera cuando la impresora está operativa.}
+
+Desde esta botonera solo podemos comenzar la impresión ya que los demás botones están desactivados hasta que comience la impresión.
+
+En cambio cuando una impresora esta imprimiendo tendremos la siguiente botonera disponible:
+
+\imagen{botoneraEnable}{Botonera cuando la impresora esta imprimiendo.}
+
+Como la impresora ya está imprimiendo tendremos habilitados los botones de pausar y cancelar impresión, mientras que el botón de comenzar impresión estará deshabilitado.
+
+En la parte de superior de nuestra aplicación (\textit{navbar}) tenemos todos los nombres de las impresoras con las que cuenta nuestra aplicación. Si pulsamos sobre cada uno de esos nombres nos dirigirá a la instancia de OctoPrint de esa máquina seleccionada. 
+En la parte derecha del \textit{navbar} nos indicará el tipo de usuario con el que hemos iniciado sesión y un botón para cerrar la sesión actual que nos llevará otra vez a la página de inicio de sesión.
+
+\imagen{navbar}{\textit{Navbar} de nuestra aplicación.}
+
+
+
+
+

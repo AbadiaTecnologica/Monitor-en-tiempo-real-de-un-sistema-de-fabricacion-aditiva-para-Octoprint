@@ -1,0 +1,37 @@
+\capitulo{3}{Conceptos teóricos}
+
+A continuación vamos a explicar algunos conceptos que son necesarios para comprender como funciona nuestra aplicación web.
+
+\section{OctoPrint}
+
+OctoPrint \cite{octoprint} es una interfaz web que sirve para controlar y monitorizar todos los aspectos que tienen que ver con las impresoras 3D desde el propio navegador.
+
+OctoPrint está principalmente diseñado para funcionar sobre una Raspberry Pi conectada a una impresora 3D. El funcionamiento es sencillo, OctoPrint crea un servidor local desde el que se lanzan todos los servicios para controlar la máquina.
+
+\imagen{octoprint}{Imagen correspondiente a una instancia de OctoPrint. Imagen extraída de \cite{wiki:octoprintimagen}.}
+
+\section{API REST}
+
+Para entender en que consiste la API \cite{api} de OctoPrint deberemos comprender qué es una API REST.
+
+Una API REST es el conjunto de funciones que los desarrolladores podemos usar para obtener información de una aplicación web. Las solicitudes y las respuestas funcionan a través del protocolo HTTP. 
+
+Las operaciones más utilizadas suelen ser GET y POST que son las que hemos usado en nuestra aplicación.
+
+\section{JSON}
+
+JSON \cite{wiki:json} es un formato de texto ligero para intercambio de datos.
+
+Es el formato más utilizado cuando llevamos a cabo una comunicación con una API. Como por ejemplo, en nuestro caso cuando hacemos una petición GET a la API de OctoPrint ésta nos devuelve un archivo JSON en el que se encuentran los datos de las impresoras 3D.
+
+\imagen{json}{Ejemplo de un archivo JSON en una petición GET. Imagen extraída de \cite{wiki:jsonimagen}.}
+
+\section{G-code}
+
+G-code \cite{wiki:gcode}, se conoce también como RS-274, es el nombre que recibe el lenguaje de programación más usado en control numérico.
+
+Es usado principalmente en automatización y forma parte de la ingeniería asistida por computadora.
+
+En el mundo de la impresión 3D se usa este lenguaje de programación para codificar los archivos que le enviamos a las impresoras 3D. Se podría decir que es un archivo con las coordenadas que debe seguir la impresora para realizar la impresión completa.
+
+

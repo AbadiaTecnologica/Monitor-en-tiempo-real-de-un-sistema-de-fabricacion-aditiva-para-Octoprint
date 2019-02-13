@@ -1,0 +1,55 @@
+\apendice{Especificación de diseño}
+
+\section{Introducción}
+
+A continuación vamos a especificar el procedimiento que hemos seguido para organizar nuestro proyecto y explicaremos cuáles han sido las razones para llevar a cabo el desarrollo de esta manera. 
+
+\section{Diseño de datos}
+
+Es importante realizar un buen diseño de datos antes de ponernos a codificar nuestro proyecto, de esta manera podemos valorar la complejidad y la eficiencia de usar unas estructuras de datos u otras.
+
+Todos los datos que recopilamos en nuestra aplicación están en formato \textit{JSON} pero los datos se almacenan en un diccionario de diccionarios en \textit{Python}. Esta estructura es la más óptima para nuestro proyecto ya que tenemos un diccionario y dentro de él tantos diccionarios como máquinas tenga nuestra aplicación con los datos correspondiente de cada máquina. Siguiendo esta estructura de datos es muy fácil para nosotros acceder a los datos desde el índice de la aplicación ya que solo tendremos que poner el nombre del diccionario principal y pasarle como clave la máquina de la que queremos obtener los datos; de esta manera obtenemos una lista con todos los datos que hemos guardado sobre la máquina seleccionada.
+
+A continuación, en la figura C1, podemos ver la estructura en la que guardamos los datos de las máquinas.
+\imagen{diccionarios}{Ejemplo de cómo se organizan los datos.}
+
+En la figura C2 podemos ver un ejemplo de cómo accedemos a la información de los diccionarios desde el propio índice de la aplicación.
+
+\imagen{informacion}{Ejemplo de cómo accedemos a la información desde el índice de la aplicación.}
+
+\section{Diseño procedimental}
+En el momento en el que la aplicación está en línea se abrirá una ventana para que iniciemos sesión; deberemos introducir un usuario y una contraseña y se comprobará si ese usuario está incluido en la base de datos. Si el usuario no está presente en la base de datos la aplicación nos devolverá un error y volverá cargar la página de inicio de sesión, mientras que si el usuario con el que hemos iniciado sesión es correcto la aplicación cargará el monitor con los permisos que cuente el usuario que haya iniciado sesión.
+
+A continuación, en la figura C3, vamos a ver un diagrama del diseño procedimental de nuestra aplicación.
+
+\imagen{procedimental}{Ejemplo del diseño procedimental de nuestra aplicación.}
+
+\section{Diseño arquitectónico}
+
+Para llevar a cabo la codificación de nuestro proyecto hemos utilizado tres paquetes principales:
+
+\begin{itemize}
+\item \textbf{Principal}: en este paquete tenemos toda la codificación principal de la aplicación, es decir, todo el \textit{back-end} de la aplicación y la base de datos con los usuarios.
+\item \textbf{Static}: en este apartado metemos todos los estáticos de la aplicación los archivos con las imágenes, las fuentes, etc.
+\item \textbf{Templates}: aquí tenemos todos archivos \textit{HTML} para mostrar todas las vistas de la aplicación como el \textit{login} y la página principal.
+\end{itemize}
+
+\subsection{Principal}
+
+Tal y como hemos dicho, en este apartado tenemos la parte principal de la aplicación que se llama \textit{monitor.py}, los archivos CSV con todos los datos de las máquinas y todos los archivos de la base de datos que contienen los usuarios con los que está permitido acceder a nuestra aplicación web.
+
+\imagen{general}{Paquete principal de la aplicación.}
+
+\subsection{Static}
+
+En el apartado de los estáticos contamos con todos los archivos de las hojas de estilo, las imágenes, las fuentes, etc. Se organiza todo el carpetas tal y como vemos en la figura C5.
+
+\imagen{estaticos}{Paquete \textit{static} de nuestra aplicación.}
+
+\subsection{Templates}
+
+En el apartado de las plantillas tenemos todos los archivos \textit{HTML} con los que cuenta nuestra aplicación. En nuestro caso tenemos un archivo que se llama \textit{base.html} que cuenta con el \textit{navbar} y el \textit{footer} de la aplicación, por otro lado tenemos el \textit{index.html} que se corresponde con las tarjetas que muestran la información de las máquinas y por último tenemos el \textit{login.html} que es la página de inicio de sesión.
+
+\imagen{template}{Paquete \textit{Template} de nuestra aplicación.}
+
+

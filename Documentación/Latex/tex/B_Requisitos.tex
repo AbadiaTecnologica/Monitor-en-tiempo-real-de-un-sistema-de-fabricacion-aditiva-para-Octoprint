@@ -1,0 +1,181 @@
+\apendice{Especificación de Requisitos}
+
+\section{Introducción}
+
+En este apartado vamos a llevar a cabo un estudio de los objetivos y requisitos establecidos previamente teniendo en cuenta las necesidades de la empresa \textbf{Abadía Tecnológica} antes del desarrollo del producto.
+
+\section{Objetivos generales}
+
+El objetivo principal de nuestra aplicación es conseguir controlar el estado de una granja de impresoras desde una misma aplicación y de una manera simple e intuitiva; de esta manera podemos saber si una impresora está operativa, está imprimiendo o ha tenido algún error de una manera rápida.
+\section{Catálogo de requisitos}
+ 
+ A continuación vamos a definir los requisitos tanto funcionales como no funcionales con los que cuenta nuestra aplicación:
+
+\subsection{Requisitos funcionales}
+
+\begin{itemize}
+\item \textbf{RF1-Monitorizar el sistema}: monitorizar el estado de una granja de impresoras 3D conectadas entre sí.
+\item \textbf{RF2-Sistema de usuarios}: crear un sistema de gestión de usuarios y permisos que garanticen la seguridad de la aplicación.
+\item \textbf{RF3-Comenzar impresión}: creación de un sistema que permita comenzar la impresión de una pieza desde nuestra aplicación.
+\item \textbf{RF4-Pausar impresión}: creación de un sistema que permita pausar la impresión en curso desde la propia aplicación.
+\item \textbf{RF5-Cancelar impresión}: creación de un sistema que permita cancelar una impresión en curso desde la propia aplicación.
+\item \textbf{RF6-Conectar impresora}: funcionalidad que permita conectar una impresora 3D a  nuestra aplicación.
+\item \textbf{RF7-Desconectar impresora}: funcionalidad que permita desconectar una impresora 3D de nuestra aplicación.
+\end{itemize}
+
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+\item \textbf{RNF1-Diseño adaptable}: la aplicación se adaptará dinámicamente a cualquier resolución de pantalla y a cualquier tipo de dispositivo.
+\item \textbf{RNF2-Usabilidad}: la aplicación será lo suficientemente intuitiva para que cualquier usuario sea capaz de utilizarla sin necesidad de ningún tipo de cualificación técnica.
+\item \textbf{RNF3-Autonomía}: la aplicación deberá recargarse ella misma cada pocos segundos con el fin de que la información sea lo más fiable posible.
+\item \textbf{RNF4-Escalabilidad}: debe ser posible y sencillo aumentar el número de máquinas con las que cuenta nuestra aplicación.
+
+\end{itemize}
+\section{Diagrama de casos de uso}
+
+En la figura B1 podemos ver todos los casos de uso correspondientes a nuestra aplicación web en la que podemos diferenciar tres actores principales.
+
+\imagen{diagrama}{Diagrama de casos de uso.}
+
+\break
+
+\newpage
+
+\section{Especificación de requisitos}
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 1}            & \cellcolor[HTML]{EFEFEF}\textbf{Monitorizar el sistema}                                                                   \\ \hline
+\textbf{Descripción}     & Se podrá visualizar la vista general de la aplicación con todas las impresoras 3D conectadas entre sí. \\ \hline
+\textbf{Precondiciones}  & Previamente, el usuario se ha identificado de manera correcta.\\ \hline
+\textbf{Acciones}        & El usuario visualiza el estado de todas la impresoras conectadas a la aplicación.\\ \hline
+\textbf{Postcondiciones} & La aplicación muestra el estado de la impresoras.                   \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF1 - Monitorizar el sistema}
+\label{RF1}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 2}            & \cellcolor[HTML]{EFEFEF}\textbf{Sistema de usuarios}                                                              \\ \hline
+\textbf{Descripción}     & Nos podremos identificar en la aplicación dependiendo del tipo de usuario que seamos. \\ \hline
+\textbf{Precondiciones}  & Ninguna.\\ \hline
+\textbf{Acciones}        & El usuario deberá introducir un usuario y contraseña correcto con el fin de identificarse como un grupo de usuarios determinado.            \\ \hline
+\textbf{Postcondiciones} & Si el usuario y contraseña es correcto se mostrará una vista de la aplicación completa que dependerá del usuario con el que hemos iniciado sesión. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF2 - Sistema de usuarios}
+\label{RF2}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 3}            & \cellcolor[HTML]{EFEFEF}\textbf{Comenzar impresión}                                                              \\ \hline
+\textbf{Descripción}     & Podremos comenzar la impresión de una pieza desde el propio monitor de la aplicación \\ \hline
+\textbf{Precondiciones}  & \begin{itemize}
+\item Deberemos haber iniciado sesión previamente en la aplicación.
+\item Deberemos haber cargado previamente el G-code en la instancia de OctoPrint.
+\end{itemize} \\ \hline
+\textbf{Acciones}        & El usuario deberá pulsar sobre el botón destinado para comenzar la impresión.\\ \hline
+\textbf{Postcondiciones} & Comenzará la impresión de la pieza que haya sido cargada previamente. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF3 - Comenzar impresión}
+\label{RF3}
+\end{table}
+
+
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 4}            & \cellcolor[HTML]{EFEFEF}\textbf{Pausar impresión}                                                              \\ \hline
+\textbf{Descripción}     & Podremos pausar la impresión en curso de una pieza desde el propio monitor de la aplicación \\ \hline
+\textbf{Precondiciones}  & \begin{itemize}
+\item Deberemos haber iniciado sesión previamente en la aplicación.
+\item La impresora deberá estar imprimiendo.
+\end{itemize} \\ \hline
+\textbf{Acciones}        & El usuario deberá pulsar sobre el botón destinado para pausar la impresión.\\ \hline
+\textbf{Postcondiciones} & La impresión en curso se pausará indefinidamente. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF4 - Pausar impresión}
+\label{RF4}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 5}            & \cellcolor[HTML]{EFEFEF}\textbf{Cancelar impresión}                                                              \\ \hline
+\textbf{Descripción}     & Podremos cancelar la impresión en curso de una pieza desde el propio monitor de la aplicación \\ \hline
+\textbf{Precondiciones}  & \begin{itemize}
+\item Deberemos haber iniciado sesión previamente en la aplicación.
+\item La impresora deberá estar imprimiendo.
+\end{itemize} \\ \hline
+\textbf{Acciones}        & El usuario deberá pulsar sobre el botón destinado para cancelar la impresión.\\ \hline
+\textbf{Postcondiciones} & La impresión en curso se cancelará. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF5 - Cancelar impresión}
+\label{RF5}
+\end{table}
+
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 6}            & \cellcolor[HTML]{EFEFEF}\textbf{Conectar impresora}                                                              \\ \hline
+\textbf{Descripción}     & Podremos conectar una impresora a nuestra aplicación. \\ \hline
+\textbf{Precondiciones}  & \begin{itemize}
+\item La impresora deberá estar conectada mediante el puerto serie.
+\item La instancia de OctoPrint deberá estar lanzada.
+\end{itemize} \\ \hline
+\textbf{Acciones}        & El usuario deberá pulsar sobre el botón destinado para conectar la impresora 3D.\\ \hline
+\textbf{Postcondiciones} & La impresora se conectará a la aplicación. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF6 - Conectar impresora}
+\label{RF6}
+\end{table}
+
+
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |p{0.8\linewidth}|}
+\hline
+\textbf{RF 7}            & \cellcolor[HTML]{EFEFEF}\textbf{Desconectar impresora}                                                              \\ \hline
+\textbf{Descripción}     & Podremos desconectar una impresora de nuestra aplicación. \\ \hline
+\textbf{Precondiciones}  & \begin{itemize}
+\item La impresora deberá estar conectada mediante el puerto serie.
+\item La instancia de OctoPrint deberá estar lanzada.
+\item La impresora deberá estar conectada a nuestra aplicación.
+\end{itemize} \\ \hline
+\textbf{Acciones}        & El usuario deberá pulsar sobre el botón destinado para desconectar la impresora 3D.\\ \hline
+\textbf{Postcondiciones} & La impresora se desconectará de la aplicación. \\ \hline
+\textbf{Importancia}     & Alta.                                                                                                                  \\ \hline
+\end{tabular}
+\caption{RF7 - Desconectar impresora}
+\label{RF7}
+\end{table}
+
+
+

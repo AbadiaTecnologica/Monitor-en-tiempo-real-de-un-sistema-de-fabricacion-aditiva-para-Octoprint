@@ -1,0 +1,212 @@
+\capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
+
+A continuación vamos explicar los detalles principales del desarrollo de nuestro proyecto. Haremos un repaso de todos los pasos importantes que hemos tenido que llevar a cabo para que nuestra aplicación web funcione sin problemas.
+\section{Instalación de las herramientas}
+\subsection{Instalación de las instancias de OctoPrint}
+
+Para explicar los aspectos más relevantes de nuestro proyecto deberemos empezar comentando qué fue lo primero que hicimos.
+
+En nuestro caso, lo primero que hicimos fue instalar Debian en su versión número 9 en el ordenador que hará la función de servidor.
+
+Para evitar problemas deberemos crear un usuario por cada instancia de OctoPrint que vayamos a instalar; de esta manera podemos diferenciar cada máquina con un usuario.
+
+El siguiente paso que debemos hacer es instalar una instancia de OctoPrint por cada una de las máquinas que queramos tener en nuestra aplicación web. Para ello deberemos clonar el repositorio de GitHub de OctoPrint \cite{codigoOctoprint}. Además de clonar el repositorio de GitHub deberemos crear un entorno virtual de Python y ejecutar una serie de comandos que dejo a continuación:
+
+\begin{verbatim}
+1. git clone https://github.com/foosel/OctoPrint
+
+2. cd OctoPrint
+
+3. virtualenv venv
+
+4. ./venv/bin/pip install pip --upgrade
+
+5. ./venv/bin/python setup.py install
+
+6. mkdir ~/.octoprint
+\end{verbatim}
+
+Para probar si la instalación ha ido bien, deberemos introducir el siguiente comando:
+
+\begin{verbatim}
+~/OctoPrint/venv/bin/octoprint serve
+\end{verbatim}
+
+Deberemos repetir esta operación con cada usuario que hayamos creado previamente.
+
+
+\subsection{Primeros pasos}
+
+La primera vez que arrancamos una instancia de OctoPrint deberemos seguir el asistente de instalación. Es muy sencillo, no tienen ninguna complicación, tan solo deberemos seguir los pasos indicados e indicar el tamaño de la cama caliente de nuestra impresora 3D.
+
+Una vez tengamos bien configurado nuestro OctoPrint deberemos ir al apartado de configuración y guardaremos el Token de la API. Tenemos que tener en cuenta que es una clave diferente para cada máquina.
+
+\imagen{tokenapi}{Acceder al Token de la API.}
+
+Una vez tengamos el Token anotado podremos comenzar a desarrollar nuestra aplicación.
+
+\section{Funcionalidad}
+
+\subsection{Leer datos del CSV}
+
+Una vez tenemos todos los datos de la impresora 3D tales como puerto, nombre de la máquina, Token de la API procederemos a crear los archivos CSV con todos los datos tal y como se ve en la siguiente ilustración:
+
+\imagen{csvDatos}{Datos de las impresoras en formato CSV.}
+
+A continuación deberemos leer los datos de este archivo desde nuestro 'back-end' de la aplicación. Durante la lectura del archivo iremos guardando la información en un diccionario de Python. De esta manera tendremos los datos de todas las máquinas organizados en un diccionario y no tendremos que editar el código cada vez que queramos añadir una máquina nueva; tan solo tendremos que añadir los datos de la máquina en el archivo CSV.
+
+\subsection{Peticiones GET a la API}
+
+La API que dispone OctoPrint cuenta con numerosos comandos para extraer la información de las impresoras 3D. Dependiendo de la información que necesitemos usaremos unos comandos u otros. Los comandos que hemos usado en la aplicación web son \textit{Printer} y \textit{Job}.
+\begin{itemize}
+\item \textit{Printer}: mediante este comando podemos obtener información sobre los parámetros de la impresora, como estado, temperaturas, etc.
+
+\item \textit{Job}: con este otro comando podemos obtener información sobre la pieza actual que se está imprimiendo.
+
+\end{itemize}
+ 
+Si la petición ha funcionado correctamente, obtendremos un archivo de tipo JSON con toda la información de la máquina. 
+
+Además, en la función que se encarga de realizar las peticiones deberemos incluir una serie de excepciones para que la aplicación siga funcionando aunque alguna impresora 3D nos devuelva un error. 
+
+Debemos saber que cuando generamos una petición GET ésta nos devuelve una serie de números que nos indican como ha ido dicha petición. Tipos de respuestas de una petición GET en nuestra aplicación:
+\begin{itemize}
+\item 200: la petición ha salido correctamente.
+\item 204: la respuesta de la API no tiene contenido.
+\item 404: no hay comunicación por parte del servidor.
+\item 409: la impresora no está operativa.
+\end{itemize}
+
+Identificando este tipo de respuestas podemos capturar los posibles errores que se pueden producir en la aplicación. De esta manera si se producen alguno de ellos identificaremos el error pero la aplicación seguirá funcionando sin problemas. Capturando dichas respuestas nuestra aplicación ganará en estabilidad.
+
+\subsubsection{Extraer la información útil del archivo JSON}
+
+Lo que hacemos a continuación es llamar a otra función que se encarga de leer todos los datos del JSON y filtramos solo los datos y los introducimos en un diccionario de Python. De esta manera tendremos un diccionario de Python con todos los datos que nos interesan, es decir, sólo los que vamos a mostrar en nuestra aplicación.
+
+Una vez tengamos todos los datos en sus sitio, devolveremos el diccionario para poder mostrarlo en nuestra aplicación.
+
+
+\subsection{Peticiones POST a la API}
+
+El otro tipo de operaciones que usamos en nuestra aplicación son las peticiones POST. 
+
+La principal diferencia entre una petición GET y una POST, es que la petición GET aparece en la URL y por tanto es visible para el usuario. Mientras que si hacemos una petición POST ésta no sale en la URL y es transparente al usuario.
+
+Por este motivo, cuando nosotros queremos que la API nos de información lo hacemos con una petición GET, pero cuando queremos dar una orden, como por ejemplo desconectar una impresora 3D usamos una petición POST ya que debemos  incluir el Token de la API en el comando y esa información debe permanecer oculta.
+
+A continuación vamos a explicar cómo se realiza la desconexión de una máquina usando una petición POST.
+
+Nuestra petición POST está compuesta principalmente por dos elementos llamados 'data' y 'headers'.
+
+El elemento 'headers' contiene el tipo de archivo que estamos enviando y el Token correspondiente a impresora 3D sobre la que queremos ejecutar la operación.
+
+Y el elemento 'data' contiene el comando que se va a ejecutar en la impresora, en este caso es la operación de desconectar una máquina.
+
+En la figura 59 se muestra un ejemplo de cómo se realiza la desconexión en nuestra aplicación web:
+
+\imagen{desconectar}{Desconexión de una máquina en nuestra aplicación web.}
+
+\subsection{Añadir nuevas impresoras}
+
+En la última versión de la aplicación hemos mejorado enormemente ésta funcionalidad. En antiguas versiones si queríamos añadir alguna máquina teníamos que hacer la instalación estándar de OctoPrint pero luego teníamos que entrar en el \textit{back-end} de la aplicación y teníamos que añadir en un diccionario de Python todos los datos de configuración tales como Token de la API, puerto de conexión, nombre de la máquina, etc. Luego teníamos que ir al archivo HTML y añadir línea a línea todas las características que queríamos mostrar, ya que la interfaz desarrollada en ese momento mostraba la información de cada máquina por separado, es decir, por cada cada máquina se mostraba en pantalla lo que hemos denominado una tarjeta informativa.
+
+Con el fin de mejorar la escalabilidad de la aplicación hemos incluido el uso de archivos CSV. Al añadir esta funcionalidad sólo tenemos que añadir todos los datos de la nueva impresora en el archivo CSV. Es decir, no tenemos que modificar el código de la aplicación. En el HTML tampoco deberemos modificar nada puesto que ahora solo existe una tarjeta a partir de la cual se dibuja el estado de todas las impresoras.
+
+\subsection{Scripts}
+
+Ésta ha sido una tarea especialmente complicada ya que no tenía mucha experiencia previa tratando con este tipo de tareas.
+
+Principalmente debemos modificar dos \textit{Scripts}  que se generan en la instalación de OctoPrint. En el servidor los \textit{Scripts} se encuentran situados en las siguientes rutas \textit{/etc/init.d y etc/default}.
+
+Tenemos que tener en cuenta que tenemos un \textit{Script} por cada instancia de OctoPrint por lo que tenemos que duplicar el \textit{Script} tantas veces como máquinas tengamos instaladas en la aplicación. Deberemos modificar todos los \textit{Scripts} creando una variable que dependa del número de máquina. En nuestro caso hemos creado un variable llamada \textit{INSTANCENUMBER} que se incrementa con cada máquina. Una vez tengamos esto, deberemos cambiar el nombre del paquete añadiendo el nombre de la variable tal y como vemos a continuación:
+
+\imagen{script}{Ejemplo de nuestro \textit{Script}.}
+
+Deberemos seguir los mismos pasos para los \textit{Scripts} que se encuentran en las dos rutas mencionadas anteriormente.
+
+Una vez hayamos seguido todos estos pasos deberemos ponernos con el \textit{Script} que se encarga de lanzar nuestra aplicación.
+
+Con la aplicación copiada en la raíz del servidor deberemos copiar los \textit{Scripts} anteriormente citados una vez más, pero esta vez no tendremos la variable \textit{INSTANCENUMBER} sino que deberemos cambiar el nombre del paquete por el que tiene nuestra aplicación, en nuestro caso \textit{monitorOcto} e indicaremos la ruta en la que se encuentra dicho archivo tal y como mostramos a continuación:
+
+\imagen{monitor}{Ejemplo del \textit{Script} que lanza nuestro monitor.}
+
+En el código de nuestra aplicación deberemos asegurarnos que la dirección desde la que pedimos los datos es la misma que tiene el servidor y también tenemos que tener en cuenta el puerto sobre el que queremos que funcione nuestra aplicación, para ello deberemos indicarlo en la configuración de Flask dentro del archivo \textit{monitorOcto.py}.
+
+
+\section{Diseño de la interfaz}
+\subsection{Vista general de la aplicación}
+
+Uno de nuestros objetivos era mostrar una tarjeta por cada máquina que tengamos incluida en la aplicación. Además, ésta tarjeta tiene un color diferente dependiendo del estado en que se encuentre la máquina. 
+
+En cada tarjeta mostraremos los datos que para nosotros son interesantes, en nuestro caso son:
+\begin{itemize}
+\item \textbf{Estado}: muestra el estado de la máquina en todo momento. Puede ser imprimiendo, operativa o que la máquina tenga algún error.
+\item \textbf{Tiempo Restante}: si la máquina está imprimiendo, en la tarjeta se mostrará el tiempo esperado restante de impresión.
+\item \textbf{Nombre}: muestra el nombre de la pieza que se está imprimiendo.
+\item \textbf{Barra de progreso}: se muestra una barra de progreso para identificar de una manera más visual el tiempo restante de impresión.
+\item \textbf{Extrusor}: se muestra la temperatura que tiene el extrusor actualmente y a su derecha la temperatura que hemos prefijado en el G-code o desde la propia máquina.
+\item \textbf{Cama}: si la impresora tiene ésta característica se mostrará otro apartado que indicará la temperatura actual de la cama y la temperatura que hemos prefijado con anterioridad.
+\item \textbf{Botonera}: por último mostraremos una botonera que cambia dependiendo del estado de la impresora. La botonera permite comenzar, pausar o cancelar una impresión.
+\end{itemize}
+
+En la figura 5.12 veremos un ejemplo de cómo mostramos los datos una 
+impresora 3D sobre nuestra aplicación:
+
+\imagen{Imprimiendo}{Ejemplo de de una máquina imprimiendo en la aplicación.}
+
+Con estas tarjetas alcanzamos uno de los objetivos de nuestra aplicación que es la  de mostrar el estado de varias impresoras 3D desde una misma aplicación web. Estas tarjetas también nos permiten controlar el estado de cada máquina de una manera más rápida y sencilla. En la figura 5.13 podemos ver una vista general de la aplicación con siete máquinas funcionando simultáneamente.
+
+\imagen{VistaMonitor}{Vista completa de nuestra aplicación.}
+
+El color de cada tarjeta nos permite identificar los cuatro estados principales de cada impresora, que son:
+
+\begin{itemize}
+\item \textbf{Operativa}: la tarjeta tendrá un color verde para indicar que todo está correcto y está lista para imprimir. Podemos usar el botón de imprimir para comenzar la impresión siempre que tengamos un \textit{G-code} cargado.
+
+\item \textbf{Imprimiendo}: la tarjeta tendrá una tonalidad azul y podemos usar los botones para pausar o cancelar la impresión en curso.
+
+\item \textbf{Pausa}: la tarjeta estará con una tonalidad anaranjada. En este estado podemos utilizar los botones para retomar la impresión o cancelarla.
+
+\item \textbf{Error}: en este caso la tarjeta estará de color rojo. El estado de error puede venir de dos motivos principales: el primero es que la impresora nos devuelva un error y en este caso nos dará información del error; y el segundo motivo es que puede que no esté lanzado el servicio de OctoPrint y en ese caso así nos lo hará saber la aplicación.
+\end{itemize}
+
+\subsection{Identificación de usuarios}
+
+La aplicación desarrollada dispone además de un \textit{Login} para poder llevar a cabo la identificación de los usuarios y poder así filtrar qué tipo de acciones pueden ejecutar cada perfil de usuario. 
+
+Para nuestro proyecto hemos identificado tres grupos de usuarios y hemos creado una pequeña base de datos para añadir los usuarios que necesitamos.
+
+\begin{itemize}
+\item \textbf{Admin}: es el administrador de la aplicación. Tiene acceso a todos los elementos de la aplicación y en un futuro será el encargado de añadir usuarios a la base de datos.
+\item \textbf{Operador}: tendrá acceso a todas las funcionalidades del sistema salvo a la creación de nuevos usuarios.
+\item \textbf{Visor}: este usuario será el que más restricciones tenga ya que no podrá utilizar la botonera de funcionalidades \textit{(comenzar, pausar, cancelar)}  y tampoco deberá tener acceso a la conexión y desconexión de las impresoras 3D.
+
+
+\imagen{Login}{\textit{Login} de nuestra aplicación web}
+
+Tal y como sabemos, dependiendo del tipo de usuario con el que se inicie sesión tenemos disponibles unas funcionalidades u otras. En la figura 5.15 se muestra un ejemplo de como se muestra la aplicación cuando hemos accedido como \textit{Admin}.
+
+\imagen{aplicacionAdmin}{Vista de la aplicación cuando eres \textit{Admin} }
+
+A continuación vemos la vista de la aplicación cuando eres un \textit{Visor}, en este caso no tenemos disponible ninguna funcionalidad.
+
+\imagen{visor}{Vista de la aplicación cuando eres \textit{Visor}}
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

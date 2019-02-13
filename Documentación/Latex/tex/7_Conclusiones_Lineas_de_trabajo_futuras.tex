@@ -1,0 +1,34 @@
+\capitulo{7}{Conclusiones y Líneas de trabajo futuras}
+
+\section{Conclusiones}
+
+Ahora que hemos concluido el desarrollo de nuestra aplicación web podemos decir que hemos conseguido cumplir todos los objetivos que nos propusimos al principio del desarrollo del proyecto.
+
+He aprendido a usar herramientas como Flask, Nginx o SQLite y lenguajes como JavaScript y HTML con los que apenas tenía experiencia previa.
+
+Por otra parte, también he adquiridos conocimientos sobre la impresión 3D ajenos a los ámbitos de la carrera.
+
+También nos hemos encontrado alguna limitación: para el desarrollo de la totalidad de nuestro proyecto hemos tenido que solicitar la cesión de recursos a la empresa \textbf{Abadía Tecnológica}, la cual nos ha dejado las impresoras 3D y el hardware necesario para llevar a cabo este proyecto.
+
+Además, una de las partes más complejas del desarrollo ha sido la de conseguir que funcione nuestra aplicación en el servidor; para ello hemos tenido que modificar varios \textit{scripts} en Bash y no ha sido una tarea sencilla.
+
+
+\section{Líneas de trabajo futuras}
+
+Tal y como hemos comentado anteriormente, el desarrollo de nuestra aplicación no concluye aquí; la empresa que ha confiado en nosotros para el desarrollo de esta aplicación quiere continuar con el proyecto.
+
+\subsection{Cola de impresión}
+
+Tenemos previsto incluir una cola de impresión, que actualmente se está desarrollando por separado, en nuestro monitor. En el momento que entre un pedido nuevo compruebe que máquina es la mejor opción para imprimir ese pedido y le asigne automáticamente a una impresora en concreto. Como esta aplicación contará con una base de datos propia, sería interesante incluir nuestros usuarios en esa base de datos.
+
+\subsection{Creación de un Log}
+
+Otra cosa que sería muy interesante añadir es un \textit{ archivo log} que guarde los registros de nuestra aplicación, de manera que si alguna máquina produce algún error podamos entender rápidamente por qué se ha producido dicho error.
+
+\subsection{Diferenciación de usuarios}
+
+Actualmente, el usuario \textit{Admin} y  \textit{Operador} tienen los mismos permisos, en un futuro próximo esto no será así.
+
+La idea original es que el usuario \textit{Admin} se encargue de añadir nuevos usuarios a la base de datos, mientras que el operador tenga acceso a todos los parámetros de las impresoras, pero no deberá tener acceso a la base de datos. 
+
+

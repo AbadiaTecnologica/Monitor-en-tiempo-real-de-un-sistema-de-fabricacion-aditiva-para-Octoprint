@@ -1,0 +1,119 @@
+\capitulo{4}{Técnicas y herramientas}
+
+A continuación vamos a describir las principales técnicas y herramientas que hemos utilizado en nuestro proyecto.
+
+\section{Técnicas utilizadas para el desarrollo}
+\subsection{Python}
+
+Python \cite{wiki:python} es un lenguaje de programación interpretado cuya filosofía hace hincapié en una sintaxis que favorezca un código legible.
+
+Para nuestro proyecto hemos elegido Python como lenguaje de programación porque posee una licencia de código libre y además es un lenguaje multiplataforma.
+
+Para ejecutar nuestra aplicación deberemos utilizar una versión de Python 2.7 o superior.
+
+\subsection{Flask}
+Flask \cite{wiki:flask} es un web framework escrito en Python. Está clasificado como microframework porque no necesita otras librerías o herramientas para funcionar.
+
+En nuestro proyecto hemos utilizado Flask ya que nos aportaba numerosas ventajas frente a otras alternativas.
+\begin{itemize}
+    \item Usa el motor de plantillas Jinja2 \cite{wiki:jinja} el cual es completamente compatible con Bootstrap \cite{wiki:bootstrap}.
+    \item No se necesita una estructura de un servidor web, ya que Flask crea su propio servidor que se ejecuta en \textit{localhost}
+    \item Tiene un depurador y soporte integrado para pruebas unitarias.
+    \item Flask usa la misma estructura para todos sus proyectos.
+    \item Es compatible con Python3.
+    \item Flask es \textit{open source.}
+\end{itemize}
+
+
+\subsection{JavaScript}
+
+JavaScript \cite{wiki:javascript} es un lenguaje de programación que se define como orientado objetos, basado en prototipos, imperativo, débilmente tipado y dinámico.
+
+Generalmente JavaScript se usa en el lado del cliente. Su principal uso es en los navegadores, a la hora de crear páginas web. Con esto podemos hacer web dinámicas y hacer mejoras visuales en las páginas web.
+
+En nuestro caso, hemos utilizado JavaScript para ejecutar las funciones de conectar/desconectar la impresora, pausar, comenzar/cancelar  impresión y para introducir confirmación en todos los botones que tengan una función crítica.
+
+\subsection{HTML}
+
+HTML \cite{wiki:html} es un lenguaje marcado para la elaboración de páginas web. Actualmente se puede decir que HTML es el lenguaje estándar que se ha impuesto en la visualización de páginas web, ya que es el que todos los navegadores del momento han adoptado.
+
+Hemos utilizado HTML para crear la parte visible de nuestra aplicación web. 
+
+En nuestra aplicación hemos creado una base (que contiene en \textit{navbar} y el \textit{footer} de la aplicación), un índice (contiene la información que queremos mostrar de las máquinas) y por último, también contamos con la página del \textit{login}.
+
+
+\subsection{SQLite}
+
+SQLite \cite{wiki:sqlite} es un sistema de gestión de bases de datos relacional.
+
+Tenemos que saber que SQLite no es un motor de base de datos cliente-servidor al uso, sino que está integrado dentro del propio programa.
+
+Sabemos que hay mejores opciones a la hora de crear una base de datos, pero entendimos que nuestro proyecto no se centraba en la base de datos y no necesitábamos una base de datos tan grande, puesto que solo se iba a usar para la gestión de los usuarios. Es por esto que nos decidimos a utilizar SQLite en lugar de otras herramientas como MySQL o PostgreSQL.
+
+\subsection{Nginx}
+
+Nginx \cite{wiki:nginx} es un servidor web/proxy inverso de alto rendimiento y un proxy para protocolos de correo electrónico. Además tiene un licencia de software libre y de código abierto lo cual es perfecto para nuestra aplicación.
+
+En nuestro caso, hemos usado Nginx para que las llamadas a las impresoras desde el navegador fueran con un determinado nombre.
+
+\subsection{PyCharm}
+
+PyCharm \cite{wiki:pycharm} es un entorno de desarrollo integrado utilizado en la programación de las computadoras, especialmente en Python.
+
+Hemos utilizado PyCharm como nuestro IDE principal para desarrollar nuestro proyecto, ya que cuenta con la ventaja de ser multiplataforma y tiene soporte integrado para el control de versiones.
+
+Además, gracias a la cuenta de correo de la Universidad de Burgos tenemos acceso a una licencia de uso profesional de esta herramienta.
+
+
+\subsection{Bash}
+
+Bash \cite{wiki:bash} es un programa informático, cuya función consiste en interpretar órdenes, y un lenguaje de consola.
+
+Nuestra aplicación se ejecuta sobre un ordenador con Debian 9 instalado, y hemos que tenido que utilizar Bash para hacer una serie de scripts. Estos scripts se encargan de lanzar todas las instancias de OctoPrint y todas las cámaras que controlarán las impresoras.
+
+
+
+
+
+\subsection{Sublime Text}
+
+Sublime Text \cite{wiki:sublime} es un editor de texto y editor de código fuente escrito en C++ y en Python.
+
+Tomamos la decisión de utilizar este editor ya que es multiplataforma y completamente gratuito.
+
+Sublime Text lo hemos usado principalmente para la creación y edición de los scripts en Bash que hemos comentado anteriormente. Y en alguna que otra ocasión para editar los archivos HTML y CSS con los que cuenta nuestra aplicación web.
+
+
+
+\subsection{PuTTY}
+
+PuTTY \cite{wiki:putty} es un cliente SSH, Telnet, rlogin, y TCP raw con licencia libre. Anteriormente solo estaba disponible en Windows pero actualmente es un cliente multiplataforma.
+
+Nuestro uso principal de esta herramienta ha sido como cliente SSH para controlar el servidor donde corre nuestra aplicación web. De esta manera, podemos lanzar o detener nuestros scripts sin tener que estar en la misma localización que el servidor en el que se ejecuta nuestra aplicación.
+
+\section{Control de versiones y documentación}
+
+A continuación, vamos a explicar la herramienta que hemos usado para el control de versiones y la que hemos decidido utilizar para desarrollar la documentación nuestro proyecto.
+
+\subsection{GitHub}
+
+GitHub \cite{wiki:github} es una plataforma de desarrollo colaborativo para alojar proyectos y utiliza el control de versiones llamado Git.
+
+Por defecto todo el código que se aloja en esta página es de dominio público pero si compramos la versión de pago podemos hacer que nuestros repositorios sean privados. 
+
+Actualmente, gracias a la cuenta de correo de la Universidad de Burgos podemos tener repositorios privados sin tener que pagar por ello.
+
+En nuestro caso, hemos utilizado GitHub para llevar un control de versiones del proyecto.
+
+\subsection{LaTeX}
+
+LaTeX \cite{wiki:latex} es un sistema de composición de textos, orientado a la creación de documentos escritos.
+
+Hemos elegido LaTeX porque tiene una calidad tipográfica superior a la de otros editores convencionales. 
+
+Para nuestro proyecto hemos utilizado TexMaker en su versión para Mac OS para redactar la memoria y los anexos.
+
+
+
+
+

@@ -1,0 +1,89 @@
+\chapter[Documentación de programación]{Documentación técnica de programación}
+
+
+\section{Introducción}
+
+En este apartado de los anexos se explican los conceptos relacionados con el manual del programador y con la compilación, instalación y ejecución del proyecto para que alguna persona pueda continuar con el desarrollo de la aplicación web.
+
+\section{Estructura de directorios}
+
+El desarrollo de nuestro proyecto se ha llevado a cabo utilizando los siguientes directorios principales:
+
+\begin{itemize}
+\item \textbf{FlaskApp}: contiene el código fuente del proyecto con todos los archivos necesarios para ejecutar la aplicación.
+\item \textbf{Documentación}: contiene la documentación para poder comprender correctamente el funcionamiento de nuestra aplicación. 
+\end{itemize}
+
+\imagen{estructura}{Estructura de los directorios del proyecto.}
+\section{Manual del programador}
+
+\subsection{Instalación de Anaconda}
+
+La forma más sencilla de instalar un intérprete de 	\textit{Python} es instalando Anaconda. Para ello nos dirigimos a su web \cite{anaconda} y deberemos pulsar sobre el botón \textit{Download} tal y como se ve en la siguiente figura:
+
+\imagen{anaconda1}{Descarga del intérprete de Python.}
+
+Una vez hayamos descargado el archivo deberemos seguir las introducciones del instalador que aparece en pantalla.
+
+\imagen{anaconda2}{Instalador de Anaconda.}
+\subsection{Instalación de PyCharm}
+
+PyCharm el \textit{IDE} que hemos elegido para llevar a cabo la codificación de nuestro proyecto. Para instalar dicho entorno de desarrollo nos tenemos que dirigir a su página web \cite{pycharm} y pulsar sobre la versión que queremos descargar. Tal y como comentamos en la memoria gracias a la cuenta universitaria que nos otorga la Universidad de Burgos tenemos acceso a una licencia "Profesional" de este entorno de desarrollo, en nuestro caso es la versión que hemos utilizado.
+
+\imagen{Pycharm}{Descarga del entorno de desarrollo \textit{PyCharm}.}
+
+Cuando la descarga se haya completado deberemos seguir el instalador como tantas veces hemos hecho.
+
+\subsection{Instalación de Sublime Text}
+
+Sublime Text es un completo editor de texto que hemos utilizado sobre todo para editar los archivos \textit{HTML} que contienen las vistas de la aplicación. Para descargar éste editor de texto deberemos dirigirnos a su página web \cite{sublime} y pulsar sobre el botón de descargar.
+
+\imagen{sublime}{Descarga del editor de texto \textit{Sublime Text}.}
+
+Cuando se haya terminado de descargar seguiremos el instalador.
+
+ 
+\subsection{Instalación de PuTTY}
+
+PuTTY es el programa que hemos usado para gestionar, mediante el protocolo \textit{SSH}, el servidor donde está corriendo nuestra aplicación web. Para instalar éste programa debemos ir a su página web \cite{putty} y pulsar sobre el botón descargar.
+
+\imagen{putty}{Descarga del programa 	\textit{PuTTY}.}
+
+Una vez descargado seguiremos los pasos del instalador.
+
+\section{Compilación, instalación y ejecución del proyecto}
+
+Para instalar y ejecutar el proyecto debemos tener en cuenta que necesitamos tener al menos una instancia de OctoPrint instalada y funcionando sobre un servidor. 
+Cuando hayamos cumplido esta condición deberemos seguir los siguientes pasos para la ejecución del proyecto:
+
+\subsection{Importar el repositorio}
+
+Lo primero que debemos hacer es dirigirnos a la página web \cite{repositorio} del repositorio y descargarnos el proyecto desde el botón verde que pone \textit{Clone or download}  y luego en \textit{download zip} tal y como se ve en la siguiente figura:
+
+\imagen{clone}{Botón para descargar el repositorio.}
+
+Una vez hemos descargado y descomprimido el proyecto nos debemos dirigir al entorno de desarrollo que estemos usando, en nuestro caso \textit{PyCharm} y pulsar sobre el botón \textit{Open}.
+
+\imagen{open}{Botón para importar el proyecto.}
+
+Lo siguiente que debemos hacer es elegir el proyecto que acabamos de descargar y pulsar otra vez sobre el botón \textit{Open}  tal y como vemos en la siguiente imagen:
+
+\imagen{ruta}{Elegir la ruta donde se encuentra el proyecto.}
+
+Si hemos seguido estos pasos correctamente se nos abrirá nuestro entorno de desarrollo con el proyecto que hemos descargado de \textit{GitHub}.
+
+\subsection{Ejecución}
+
+Para ejecutar nuestro proyecto deberemos editar los archivos CSV que se encuentran dentro de nuestro proyecto y tendremos que copiar el token de API que nos proporciona OctoPrint y pegarlo en los archivos CSV que hemos comentado. Además también tendremos que cambiar el nombre de la impresora con el que queremos que se muestre en nuestra plataforma.
+
+Otra cosa que debemos modificar es la dirección IP sobre la que está corriendo el servidor: para ello nos dirigimos al archivo \textit{monitorOcto.py} y deberemos modificar la variable llamada \textit{host} tal y como vemos en la siguiente figura:
+
+\imagen{host}{Dirección sobre la que corre el servidor.}
+
+
+Una vez hayamos completado todos los pasos anteriores debemos posicionarnos sobre el archivo \textit{monitorOcto.py} pulsar con el botón derecho y hacer click sobre la opción \textit{run 'monitorOcto'} tal y como vemos en la siguiente figura:
+
+\imagen{run}{Ejecutar el proyecto.}
+
+Una vez esté el proyecto corriendo deberemos irnos a nuestro navegador predeterminado y escribir en la barra de busqueda \textit{localhost} y nos cargará una página con el \textit{login} de la aplicación que hemos desarrollado.
+
