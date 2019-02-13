@@ -126,9 +126,9 @@ d
                     {% else %}
                     <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
-                  <button type="button" class="btn btn-primary" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
-                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px;color: black"></i></button>
-                  <button type="button"class="btn disabled" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px; color: black"></i></button></p>
+                  <button type="button" class="btn btn-primary" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <em class="fa fa-print" style="font-size:24px"></em></button>
+                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-pause" style="font-size:24px;color: black"></em></button>
+                  <button type="button"class="btn disabled" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-stop" style="font-size:24px; color: black"></em></button></p>
                      </div>
                 {% endif %}
 
@@ -202,9 +202,9 @@ d
                     {% else %}
                     <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
-                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px"></i></button>
-                  <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-pause" style="font-size:24px;color: black"></i></button>
-                  <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px; color: black"></i></button></p>
+                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <em class="fa fa-print" style="font-size:24px"></em></button>
+                  <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionPausar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-pause" style="font-size:24px;color: black"></em></button>
+                  <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-stop" style="font-size:24px; color: black"></em></button></p>
                      </div>
                 {% endif %}
              <!-- {{fallos[key]}}-->
@@ -279,9 +279,9 @@ d
             <!-- Pusar o Cancelar impresion (Botonera) -->
              <div class="btn-group btn-group" role="group" style="text-align: center;">
               <p>
-                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <i class="fa fa-print" style="font-size:24px;color: black"></i></button>
-                  <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionReanudar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-play" style="font-size:24px"></i></button>
-                  <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <i class="fa fa-stop" style="font-size:24px"></i></button></p>
+                  <button type="button" class="btn disabled" style="padding: 8px;" onclick="confirmacionStart({{nombresMaquinas[key]["numMaquina"]}})"> <em class="fa fa-print" style="font-size:24px;color: black"></em></button>
+                  <button type="button" class="btn btn-warning" style="padding: 8px;" onclick="confirmacionReanudar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-play" style="font-size:24px"></em></button>
+                  <button type="button"class="btn btn-danger" style="padding: 8px;"onclick="confirmacionCancelar({{nombresMaquinas[key]["numMaquina"]}})" > <em class="fa fa-stop" style="font-size:24px"></em></button></p>
              </div>
 
               <!-- Cuando tenemos el dato por defecto significa que el servicio de OctoPrint no esta lanzado.-->
@@ -292,7 +292,7 @@ d
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
                 </h4>
                <p> El servicio de OctoPrint no esta en funcionamiento. </p>
-               <i class="fa fa-exclamation-triangle" style="font-size: 48px"></i>
+               <em class="fa fa-exclamation-triangle" style="font-size: 48px"></em>
 
 
             {% else %} <!-- Cuando el Octoprint funciona pero ha dado algun error -->
