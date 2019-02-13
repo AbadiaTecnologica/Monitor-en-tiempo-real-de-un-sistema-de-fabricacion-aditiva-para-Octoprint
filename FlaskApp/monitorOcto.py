@@ -1,12 +1,11 @@
 #!/usr/bin/python2.7
 
 
-'''
-__author__ = "David Zotes"
-__license__ = "GPL3.0"
-__version__ = "1.0.0"
-__email__ = "zotesgonzalez@gmail.com"
-'''
+
+#__author__ = "David Zotes"
+#__license__ = "GPL3.0"
+#__version__ = "1.0.0"
+#__email__ = "zotesgonzalez@gmail.com"
 
 from flask import Flask, render_template, redirect, url_for, request, session, abort
 from flask import jsonify
@@ -27,28 +26,28 @@ app = Flask(__name__)
 
 # Direccion sobre la que corre el Octoprint dentro del servidor.
 # host = "http://127.0.0.1"
-#Direccion sobre la que corre el Octoprint.
-host = "http://192.168.1.200"
+# Direccion sobre la que corre el Octoprint.
+host = "http://XXX.XXX.X.XXX"
 
-#Archivo files API Octoprint.
+# Archivo files API Octoprint.
 files = "files"
 
-#Archivo printer API Octoprint.
+# Archivo printer API Octoprint.
 printer = "printer"
 
-#Archivo job API Octoprint (para monitorizar las impresiones en curso).
+# Archivo job API Octoprint (para monitorizar las impresiones en curso).
 job = "job"
 
-#Direccion de la API para conectar o desconectar las impresoras mediante una peticion POST
-conn="connection"
+# Direccion de la API para conectar o desconectar las impresoras mediante una peticion POST
+conn = "connection"
 
 maquinas = list()
-#Lista en las que se guardan los datos utiles que vamos a mostrar.
+# Lista en las que se guardan los datos utiles que vamos a mostrar.
 valoresFiles = list()
 valoresPrinter = dict()
 valoresJob=dict()
 
-#Diccicionarios con clave el id de la maquina y valor los datos de cada maquina.
+# Diccicionarios con clave el id de la maquina y valor los datos de cada maquina.
 datosFinalesFiles = dict()
 datosFinalesPrinter = dict()
 datosFinalesJob = dict()
@@ -56,11 +55,11 @@ datosFinalesJob = dict()
 datosJsonPrinter = dict()
 datosJsonJob = dict()
 
-#Un diccionario para guardar los errores que se hayan podido producir en las peticiones a la API.
+# Un diccionario para guardar los errores que se hayan podido producir en las peticiones a la API.
 errores=dict()
 
 
-#Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
+# Array con los identificadores de las maquinas y las direcciones con el proxy para poner los enlaces en el index
 nombres=dict()
 nombresOrdenados=dict()
 
@@ -110,7 +109,7 @@ for element in range(0, len(maquinas)):
 
 
 
-#Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).			
+#Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).
 # def pideDatosFiles(datos, idmaquina):
 
 
@@ -357,49 +356,6 @@ def requestJob():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def getJsonPrinter():
     for i in range(0, len(maquinas)):
         maquina = maquinas[i]
@@ -620,7 +576,8 @@ def pausar():
 @app.route("/cancelar")
 
 def cancelar():
-    # Ejemplo de direccion http://192.168.1.185:8050/cancelar?maq=1
+    # Ejemplo de direccion http://192.168.1.185:8050/cancelar?maq
+
 
     #Extrae el id maquina de los argumentos de la URL y lo guarda en id_maq.
     id_maq=request.args.get("maq", default =-1, type = int)
@@ -663,7 +620,7 @@ def do_admin_login():
             print("Las credenciales son incorrectas")
             print("Resultado"+str(result))
             print("Usuario: " + str(request.form['username']))
-            print("Contraseña: " + str(request.form['password']))
+            print("Pass: " + str(request.form['password']))
 
     return render_template('login.html', error=error)
 
@@ -688,37 +645,15 @@ def main():
         #LLamada a las funciones que utilizamos
         #requestFiles()
 
-        Printer = dict()
-        Job = dict()
-        # sch = scheduler()
-        # sch2 = scheduler()
-        # sch.add_job(requestPrinter, 'interval', seconds=3)
-        # sch2.add_job(requestJob, 'interval', seconds=3)
-        # sch.start()
-        # sch2.start()
         requestPrinter()
         requestJob()
         getJsonPrinter()
         getJsonJob()
 
-        #print("Diccionario Printer: " + str(datosJsonPrinter))
-        #print("Diccionario Job: " + str(datosJsonJob))
-
 
         nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
         datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
-        #parsed_json= jsonify(json_string)
 
-        #parsed_json = json.loads(json_string)
-        #data = []
-        #funcionDatosJson(data)
-        #print("NUM PRINTER"+ str(len(datosFinalesPrinter)))
-        #print("NUM JOB"+ str(len(datosFinalesJob)))
-        #print("DATOS PRINTER"+str(datosFinalesPrinter["maq1"]))
-
-        #print("DATOS JOB"+str(datosFinalesJob["maq1"]))
-        #print("DATOS PRINTER"+str(datosFinalesPrinter))
-        #print("DATOS JOB"+str(datosFinalesJob))
         return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
                                fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter,)
 

@@ -57,23 +57,23 @@
              	<p>   </p>
              	<!--Estado e icono de desconectar -->
                 {% if session['visor'] %}
-
-                <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}} </pre>
+d
+                <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}} </pre>
                 {% else %}
-                    <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
+                    <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
 
                 {% endif %}
                     <!--Tiempo de ultima impresion -->
-                    <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
+                    <pre> <em class="fa fa-clock-o" style="font-size:24px"></em> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
 
                 {% if datosJob[key]["TiempoUltimaImpresion"] == 'N' %}
-                    <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
+                    <pre> <em class="fa fa-clock-o" style="font-size:24px"></em> Ultima: {{datosJob[key]["TiempoUltimaImpresion"]}}</pre>
                 {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
-                <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
+                <pre> <em class="fa fa-archive" style="font-size:24px"></em> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
 
                 {% if datosJob[key]["Nombre"] == 'N' %}
-                      <pre> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
+                      <pre> <em class="fa fa-archive" style="font-size:24px"></em> :<span style="font-size: 12px">{{datosJob[key]["Nombre"][:30]}} </span></pre>
                 {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
@@ -106,11 +106,11 @@
 
 					<!--Comprobacion cuando es una Witbox (sin cama caliente) -->
 					{% if datosPrinter[key]["CamaDisponible"] == "No"%}
-	 					<pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+	 					<pre> <em class="fas fa-thermometer-three-quarters" style="font-size:24px"></em> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
 	                {% else %}
-	                    <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+	                    <pre> <em class="fas fa-thermometer-three-quarters" style="font-size:24px"></em> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
 	                    {% if datosPrinter[key]["TempCamaActual"] > "0.0" %}
-	                    	<pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+	                    	<pre> <em class="fa fa-thermometer-quarter" style="font-size:24px"></em> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
 	                    {% endif %}
 	                {% endif %}
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
@@ -142,9 +142,9 @@
              	<!--Estado e icono de desconectar -->
                 {% if session['visor'] %}
 
-                <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}} </pre>
+                <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}} </pre>
                 {% else %}
-                    <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px;color: #1b5e20"></i></a> </pre>
+                    <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px;color: #1b5e20"></i></a> </pre>
 
                 {% endif %}                <!--Tiempo restante de impresion -->
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
@@ -152,11 +152,11 @@
                   {% elif datosJob[key]["TiempoRestante"] == "-"%}
                   {% else %}
 
-                  <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
+                  <pre> <em class="fa fa-clock-o" style="font-size:24px"></em> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
                   {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
                 {% if datosJob[key]["Nombre"] != 'None' %}
-                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
+                      <p> <em class="fa fa-archive" style="font-size:24px"></em> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
                 {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
@@ -186,9 +186,9 @@
 					{% if datosPrinter[key]["CamaDisponible"] == "No"%}
             <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
                   {% else %}
-                      <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                      <pre> <em class="fas fa-thermometer-three-quarters" style="font-size:24px"></em> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
                       {% if datosPrinter[key]["TempCamaActual"] > "0.0" %}
-                        <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+                        <pre> <em class="fa fa-thermometer-quarter" style="font-size:24px"></em> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
                       {% endif %}
                   {% endif %}
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
@@ -222,9 +222,9 @@
               <!--Estado e icono de desconectar -->
                 {% if session['visor'] %}
 
-                <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}} </pre>
+                <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}} </pre>
                 {% else %}
-                    <pre> <i class="fas fa-info-circle" style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
+                    <pre> <em class="fas fa-info-circle" style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}}   <a href="#" style= <button onclick="confirmacionDesconectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonDisconnect"><i class="fas fa-power-off" style="font-size:24px"></i></a> </pre>
 
                 {% endif %}                <!--Tiempo restante de impresion -->
                   {% if datosJob[key]["TiempoRestante"] == "None" %}
@@ -232,11 +232,11 @@
                   {% elif datosJob[key]["TiempoRestante"] == "-"%}
                   {% else %}
 
-                  <pre> <i class="fa fa-clock-o" style="font-size:24px"></i> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
+                  <pre> <em class="fa fa-clock-o" style="font-size:24px"></em> Restante: {{datosJob[key]["TiempoRestante"]}} </pre>
                   {% endif %}
                 <!--Nombre del ultimo archivo que ha impreso -->
                 {% if datosJob[key]["Nombre"] != 'None' %}
-                      <p> <i class="fa fa-archive" style="font-size:24px"></i> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
+                      <p> <em class="fa fa-archive" style="font-size:24px"></em> :<span style="font-size: 12px"> {{datosJob[key]["Nombre"]}} </span></p>
                 {% endif %}
                 <!--Porcentaje de impresion -->
                 {% if datosJob[key]["Porcentaje"] == 'None'%}
@@ -264,11 +264,11 @@
 
           <!--Comprobacion cuando es una Witbox (sin cama caliente) -->
           {% if datosPrinter[key]["CamaDisponible"] == "No"%}
-            <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+            <pre> <em class="fas fa-thermometer-three-quarters" style="font-size:24px"></em> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
                   {% else %}
-                      <pre> <i class="fas fa-thermometer-three-quarters" style="font-size:24px"></i> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
+                      <pre> <em class="fas fa-thermometer-three-quarters" style="font-size:24px"></em> Extrusor: {{datosPrinter[key]["TempHottendActual"]}} / {{datosPrinter[key]["TempHottendFijada"]}} º C</pre>
                       {% if datosPrinter[key]["TempCamaActual"] > "0.0" %}
-                        <pre> <i class="fa fa-thermometer-quarter" style="font-size:24px"></i> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
+                        <pre> <em class="fa fa-thermometer-quarter" style="font-size:24px"></em> Cama: {{datosPrinter[key]["TempCamaActual"]}} / {{datosPrinter[key]["TempCamaFijada"]}} º C</pre>
                       {% endif %}
                   {% endif %}
                   {% else %} <!-- En este caso, el servicio del OctoPrint esta funcionando, pero ha habido algun error -->
@@ -301,7 +301,7 @@
                 <a href={{nombresMaquinas[key]["direccion"]}} style = "color:black">{{nombresMaquinas[key]["Nombre"]}}</a>
               </h4>
                 {% if session['visor'] %}
-                    <p> <i class="fas fa-info-circle"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</p>
+                    <p> <em class="fas fa-info-circle"  style="font-size: 24px"></em> : {{datosJob[key]["Estado"]}}</p>
                     {% else %}
                      <a href="#" style= <button onclick="confirmacionConectar({{nombresMaquinas[key]["numMaquina"]}})" class="buttonConnect"><i class="fas fa-plug" style="font-size:24px;color:greenyellow"></i></button></a>
                <p> <i class="fas fa-info-circle"  style="font-size: 24px"></i> : {{datosJob[key]["Estado"]}}</p>
