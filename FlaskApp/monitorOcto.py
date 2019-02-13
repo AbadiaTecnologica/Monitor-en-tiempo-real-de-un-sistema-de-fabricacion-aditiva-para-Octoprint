@@ -2,11 +2,6 @@
 
 
 
-#__author__ = "David Zotes"
-#__license__ = "GPL3.0"
-#__version__ = "1.0.0"
-#__email__ = "zotesgonzalez@gmail.com"
-
 from flask import Flask, render_template, redirect, url_for, request, session, abort
 from flask import jsonify
 from flask import request
@@ -109,43 +104,22 @@ for element in range(0, len(maquinas)):
 
 
 
-#Funcion que devuelve los datos de las impresiones que hayan finalizado de cada maquina. (Actualmente no esta funcionando).
-# def pideDatosFiles(datos, idmaquina):
-
-
-# 	valoresFiles = list()
-
-# 	for i in range(0, len(datos)):
-
-# 		valoresFiles.append("Fecha: " + datetime.fromtimestamp(datos["files"][i]["date"]).strftime(' %I:%M %p %b. %d, %y'))
-# 		valoresFiles.append("Nombre: " + datos["files"][i]["display"])
-
-# 		tiempo=datos["files"][i]["gcodeAnalysis"]["estimatedPrintTime"]
-# 		m, s = divmod(tiempo,60)
-# 		h, m = divmod(m, 60)
-# 		valoresFiles.append("Tiempo estimado impresion: " + "%d:%02d:%02d" % (h, m, s))
-# 		valoresFiles.append("____________________________________________")
-
-
-# 	return valoresFiles
-
-
 #Funcion que devuelve los datos de impresora (temperaturas de cama y extrusor).
-def pideDatosPrinter(datos):
+def pide_datos_printer(datos):
     # Diccionario temporal en el que iremos guardando nuestros valores utiles.
-    valoresPrinter = dict()
+    valores_printer = dict()
 
     # Pausa
-    valoresPrinter["Pausa"] = str(datos["state"]["flags"]["paused"])
+    valores_printer["Pausa"] = str(datos["state"]["flags"]["paused"])
 
     # Imprimiendo
-    valoresPrinter["Imprimiendo"] = str(datos["state"]["flags"]["printing"])
+    valores_printer["Imprimiendo"] = str(datos["state"]["flags"]["printing"])
 
     # Lista
-    valoresPrinter["Lista"] = str(datos["state"]["flags"]["ready"])
+    valores_printer["Lista"] = str(datos["state"]["flags"]["ready"])
 
     # Estado Impresora (conectada o no)
-    valoresPrinter["Estado"] = str(datos["state"]["text"])
+    valores_printer["Estado"] = str(datos["state"]["text"])
 
     # Comprobamos que la impresora este conectada mediante las lecturas de temperatura
     if len(datos["temperature"]) == 0:
@@ -155,84 +129,84 @@ def pideDatosPrinter(datos):
         if "bed" in datos["temperature"]:
 
             # Temperatura actual de la cama
-            valoresPrinter["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
+            valores_printer["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
 
             # Temperatura fijada de la cama
-            valoresPrinter["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
+            valores_printer["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
 
             # Temperatura actual del extrusor
-            valoresPrinter["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+            valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
 
             # Temperatura fijada de extrusor
-            valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+            valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
         else:
             # Temperatura actual del extrusor
-            valoresPrinter["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+            valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
 
             # Temperatura fijada de extrusor
-            valoresPrinter["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
-            valoresPrinter["CamaDisponible"] = str("No")
+            valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+            valores_printer["CamaDisponible"] = str("No")
 
     # Devolvemos el diccionario con los datos de cada maquina.
-    return valoresPrinter
+    return valores_printer
 
 
 #Funcion que devuelve los datos de la impresion en curso (Timepo, Timeleft, Porcentaje completado...).
-def pideDatosJob(datos):
+def pide_datos_job(datos):
 
     #Diccionario temporal en el que guardaremos nuestros datos utiles.
-    valoresJob=dict()
+    valores_job=dict()
 
     #Comprabamos que el tiempo estimado de impresion no es None, y entonces cambiamos el formato a uno legible.
     if datos["job"]["estimatedPrintTime"] is None:
-        valoresJob["TiempoEstimadoImpresion"]=str(datos["job"]["estimatedPrintTime"])
+        valores_job["TiempoEstimadoImpresion"]=str(datos["job"]["estimatedPrintTime"])
     else:
         tiempo=datos["job"]["estimatedPrintTime"]
         m, s = divmod(tiempo,60)
         h, m = divmod(m, 60)
         #Hacemos la conversion y lo guardamos en nuestro diccionario en horas, minutos y segundos.
-        valoresJob["TiempoEstimadoImpresion"]="%d:%02d:%02d" % (h, m, s)
+        valores_job["TiempoEstimadoImpresion"]="%d:%02d:%02d" % (h, m, s)
 
     #Nombre del archivo que esta imprimiendo
-    valoresJob["Nombre"]=str(datos["job"]["file"]["name"])
+    valores_job["Nombre"]=str(datos["job"]["file"]["name"])
 
     #Tiempo que duro la ultima impresion y hacemos la misma conversion de antes para que los datos sean legibles.
     if datos["job"]["lastPrintTime"] is None:
-        valoresJob["TiempoUltimaImpresion"]=str(datos["job"]["lastPrintTime"])
+        valores_job["TiempoUltimaImpresion"]=str(datos["job"]["lastPrintTime"])
     else:
         tiempo=datos["job"]["lastPrintTime"]
         m, s = divmod(tiempo,60)
         h, m = divmod(m, 60)
-        valoresJob["TiempoUltimaImpresion"]= "%d:%02d:%02d" % (h, m, s)
+        valores_job["TiempoUltimaImpresion"]= "%d:%02d:%02d" % (h, m, s)
 
     #Porcetaje de impresion que se ha completado
-    valoresJob["Porcentaje"]=str(datos["progress"]["completion"])
+    valores_job["Porcentaje"]=str(datos["progress"]["completion"])
 
 
     #Tiempo que lleva de impresion (pieza actual). Hacemos la misma coversion anterior.
     if datos["progress"]["printTime"] is None:
-        valoresJob["TiempoImpresion"]=str(datos["progress"]["printTime"])
+        valores_job["TiempoImpresion"]=str(datos["progress"]["printTime"])
     else:
         tiempo=datos["progress"]["printTime"]
         m, s = divmod(tiempo,60)
         h, m = divmod(m, 60)
-        valoresJob["TiempoImpresion"]="%d:%02d:%02d" % (h, m, s)
+        valores_job["TiempoImpresion"]="%d:%02d:%02d" % (h, m, s)
 
 
     #Tiempo que le queda a la impresion actual. Hacemos la misma coversion anterior.
     if datos["progress"]["printTimeLeft"] is None:
-        valoresJob["TiempoRestante"]=str(datos["progress"]["printTimeLeft"])
+        valores_job["TiempoRestante"]=str(datos["progress"]["printTimeLeft"])
     else:
         tiempo=datos["progress"]["printTimeLeft"]
         m, s = divmod(tiempo,60)
         h, m = divmod(m, 60)
-        valoresJob["TiempoRestante"]= "%d:%02d:%02d" % (h, m, s)
+        valores_job["TiempoRestante"]= "%d:%02d:%02d" % (h, m, s)
     #Estado de la impresora
-    valoresJob["Estado"]= str(datos["state"])
+    valores_job["Estado"]= str(datos["state"])
 
 
     #Devolvemos el diccionario con los datos de cada maquina.
-    return valoresJob
+    return valores_job
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON files
@@ -268,7 +242,7 @@ def pideDatosJob(datos):
 # 			datosFinalesFiles[maquina[1]] = pideDatosFiles(data,maquina[1])		
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON printer
-def requestPrinter():
+def request_printer():
     for i in range(0, len(maquinas)):
         maquina = maquinas[i]
         urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
@@ -287,7 +261,6 @@ def requestPrinter():
             data = resp.json()
 
         except Exception as e:
-            datosJson =list()
             strfallo = "Error en Printer cuando i= %d: %s"
             print (strfallo %(i, str(e)))
             print("resp del if Printer: " + str(resp))
@@ -307,18 +280,18 @@ def requestPrinter():
                 elif resp.status_code == 200:
                     print("La respuesta es correcta")
                 #Seguramente se tendra que comentar, se usa a modo debug
-                #datosJson.append(str(data.content()))
+                #datos_json.append(str(data.content()))
                 elif resp.status_code == 500:
                     errores[maquina[1]]="Internal server error"
                 else:
                     errores[maquina[1]]= "Hay algun error desconocido"
 
         else: #Else del try
-            datosFinalesPrinter[maquina[1]] = pideDatosPrinter(data)
+            datosFinalesPrinter[maquina[1]] = pide_datos_printer(data)
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON job
-def requestJob():
+def request_job():
     for i in range(0, len(maquinas)):
         maquina = maquinas[i]
         urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
@@ -332,7 +305,6 @@ def requestJob():
                 errores[maquina[1]]="El servicio de Octoprint no esta operativo"
             else:
 
-                datosJson =list()
                 strfallo = "Error en Job cuando i= %d: %s"
                 print (strfallo %(i, str(e)))
                 print("resp del if Job: " + str(resp))
@@ -347,16 +319,16 @@ def requestJob():
                 elif resp.status_code == 200:
                     print("La respuesta es correcta")
                 #Seguramente se tendra que comentar, se usa a modo debug
-                #datosJson.append(str(data.content()))
+                #datos_json.append(str(data.content()))
                 else:
                     errores[maquina[1]]= "Hay algun error desconocido"
         else: #Else del try
-            datosFinalesJob[maquina[1]] = pideDatosJob(data)
+            datosFinalesJob[maquina[1]] = pide_datos_job(data)
 
 
 
 
-def getJsonPrinter():
+def get_json_printer():
     for i in range(0, len(maquinas)):
         maquina = maquinas[i]
         urlstring = str(host + ":" + maquina[0] + "/api/"+ printer + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
@@ -377,7 +349,7 @@ def getJsonPrinter():
 
 
         except Exception as e:
-            datosJson =list()
+
             strfallo = "Error en Printer cuando i= %d: %s"
             print (strfallo %(i, str(e)))
             print("resp del if Printer: " + str(resp))
@@ -408,7 +380,7 @@ def getJsonPrinter():
 
 
 #Funcion que hace las peticiones a la API de cada maquina para obtener el JSON job
-def getJsonJob():
+def get_json_job():
     for i in range(0, len(maquinas)):
         maquina = maquinas[i]
         urlstring = str(host + ":" + maquina[0] + "/api/" + job + "?apikey=" + maquina[2]) #Direccion con la que haremos la peticion GET
@@ -423,7 +395,7 @@ def getJsonJob():
                 errores[maquina[1]]="El servicio de Octoprint no esta operativo"
             else:
 
-                datosJson =list()
+
                 strfallo = "Error en Job cuando i= %d: %s"
                 print (strfallo %(i, str(e)))
                 print("resp del if Job: " + str(resp))
@@ -461,8 +433,8 @@ def conectar():
         print("Entra en el else:")
         headers = {'Content-Type': 'application/json', 'X-Api-Key': maquina[2]}
         data = '{"command": "connect"}'
-        urlConectar = str(host + ":" + maquina[0] + "/api/" + conn)
-        peticion = requests.post(urlConectar, data=data, headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + conn)
+        requests.post(url_conectar, data=data, headers=headers)
 
     #Para pruebas
     # print("request else: " + str(peticion))
@@ -495,16 +467,10 @@ def desconectar():
         print("Entra en el else:")
         headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
         data= '{"command": "disconnect"}'
-        urlConectar= str(host + ":" + maquina[0] + "/api/" + conn)
-        peticion=requests.post(urlConectar,data=data,headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + conn)
+        requests.post(url_conectar,data=data,headers=headers)
 
 
-    # print("request else: " + str(peticion))
-    # print("status code else: " + str(peticion.status_code))
-    # print("tipo status code else: " + str(type(peticion.status_code)))
-    # print("tipo de request else: " + str(type(peticion)))
-    # print("datos request else = " + str(peticion.content))
-    # print("datos request tipo else = " + str(type(peticion.content)))
 
     #Despues de conectar un maquina devolvemos el main para que vuelva a cargar la pagina principal con todos los datos.
     return main()
@@ -526,9 +492,9 @@ def imprimir():
         print("Maquina: " + str(maquina))
         headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
         data = '{"command": "start"}'
-        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-        #print(str(urlConectar))
-        peticion=requests.post(urlConectar,data=data,headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + job)
+        #print(str(url_conectar))
+        requests.post(url_conectar,data=data,headers=headers)
 
     return main()
 
@@ -547,8 +513,8 @@ def reanudar():
         print("Maquina: " + str(maquina))
         headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
         data = '{"command": "pause", "action": "resume"}'
-        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-        peticion=requests.post(urlConectar,data=data,headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + job)
+        requests.post(url_conectar,data=data,headers=headers)
 
     return main()
 
@@ -567,8 +533,8 @@ def pausar():
         print("Maquina: " + str(maquina))
         headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
         data = '{"command": "pause", "action": "pause"}'
-        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-        peticion=requests.post(urlConectar,data=data,headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + job)
+        requests.post(url_conectar,data=data,headers=headers)
 
     return main()
 
@@ -587,8 +553,8 @@ def cancelar():
         print("Maquina: " + str(maquina))
         headers = {'Content-Type': 'application/json','X-Api-Key': maquina[2]}
         data = '{"command": "cancel"}'
-        urlConectar= str(host + ":" + maquina[0] + "/api/" + job)
-        peticion=requests.post(urlConectar,data=data,headers=headers)
+        url_conectar = str(host + ":" + maquina[0] + "/api/" + job)
+        requests.post(url_conectar,data=data,headers=headers)
 
     return main()
 
@@ -645,17 +611,17 @@ def main():
         #LLamada a las funciones que utilizamos
         #requestFiles()
 
-        requestPrinter()
-        requestJob()
-        getJsonPrinter()
-        getJsonJob()
+        request_printer()
+        request_job()
+        get_json_printer()
+        get_json_job()
 
 
-        nombresOrdenados= collections.OrderedDict(sorted(nombres.items()))
-        datosFinalesJobOrdenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
+        nombres_ordenados = collections.OrderedDict(sorted(nombres.items()))
+        datos_finales_job_ordenados = collections.OrderedDict(sorted(datosFinalesJob.items()))
 
-        return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datosFinalesJobOrdenados,
-                               fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombresOrdenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter,)
+        return render_template('index.html', datosFiles = datosFinalesFiles, datosPrinter = datosFinalesPrinter,datosJob=datos_finales_job_ordenados,
+                               fallos = errores, nombresMaquinas=nombres, nombresOrdenados=nombres_ordenados, datosJsonJob = datosJsonJob, datosJsonPrinter = datosJsonPrinter,)
 
 if __name__=="__main__":
     app.secret_key = os.urandom(12)
