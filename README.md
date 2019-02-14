@@ -3,6 +3,9 @@ El propósito del trabajo es realizar una interfaz gráfica que permita motoriza
 
 ![alt text](https://github.com/AbadiaTecnologica/Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint/blob/master/VistaMonitor.png)
 
+
+[Vídeo demostración de como funciona la aplicación.](https://www.youtube.com/watch?v=7UB7Odx65XY)
+
 # Licencia 
 
 Este software está cobijado por la licencia [GNU GPL versión 3](http://www.gnu.org/licenses/gpl-3.0.html). Es un software opensource, gratuito, de libre distribución y modificación. Si usa este software debe conservar estas mismas libertades hacia sus clientes finales y nombrar a sus autores.
