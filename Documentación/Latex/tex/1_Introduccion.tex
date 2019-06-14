@@ -1,0 +1,95 @@
+\capitulo{1}{Introducción}
+
+No cabe duda que la impresión 3D cada vez cuenta con más presencia en nuestras vidas ya que permite la creación y producción de prototipos tanto para un entorno doméstico como para un nivel más industrial y todo esto de una manera barata, rápida y sencilla.
+
+La impresión 3D es una solución a la fabricación de prototipos sencilla y polivalente ya que en el mercado encontramos infinidad de materiales que se adecuan a los diferentes prototipos que podamos necesitar. Desde una impresora 3D se pueden imprimir piezas de metal, materiales flexibles e incluso fibra de carbono.
+
+Para entender en que consiste nuestra aplicación web, debemos empezar explicando en que se basa OctoPrint ya que es la base sobre la que se construye nuestro proyecto.
+
+OctroPrint es un sistema que código abierto que sirve para monitorizar y modificar, la mayor parte los parámetros de una impresora 3D, sobre una página web. Pero tiene una limitación importante y es que OctoPrint está diseñado para un uso monomáquina.
+
+Debido a estas carencias, surgió la idea de crear una aplicación web desde la que se pueda controlar, en tiempo real, el estado, la temperatura tanto de la cama como del extrusor, la impresión en curso, el tiempo restante de impresión de varias impresoras 3D. 
+
+Con el fin de justificar algunos aspectos del diseño de la aplicación web es necesario que queden claros algunos conceptos clave de la impresión 3D tales como:
+\begin{itemize}
+\item Extrusor: es la pieza que se encarga de arrastrar el filamento, fundirlo y aplicarlo sobre la superficie. Esta compuesto por:
+	\begin{itemize}
+		\item Motor: es el que se encarga de empujar el plástico hacia el extrusor.
+		\item Rodamiento de presión: es el que se encarga de hacer presión sobre el filamento para que entre de forma continua.
+		\item HotEnd: es la pieza encargada de fundir el filamento para que salga por la boquilla.
+		\item Sensor de temperatura: que se encarga de devolvernos la temperatura a la que se funde el filamento.
+		\item Boquilla de salida: es la pieza que aplica el filamento sobre la superficie de la cama. Existes numerosos tamaños, pero el más extendido es 0.4 mm.
+	\end{itemize}
+		\imagen{extrusor}{Ejemplo de un extrusor completo. Imagen extraída de \cite{wiki:extrusor}.}
+
+\item Cama: es la pieza sobre la que se fija el filamento, normalmente suele ser un cristal. Dependiendo de la máquina, la cama puede tener unas resistencias para que se caliente. Esto es así, porque existen algunos filamentos que necesitan de esta cualidad para que el plástico se adhiera al cristal.
+
+\imagen{cama}{Ejemplo de una cama caliente.  Imagen extraída de \cite{wiki:cama}.}
+\item G-code: es el archivo que contiene todas las posiciones de los ejes X, Y, Z que tiene que llevar a cabo la máquina para hacer una impresión completa.
+\imagen{gcode}{Ejemplo de un G-code en una impresión 3D. Imagen extraída de \cite{wiki:gcodeimagen}.}
+
+\end{itemize}
+
+Principalmente nuestra aplicación web está orientada al sector industrial. La idea original es usarlo como un monitor para una granja de impresoras 3D.
+
+\section{Materiales más utilizados en la impresión 3D}
+
+A continuación vamos a enumerar los materiales más importantes que se usan en la impresión 3D.
+
+\begin{itemize}
+\item ABS: es uno de los materiales más utilizados ya que tiene gran resistencia a los choques. Necesita una temperatura de fusión bastante alta, entorno a 230ºC-260ºC. Además para que la impresión sea satisfactoria nuestra impresora 3D deberá contar con la característica de cama caliente. Es decir, necesitamos que la cama esté a unos 90ºC para que la pieza de adhiera a la cama.
+\item PLA: es un tipo de plástico biodegradable, al contrario que el ABS.  Es muy utilizado ya que es muy sencillo de utilizar y no necesitamos cama caliente para que la impresión sea satisfactoria.
+\item PET: podemos decir que es una mezcla entre los dos anteriores. Es más resistente a choques que el PLA pero es mucho más sencillo de imprimir que el ABS.
+\item Materiales Flexibles: son muy parecidos al PLA pero tienen la característica de ser flexibles. El resultado final es muy parecido a las fundas TPU para el móvil.
+
+\imagen{flexible}{Ejemplo de impresión con material flexible.  Imagen extraída de \cite{wiki:flexible}.}
+\end{itemize}
+\section{Estructura de la memoria}
+
+La memoria se ha estructurado siguiendo los siguientes apartados:
+
+\begin{itemize}
+\tightlist
+\item
+    \textbf{Objetivos del proyecto}: este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto.
+\item
+    \textbf{Conceptos Teóricos}: explicación de los conceptos teóricos principales.
+\item
+    \textbf{Técnicas y herramientas}: descripción breve de las técnicas y herramientas utilizadas en este proyecto.
+\item
+    \textbf{Aspectos relevantes del desarrollo del proyecto}: desarrollo de los aspectos mas importantes del proyecto.
+\item
+    \textbf{Trabajos relacionados}: descripción de algunos proyectos similares a \textit{Monitor en tiempo real de un sistema de fabricación aditiva para OctoPrint}.
+\item
+    \textbf{Conclusiones y líneas de trabajo futuras}: descripción de las posibles líneas de trabajo futuras y conclusiones del proyecto.
+\end{itemize}
+
+\section{Estructura de los anexos}
+
+Los anexos se han estructurado según los siguientes parámetros:
+
+
+\begin{itemize}
+\tightlist
+\item
+    \textbf{Plan de Proyecto Software}: estudio de la viabilidad legal y económica y planificación temporal del proyecto.
+\item
+    \textbf{Especificación de requisitos}: describe los requisitos establecidos al comienzo del desarrollo del proyecto.
+\item
+    \textbf{Especificación de diseño}: recoge la información relacionada con el diseño de clases y paquetes así como el diseño de la interfaz.
+\item
+    \textbf{Manual del programador}:  instalación de herramientas, compilación, instalación, entorno de ejecución y pruebas.
+\item
+    \textbf{Manual de usuario}: descripción de los aspectos relevantes para el usuario: requisitos, instalación y manual de uso de la aplicación.
+\end{itemize}
+
+\section{Contenido del CD}
+
+El CD aportado junto a esta memoria está organizado en las siguientes carpetas:
+
+\begin{itemize}
+\item Memoria: incluye la version final en formato \textit{pdf} de la memoria completa del proyecto.
+\item Anexos: incluye también la version final en formato \textit{pdf} de los anexos de nuestro proyecto.
+\item Vídeo: contiene un vídeo demostrativo de la aplicación funcionando en un entorno real para mostrar su funcionamiento.
+\item Código: incluye la última versión de código de la aplicación. \cite{wiki:codigoProyecto}
+\end{itemize}
