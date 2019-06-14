@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="en" style="height: 100%;">
 {% block head %}
     <head>
     <meta charset="utf-8">
@@ -119,21 +119,13 @@
       }
     </script>
 
-
-<!--     <script type="text/javascript">
-      setTimeout(function(){
-      window.location.replace("./");
-    },5000);
-
-    </script> -->
  
  <script type="text/javascript">
     window.onload = setupRefresh;
     function setupRefresh()
     {
-        setInterval("refreshBlock();",5000);
+        setInterval("refreshBlock();",3000);
     }
-    
     function refreshBlock()
     {
        $('#refreshDiv').load("./");
