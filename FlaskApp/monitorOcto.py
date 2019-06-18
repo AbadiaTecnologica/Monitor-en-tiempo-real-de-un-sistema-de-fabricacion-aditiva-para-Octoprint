@@ -113,42 +113,81 @@ def pide_datos_printer(datos):
     valores_printer = dict()
 
     # Pausa
-    valores_printer["Pausa"] = str(datos["state"]["flags"]["paused"])
+    try:
+        valores_printer["Pausa"] = str(datos["state"]["flags"]["paused"])
+    except:
+        valores_printer["Pausa"] = "-"
 
     # Imprimiendo
-    valores_printer["Imprimiendo"] = str(datos["state"]["flags"]["printing"])
+    try:
+        valores_printer["Imprimiendo"] = str(datos["state"]["flags"]["printing"])
+    except:
+        valores_printer["Imprimiendo"] = "-"
 
     # Lista
-    valores_printer["Lista"] = str(datos["state"]["flags"]["ready"])
+    try:
+        valores_printer["Lista"] = str(datos["state"]["flags"]["ready"])
+    except:
+        valores_printer["Lista"] = "-"
 
     # Estado Impresora (conectada o no)
-    valores_printer["Estado"] = str(datos["state"]["text"])
+    try:
+        valores_printer["Estado"] = str(datos["state"]["text"])
+    except:
+        valores_printer["Estado"] = "-"
 
     # Comprobamos que la impresora este conectada mediante las lecturas de temperatura
-    if len(datos["temperature"]) == 0:
-        print("Conflicto con la API en Printer (impresora desconectada)")
-    else:
-        # Comprobamos que la impresora tiene como caracteristica la cama caliente.
-        if "bed" in datos["temperature"]:
-
-            # Temperatura actual de la cama
-            valores_printer["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
-
-            # Temperatura fijada de la cama
-            valores_printer["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
-
-            # Temperatura actual del extrusor
-            valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
-
-            # Temperatura fijada de extrusor
-            valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+    try:
+        if len(datos["temperature"]) == 0:
+            print("Conflicto con la API en Printer (impresora desconectada)")
         else:
-            # Temperatura actual del extrusor
-            valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+            # Comprobamos que la impresora tiene como caracteristica la cama caliente.
+            if "bed" in datos["temperature"]:
 
-            # Temperatura fijada de extrusor
-            valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
-            valores_printer["CamaDisponible"] = str("No")
+                # Temperatura actual de la cama
+                valores_printer["TempCamaActual"] = str(datos["temperature"]["bed"]["actual"])
+
+                # Temperatura fijada de la cama
+                valores_printer["TempCamaFijada"] = str(datos["temperature"]["bed"]["target"])
+
+                # Temperatura actual del extrusor
+                valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+
+                # Temperatura fijada de extrusor
+                valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+            else:
+                # Temperatura actual del extrusor
+                valores_printer["TempHottendActual"] = str(datos["temperature"]["tool0"]["actual"])
+
+                # Temperatura fijada de extrusor
+                valores_printer["TempHottendFijada"] = str(datos["temperature"]["tool0"]["target"])
+                valores_printer["CamaDisponible"] = str("No")
+    except:
+        if len(datos["temperature"]) == 0:
+            print("Conflicto con la API en Printer (impresora desconectada)")
+        else:
+            # Comprobamos que la impresora tiene como caracteristica la cama caliente.
+            if "bed" in datos["temperature"]:
+
+                # Temperatura actual de la cama
+                valores_printer["TempCamaActual"] = "-"
+
+                # Temperatura fijada de la cama
+                valores_printer["TempCamaFijada"] = "-"
+
+                # Temperatura actual del extrusor
+                valores_printer["TempHottendActual"] = "-"
+
+                # Temperatura fijada de extrusor
+                valores_printer["TempHottendFijada"] = "-"
+            else:
+                # Temperatura actual del extrusor
+                valores_printer["TempHottendActual"] = "-"
+
+                # Temperatura fijada de extrusor
+                valores_printer["TempHottendFijada"] = "-"
+                valores_printer["CamaDisponible"] = str("No")
+
 
     # Devolvemos el diccionario con los datos de cada maquina.
     return valores_printer
@@ -160,17 +199,24 @@ def pide_datos_job(datos):
     valores_job = dict()
 
     # Comprabamos que el tiempo estimado de impresion no es None, y entonces cambiamos el formato a uno legible.
-    if datos["job"]["estimatedPrintTime"] is None:
-        valores_job["TiempoEstimadoImpresion"] = str(datos["job"]["estimatedPrintTime"])
-    else:
-        tiempo = datos["job"]["estimatedPrintTime"]
-        m, s = divmod(tiempo, 60)
-        h, m = divmod(m, 60)
-        # Hacemos la conversion y lo guardamos en nuestro diccionario en horas, minutos y segundos.
-        valores_job["TiempoEstimadoImpresion"] = "%d:%02d:%02d" % (h, m, s)
+    try:
+        if datos["job"]["estimatedPrintTime"] is None:
+            valores_job["TiempoEstimadoImpresion"] = str(datos["job"]["estimatedPrintTime"])
+        else:
+            tiempo = datos["job"]["estimatedPrintTime"]
+            m, s = divmod(tiempo, 60)
+            h, m = divmod(m, 60)
+            # Hacemos la conversion y lo guardamos en nuestro diccionario en horas, minutos y segundos.
+            valores_job["TiempoEstimadoImpresion"] = "%d:%02d:%02d" % (h, m, s)
+    except:
+            valores_job["TiempoEstimadoImpresion"] = "-"
+
 
     # Nombre del archivo que esta imprimiendo
-    valores_job["Nombre"] = str(datos["job"]["file"]["name"])
+    try:
+        valores_job["Nombre"] = str(datos["job"]["file"]["name"])
+    except:
+        valores_job["Nombre"] = "-"
 
     # Tiempo que duro la ultima impresion y hacemos la misma conversion de antes para que los datos sean legibles.
     try:
@@ -193,28 +239,36 @@ def pide_datos_job(datos):
 
 
     # Porcetaje de impresion que se ha completado
-    valores_job["Porcentaje"] = str(datos["progress"]["completion"])
+    try:
+        valores_job["Porcentaje"] = str(datos["progress"]["completion"])
+    except:
+        valores_job["Porcentaje"] = "-"
 
     # Tiempo que lleva de impresion (pieza actual). Hacemos la misma coversion anterior.
-    if datos["progress"]["printTime"] is None:
-        valores_job["TiempoImpresion"] = str(datos["progress"]["printTime"])
-    else:
-        tiempo = datos["progress"]["printTime"]
-        m, s = divmod(tiempo, 60)
-        h, m = divmod(m, 60)
-        valores_job["TiempoImpresion"] = "%d:%02d:%02d" % (h, m, s)
+    try:
+        if datos["progress"]["printTime"] is None:
+            valores_job["TiempoImpresion"] = str(datos["progress"]["printTime"])
+        else:
+            tiempo = datos["progress"]["printTime"]
+            m, s = divmod(tiempo, 60)
+            h, m = divmod(m, 60)
+            valores_job["TiempoImpresion"] = "%d:%02d:%02d" % (h, m, s)
+    except:
+        valores_job["TiempoImpresion"] = "-"
 
     # Tiempo que le queda a la impresion actual. Hacemos la misma coversion anterior.
-    if datos["progress"]["printTimeLeft"] is None:
-        valores_job["TiempoRestante"] = str(datos["progress"]["printTimeLeft"])
-    else:
-        tiempo = datos["progress"]["printTimeLeft"]
-        m, s = divmod(tiempo, 60)
-        h, m = divmod(m, 60)
-        valores_job["TiempoRestante"] = "%d:%02d:%02d" % (h, m, s)
-    # Estado de la impresora
-    valores_job["Estado"] = str(datos["state"])
-
+    try:
+        if datos["progress"]["printTimeLeft"] is None:
+            valores_job["TiempoRestante"] = str(datos["progress"]["printTimeLeft"])
+        else:
+            tiempo = datos["progress"]["printTimeLeft"]
+            m, s = divmod(tiempo, 60)
+            h, m = divmod(m, 60)
+            valores_job["TiempoRestante"] = "%d:%02d:%02d" % (h, m, s)
+        # Estado de la impresora
+        valores_job["Estado"] = str(datos["state"])
+    except:
+        valores_job["Estado"] = "-"
     # Devolvemos el diccionario con los datos de cada maquina.
     return valores_job
 
